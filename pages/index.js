@@ -1,51 +1,44 @@
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
-import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
+import Head from 'next/head';
+import Meta from '../components/meta'
+import Nav from '../components/Nav';
 
-export default function Index({ allPosts }) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+const shadowDepth = '3px';
+
+export default function Index() {
   return (
     <>
-      <Layout>
-        <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
-        </Head>
-        <Container>
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
-      </Layout>
+      <Head>
+        <title>Alex MacArthur</title>
+      </Head>
+
+      <Meta />
+
+      <Nav classes="absolute" />
+
+      <div className="min-h-screen">
+        <main className="h-screen w-screen flex items-center justify-center p-6">
+          <div className="text-white">
+            <h1 className="font-semibold leading-none text-7xl relative text-gray-900 tracking-widest" style={{
+              textShadow: `${shadowDepth} ${shadowDepth} #ffffff`
+            }}>
+              <span className="relative z-10 text-gray-900" style={{
+                  '-webkit-text-fill-color': 'transparent',
+                  '-webkit-text-stroke-width': '3px',
+                  '-webkit-text-stroke-color': 'white',
+                  'text-shadow': '8px 8px #ff1f8f, 20px 20px #000000'
+              }}>
+                Alex MacArthur
+              </span>
+
+              {/* <span className="absolute top-0 left-0 text-gray-900 tracking-widest" style={{
+                // '-webkit-text-stroke': '3px white',
+                // textShadow: `-${shadowDepth} -${shadowDepth} #ffffff`
+              }}>Alex MacArthur</span> */}
+            </h1>
+            <span className="pl-2 md:pl-0 text-2xl md:text-4xl leading-10 inline-block mt-1 text-gray-500">is a web developer in Nashville-ish, TN.</span>
+          </div>
+        </main>
+      </div>
     </>
   )
-}
-
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-  ])
-
-  return {
-    props: { allPosts },
-  }
 }

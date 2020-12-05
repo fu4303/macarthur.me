@@ -1,5 +1,27 @@
 @tailwind base;
 
+* {
+  @apply text-white;
+  font-family: 'Heebo', sans-serif;
+  transition: all .05s ease-in-out;
+}
+
+p {
+  @apply text-xl;
+}
+
+.post-content {
+  p,
+  ul,
+  ol {
+    @apply mb-6;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold mb-2;
+  }
+}
+
 /* Write your own custom base styles here */
 
 /* Start purging... */
