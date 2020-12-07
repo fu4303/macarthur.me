@@ -8,29 +8,36 @@ export default function Index() {
 
   useEffect(() => {
     let rafId = 0;
-    let duration = 500;
-    const easing = BezierEasing(1, 0.5, 0, 1); // Create the easing function based on https://easings.net/en#easeInSine
 
-    const turnGradient = () => {
-      rafId = requestAnimationFrame(() => {
-        // const currentDegreeNumber = Number(getComputedStyle(document.documentElement).getPropertyValue('--gradient-angle').replace('deg', ''));
-        // const newDegreeNumber = currentDegreeNumber + 1;
-        const elapsedProgress = iteration - initialDegree;
-        const relativeProgress = elapsedProgress / duration;
-        const easedProgress = easing(relativeProgress);
-        const left = duration * Math.min(easedProgress, 1);
+    const gradientEffect = async () => {
+      let startTime = null;
+      const duration = 500;
+      const totalDegreesToTurn = 10;
+      const easing = BezierEasing(.7, .33, .3, .62);
 
-        document.documentElement.style.setProperty('--gradient-angle', `${left}deg`);
-
-        if(easedProgress < 1) {
-          requestAnimationFrame(turnGradient);
+      const turnGradient = (timestamp) => {
+        if (!startTime) {
+          startTime = timestamp;
         }
-      })
-    };
 
-    setTimeout(() => {
-      requestAnimationFrame(turnGradient)
-    }, 500);
+        const runtime = timestamp - startTime;
+        const relativeProgress = runtime / duration;
+        const easedProgress = easing(relativeProgress);
+        const easedDegrees = totalDegreesToTurn * Math.min(easedProgress, 1);
+
+        document.documentElement.style.setProperty('--gradient-angle', `${easedDegrees}deg`);
+
+        if (runtime < duration) {
+          rafId = requestAnimationFrame(turnGradient);
+        }
+      };
+
+      document.fonts.status === "loaded" || (await document.fonts.ready);
+
+      setTimeout(() => rafId = requestAnimationFrame(turnGradient), 500);
+    }
+
+    gradientEffect();
 
     return () => {
       cancelAnimationFrame(rafId);
