@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router';
+import Logo from './logo';
+import { useEffect, useState } from 'react';
 
 const navItems = [
   {
@@ -16,13 +19,28 @@ const navItems = [
 ];
 
 const Nav = ({classes = ''}) => {
+  const router = useRouter();
+  const [shouldHideLogo, setShouldHideLogo] = useState(() => {
+    return router.route === '/';
+  });
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      setShouldHideLogo(url === '/');
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, []);
+
   return (
     <nav className={`py-5 px-8 w-full font-bold flex items-center justify-between ${classes}`}>
 
-      <span className="font-bold text-3xl">
-        <Link href="/">
-          Alex MacArthur
-        </Link>
+      <span className={`transition-opacity font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
+        <Logo strokeWith="2" asLink={true} />
       </span>
 
       <ul className="flex space-x-4 justify-end">

@@ -21,10 +21,6 @@ p {
   -webkit-background-clip: text;
 }
 
-.outlined-text {
-  -webkit-text-stroke: 3px white;
-}
-
 .post-content {
   p,
   ul,
