@@ -65,7 +65,7 @@ export default function Index() {
                 Alex MacArthur
               </span>
             </h1>
-            <span className="pl-2 md:pl-0 text-2xl md:text-4xl leading-10 inline-block mt-1 text-gray-500">is a web developer in Nashville-ish, TN.</span>
+            <span className="pl-2 md:pl-0 text-xl md:text-2xl leading-10 inline-block text-gray-500">is a web developer in Nashville-ish, TN.</span>
           </div>
         </main>
       </div>
