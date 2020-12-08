@@ -40,7 +40,7 @@ const Nav = ({classes = ''}) => {
     <nav className={`py-5 px-8 w-full font-bold flex items-center justify-between ${classes}`}>
 
       <span className={`transition-opacity font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
-        <Logo strokeWith="2" asLink={true} />
+        <Logo strokeWidth="2" asLink={true} />
       </span>
 
       <ul className="flex space-x-4 justify-end">
