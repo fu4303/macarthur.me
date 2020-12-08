@@ -1,27 +1,29 @@
-import { useEffect, forwardRef, useState } from 'react';
+import { useEffect, forwardRef } from 'react';
 import BezierEasing from 'bezier-easing';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+const getAngleValue = (angleString) => {
+  return Number(angleString.replace('deg', ''));
+}
+
+const getCurrentAngle = () => {
+  const rawValue = getComputedStyle(document.documentElement).getPropertyValue("--gradient-angle");
+
+  return getAngleValue(rawValue);
+}
 
 const Logo = ({strokeWith = 3, asLink = false}) => {
-  const [angle, setAngle] = useState(null);
-
-  const getCurrentAngle = () => {
-    const rawValue = document.documentElement.style.getPropertyValue("--gradient-angle");
-
-    return Number(rawValue.replace('deg', ''));
-  }
+  const router = useRouter();
 
   useEffect(() => {
-    setAngle(getCurrentAngle());
-
     let rafId = 0;
     let startTime = null;
-    const duration = 500;
-    const totalDegreesToTurn = 10;
-    const easing = BezierEasing(.7, .33, .3, .62);
-    const startDelay = 500;
-
-    let iterations = 0;
+    const startingAngle = getCurrentAngle();
+    const duration = 750;
+    const totalDegreesToTurn = 20;
+    const startDelay = 300;
+    const easing = BezierEasing(.65, .3, .3, 1);
 
     const gradientEffect = async () => {
       const turnGradient = (timestamp) => {
@@ -29,14 +31,13 @@ const Logo = ({strokeWith = 3, asLink = false}) => {
           startTime = timestamp;
         }
 
-        console.log(startTime);
-
         const runtime = timestamp - startTime;
         const relativeProgress = runtime / duration;
         const easedProgress = easing(relativeProgress);
         const easedDegrees = totalDegreesToTurn * Math.min(easedProgress, 1);
+        const newAngleFromStartingAngle = startingAngle + easedDegrees;
 
-        document.documentElement.style.setProperty('--gradient-angle', `${easedDegrees}deg`);
+        document.documentElement.style.setProperty('--gradient-angle', `${newAngleFromStartingAngle}deg`);
 
         if (runtime < duration) {
           rafId = requestAnimationFrame(turnGradient);
@@ -68,27 +69,21 @@ const Logo = ({strokeWith = 3, asLink = false}) => {
     </>
   )
 
-  if(asLink) {
-    const LogoLink = forwardRef(({ href }, ref) => {
-      return (
-        <span className="relative block">
-          <a href={href} ref={ref}>
-            { children }
-          </a>
-        </span>
-      )
-    })
+  const constructedLogo = asLink
+    ? (
+      <a href={'/'} onClick={(e) => {
+        e.preventDefault();
 
-    return (
-      <Link href="/" passHref>
-        <LogoLink />
-      </Link>
+        router.push('/');
+      }}>
+        {children}
+      </a>
     )
-  }
+    : children
 
   return (
     <span className="relative block">
-      { children }
+      { constructedLogo }
     </span>
   );
 };
