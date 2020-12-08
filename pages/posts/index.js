@@ -5,9 +5,9 @@ import { getAllPosts } from '../../lib/api';
 
 const Posts = ({posts}) => {
   return (
-    <Layout>
+    <Layout narrow={true}>
       <Title>
-        Things I've Written
+        Posts
       </Title>
 
       {posts.map(post => {

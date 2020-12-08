@@ -5,16 +5,17 @@ import Container from './container';
 import { ReactNode } from 'react';
 
 type LayoutProps = {
-  children: ReactNode
+  children: ReactNode,
+  narrow?: boolean
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, narrow = false }: LayoutProps) {
   return (
     <>
       <Meta />
         <Nav />
         <main>
-          <Container>
+          <Container narrow={narrow}>
             {children}
           </Container>
         </main>

@@ -28,14 +28,11 @@ export default function Post({ post }) {
             {post.title}
           </Title>
 
-          {/* <DateFormatter dateString={post.date} className="inline-block mb-3" /> */}
-
-          <div className="mx-auto max-w-3xl">
-
+          <Container narrow={true}>
             <div
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
-          </div>
+          </Container>
         </article>
       </Container>
     </Layout>
