@@ -46,7 +46,7 @@ const Nav = ({classes = ''}) => {
       <ul className="flex space-x-4 justify-end">
         {navItems.map(item => {
           return (
-            <li className="text-2xl font-thin text-gray-500 hover:text-white" key={item.link}>
+            <li className="text-xl font-thin text-gray-500 hover:text-white" key={item.link}>
               <Link href={item.link}>
                 {item.name}
               </Link>

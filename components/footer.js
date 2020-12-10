@@ -2,9 +2,9 @@ import Container from './container'
 
 export default function Footer() {
   return (
-    <footer className="bg-accent-1 border-t border-accent-2">
-      <Container>
-        My Footer
+    <footer className="py-8 px-6">
+      <Container classes="text-center">
+        &copy; Alex MacArthur | {new Date().getFullYear()}
       </Container>
     </footer>
   )

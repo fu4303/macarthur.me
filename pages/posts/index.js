@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import DateFormatter from '../../components/date-formatter';
 import Layout from '../../components/layout';
 import Title from '../../components/title';
 import { getAllPosts } from '../../lib/api';
@@ -10,17 +11,23 @@ const Posts = ({posts}) => {
         Posts
       </Title>
 
-      {posts.map(post => {
-        return (
-          <article key={post.slug}>
-            <h2 className="text-3xl font-semibold">
-              <Link href={`/posts/${post.slug}`}>
-                {post.title}
-              </Link>
-            </h2>
-          </article>
-        )
-      })}
+      <ul className="space-y-8">
+        {posts.map(post => {
+          return (
+            <li key={post.slug}>
+              <article>
+                <h2 className="text-3xl font-semibold">
+                  <Link href={`/posts/${post.slug}`}>
+                    {post.title}
+                  </Link>
+                </h2>
+
+                <DateFormatter dateString={post.date} />
+              </article>
+            </li>
+          )
+        })}
+      </ul>
     </Layout>
   )
 }

@@ -15,6 +15,7 @@ const Title = ({children, date}: TitleProps) => {
       {date &&
         <DateFormatter dateString={date} />
       }
+      ← Back to Posts
     </div>
   )
 }
