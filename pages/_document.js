@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className="bg-gray-900">
+        <body>
           <Main />
           <NextScript />
           <div id="slice"></div>

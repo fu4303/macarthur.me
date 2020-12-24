@@ -1,3 +1,4 @@
+@import "font-public-sans.css";
 @tailwind base;
 
 body {
@@ -15,7 +16,7 @@ body {
   min-height: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(63deg,theme('colors.gray.900') 31%, theme('colors.midGray') 0);
+  background: linear-gradient(63deg, theme('colors.gray.100') 31%, theme('colors.white') 0);
   z-index: 0;
   transition: height .5s;
 }
@@ -27,8 +28,8 @@ body {
 }
 
 * {
-  @apply text-white;
-  font-family: 'Heebo', sans-serif;
+  @apply text-gray-700 tracking-tight;
+  font-family: 'Public Sans', sans-serif;
   transition: all .05s ease-in-out;
 }
 
@@ -42,7 +43,7 @@ p {
 
 .gradient-text {
   transition: all .15s ease-in-out;
-  background: linear-gradient(var(--gradient-angle), white 50%, theme('colors.gray.900') 50%);
+  background: linear-gradient(var(--gradient-angle), theme('colors.gray.500') 50%, theme('colors.gray.700') 50%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 }
@@ -73,7 +74,7 @@ p {
   code[class*="language-"], pre[class*="language-"], code[class*="language-"] *, pre[class*="language-"] * {
     @apply text-xl;
     font-style: inherit;
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Public Sans', sans-serif;
     font-weight: inherit;
   }
 

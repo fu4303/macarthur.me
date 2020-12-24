@@ -41,10 +41,8 @@ const selectRange = (angle: number): Array<number> => {
 };
 
 const Logo = ({
-  strokeWidth = 3,
-  asLink = false,
+  asLink = false
 }: {
-  strokeWidth: number;
   asLink: boolean;
 }): ReactElement => {
   const router = useRouter();
@@ -101,14 +99,14 @@ const Logo = ({
   const children = (
     <>
       <span
-        className="relative z-30 text-gray-900"
+        className="relative z-30 text-gray-900 font-extrabold"
         style={{
-          WebkitTextStroke: `${strokeWidth}px white`,
+          // WebkitTextStroke: `${strokeWidth}px #1f2937`,
         }}
       >
         Alex MacArthur
       </span>
-      <span className="absolute z-30 text-gray-900 left-0 top-0 gradient-text">
+      <span className="absolute z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold">
         Alex MacArthur
       </span>
     </>

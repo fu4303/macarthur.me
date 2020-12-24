@@ -18,7 +18,7 @@ const Title = ({children, date, isPost}: TitleProps) => {
         </span>
       }
 
-      <h1 className="text-6xl font-semibold leading-none mb-2">
+      <h1 className="text-6xl font-extrabold leading-none mb-2">
         {children}
       </h1>
 

@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        '7xl': '5rem',
+        '7xl': '6rem',
         yuge: "14vw"
       },
       colors: {
