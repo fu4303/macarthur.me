@@ -18,10 +18,15 @@ function getSlugFromFileName(fileName: string): string {
 }
 
 function getPostFilesNames(): string[] {
-  return fs.readdirSync(postsDirectory);
+  const files = fs.readdirSync(postsDirectory);
+
+  return files.filter(f => f.match(slugPattern));
 }
 
 function findFileNameBySlug(slug) {
+  console.log('slug', slug);
+  console.log(getPostFilesNames());
+
   return getPostFilesNames().find((fileName) => {
     const fileSlug = slugPattern.exec(fileName)[1];
 

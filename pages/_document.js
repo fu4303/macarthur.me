@@ -6,11 +6,15 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;700;800;900&display=swap" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;700;800;900&family=Anonymous+Pro:ital@1&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body className="bg-gray-900">
           <Main />
           <NextScript />
+          <div id="slice"></div>
         </body>
       </Html>
     )

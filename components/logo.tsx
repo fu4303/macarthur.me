@@ -117,6 +117,7 @@ const Logo = ({
   const constructedLogo = asLink ? (
     <a
       href={"/"}
+      className="outline-none"
       onClick={(e) => {
         e.preventDefault();
 

@@ -6,7 +6,8 @@ import { getPostBySlug, getAllPosts } from "../../lib/api";
 import Head from "next/head";
 import markdownToHtml from "../../lib/markdownToHtml";
 import Title from "../../components/title";
-import DateFormatter from "../../components/date-formatter";
+
+import "prismjs/themes/prism-okaidia.css";
 
 export default function Post({ post }) {
   const router = useRouter();
@@ -21,10 +22,10 @@ export default function Post({ post }) {
           <Head>
             <title>{post.title} | Alex MacArthur</title>
 
-            <meta property="og:image" content={post.ogImage.url} />
+            <meta property="og:image" content={post.open_graph} />
           </Head>
 
-          <Title date={post.date}>
+          <Title date={post.date} isPost={true}>
             {post.title}
           </Title>
 
