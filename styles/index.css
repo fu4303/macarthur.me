@@ -40,7 +40,7 @@ body {
   z-index: 1;
 }
 
-* {
+*:not(.remark-highlight *) {
   @apply text-gray-700 tracking-tight;
   font-family: 'Public Sans', sans-serif;
   transition: all .05s ease-in-out;
@@ -72,6 +72,10 @@ p {
     @apply mb-6 font-extralight text-xl leading-snug;
   }
 
+  code {
+    @apply text-base;
+  }
+
   ul {
     @apply list-disc pl-6;
   }
@@ -97,7 +101,7 @@ p {
   }
 
   code[class*="language-"], pre[class*="language-"], code[class*="language-"] *, pre[class*="language-"] * {
-    @apply text-xl;
+    @apply text-base;
     font-style: inherit;
     font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
     font-weight: inherit;
@@ -108,7 +112,7 @@ p {
   }
 
   :not(pre) > code[class*="language-"], pre[class*="language-"] {
-    @apply bg-gray-800;
+    /* @apply bg-gray-800; */
   }
 }
 

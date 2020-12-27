@@ -7,7 +7,7 @@ import Title from "./title";
 
 import "prismjs/themes/prism-okaidia.css";
 
-export default function Post({ pageContent }) {
+export default function Post({ pageContent, isPost = false }) {
   const router = useRouter();
 
   if (!router.isFallback && !pageContent?.slug) {
@@ -24,7 +24,7 @@ export default function Post({ pageContent }) {
             <meta property="og:image" content={pageContent.open_graph} />
           </Head>
 
-          <Title date={pageContent.date} isPost={true}>
+          <Title date={pageContent.date} isPost={isPost}>
             {pageContent.title}
           </Title>
 

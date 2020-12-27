@@ -55,7 +55,7 @@ function getDirectoryByType(contentType: ContentType) {
   return null;
 }
 
-function getFileNamesByType(contentType: ContentType) {
+function getFileNamesByType(contentType: ContentType): string[] {
   if (contentType === 'post') {
     return getPostFilesNames();
   }
@@ -69,7 +69,6 @@ function getFileNamesByType(contentType: ContentType) {
 
 function findFileNameBySlug(slug, contentType: ContentType) {
   return getFileNamesByType(contentType).find((fileName) => {
-    console.log(slug);
     const match = getSlugPatternByType(contentType).exec(fileName);
     const fileSlug = match ? match[1] : null;
 
@@ -94,12 +93,14 @@ export function getContentBySlug(slug: string, contentType: ContentType): Page {
   const fullPath = join(directory, fileName);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
+  const date = fileName.match(datePattern)?.[0]?.replace(/\-$/, "") || null;
 
   return {
     slug,
     content,
-    ogImage: data.ogImage,
-    date: fileName.match(datePattern)[0].replace(/\-$/, "")
+    date,
+    title: data.title,
+    ogImage: data.ogImage || null
   };
 }
 

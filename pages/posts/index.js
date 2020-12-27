@@ -18,7 +18,7 @@ const Posts = ({posts}) => {
               <article>
                 <h2 className="text-3xl font-semibold">
                   <Link href={`/posts/${post.slug}`}>
-                    {post.title}
+                    { post.title }
                   </Link>
                 </h2>
 
@@ -37,7 +37,7 @@ export default Posts;
 export async function getStaticProps({ params }) {
   return {
     props: {
-      posts: await getAllPosts(['title', 'content', 'date', 'slug'])
-    },
+      posts: await getAllPosts()
+    }
   }
 }

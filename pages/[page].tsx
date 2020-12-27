@@ -3,17 +3,17 @@ import { getContentBySlug, getAllPages } from "../lib/api";
 import markdownToHtml from "../lib/markdownToHtml";
 
 export default function Page({ page }) {
-  return <PageLayout pageContent={page} />;
+  return <PageLayout pageContent={page} isPost={false} />;
 }
 
 export async function getStaticProps({ params }) {
-  const post = getContentBySlug(params.slug);
-  const content = await markdownToHtml(post.content || "");
+  const page = getContentBySlug(params.page, 'page');
+  const content = await markdownToHtml(page.content || "");
 
   return {
     props: {
-      post: {
-        ...post,
+      page: {
+        ...page,
         content,
       }
     },
@@ -21,16 +21,13 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPages();
-
-  console.log("HERE");
-  console.log(posts);
+  const pages = getAllPages();
 
   return {
-    paths: posts.map((post) => {
+    paths: pages.map((page) => {
       return {
         params: {
-          slug: post.slug,
+          page: page.slug,
         },
       };
     }),

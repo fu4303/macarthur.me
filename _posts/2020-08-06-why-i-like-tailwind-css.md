@@ -16,11 +16,11 @@ Other styling approaches I've used require me to jump between multiple different
 
 With Tailwind, however, all I really need to pay attention to is the HTML. Fewer VS Code tabs for my brain to manage means I can prototype more easily and quickly.
 
-**2. Built-in PurgeCSS means I only ship the styles I actually use.** 
+**2. Built-in PurgeCSS means I only ship the styles I actually use.**
 
 When working with other utility-based CSS frameworks, it's a pain to ensure you don't ship any of the CSS you don't actually use. Depending on the framework, your options are to manually import the things you actually use, give up altogether, or try your hand at configuring a tool like [PurgeCSS](https://purgecss.com/) to remove unused classes on compilation. As of v1.4, [Tailwind has PurgeCSS built in](https://tailwindcss.com/docs/release-notes/#tailwind-css-v1-4), with a lot of the hassle abstracted away, so I can focus on styling without worrying so much about CSS bloat.
 
-**3. I can throw away HTML without orphaning accompanying CSS.** 
+**3. I can throw away HTML without orphaning accompanying CSS.**
 
 Especially when I'm prototyping something, it's common for me to spontaneously throw out HTML I thought I'd need but don't. When my styles and makeup are maintained separately, a second step is required to remove that unnecessary CSS. I often forget to do that, forever leaving it orphaned. The markup-driven styling provided by Tailwind means all I have to throw away is the HTML itself. Nothing else (unless I have some custom components I've composed somewhere, but that's rare).
 
@@ -32,33 +32,33 @@ It takes time, it's hard, and I suck at it. When using Tailwind, the only time I
 
 When starting with more of a bare-bones, roll-my-own styling approach, it's a chore to determine what my base font sizes, colors, spacing values, and everything else should be. Tailwind offers consistent sets of these values out-of-the-box, while also enabling me to [customize them](https://tailwindcss.com/docs/margin/#customizing) as needed.
 
-**6. It's easy to incrementally adopt in a project.** 
+**6. It's easy to incrementally adopt in a project.**
 
 If you want to leverage just _some_ of the utilities provided by Tailwind, or want to migrate to it more slowly, it's relatively easy to do so without overcommitting yourself or putting the entire project through a refactor. After setting it up (the most common way to do so is probably [as a PostCSS plugin](https://tailwindcss.com/docs/installation#using-tailwind-with-postcss)), you can either [manually configure Tailwind](https://tailwindcss.com/docs/configuration/) to include only what you need, or rely on the aforementioned PurgeCSS integration to remove the styles you don't use. I appreciate that flexibility.
 
-**7. The documentation is incredible.** 
+**7. The documentation is incredible.**
 
 In particular, the search functionality in the Tailwind documentation is nearly psychic (and the "press '/' to focus" feature is a huge nice-to-have). If I'm looking for some utility, my first search attempt nearly always returns what I need without requiring me to try again with different terms. It's just good. Moreover, it's fast, thorough, and filled with helpful examples.
 
 ### Some Challenges I've Seen
 
-My admiration for this tool is strong, but it'd be unfair to leave out the challenges I've had working with it. 
+My admiration for this tool is strong, but it'd be unfair to leave out the challenges I've had working with it.
 
-**1. The learning curve can be steep.** 
+**1. The learning curve can be steep.**
 
 At first, it sort of felt like I was relearning CSS itself, and that was frustrating. There's a utility for virtually everything (it seems like), and trying to get my brain to map real CSS attributes to those utilities just took some time (I'm still working on it). This is where that documentation really shines, because if it weren't for that, I'd have given up early on.
 
 **2. HTML can quickly become ugly & convoluted.**
 
-Much of this is probably just preferential, or perhaps due to the fact that it goes against what I've become accustomed to while working with BEM for so long. But at the same time, when working with something like JSX in React or any other templating language infused with a moderate amount of logic, it can get rough to parse everything going on in a component with utility classes sprinkled everywhere. 
+Much of this is probably just preferential, or perhaps due to the fact that it goes against what I've become accustomed to while working with BEM for so long. But at the same time, when working with something like JSX in React or any other templating language infused with a moderate amount of logic, it can get rough to parse everything going on in a component with utility classes sprinkled everywhere.
 
-I experienced some of this pain when building [TypeIt's site](https://typeitjs.com) with Tailwind + [Gatsby](https://gatsbyjs.org). In order to fine-tune the styling I wanted, I had to do stuff like this: 
+I experienced some of this pain when building [TypeIt's site](https://typeitjs.com) with Tailwind + [Gatsby](https://gatsbyjs.org). In order to fine-tune the styling I wanted, I had to do stuff like this:
 
 
 ```jsx
 <div
   className={`
-            lg:flex 
+            lg:flex
             justify-center
             fixed
             lg:relative
@@ -92,9 +92,9 @@ I experienced some of this pain when building [TypeIt's site](https://typeitjs.c
 </div>;
 ```
 
-With so many utility classes in play, it was just _hard_ to figure out the best way to format everything while keeping the entire file relatively legible. 
+With so many utility classes in play, it was just _hard_ to figure out the best way to format everything while keeping the entire file relatively legible.
 
-Admittedly, there are some tricks to help mitigate this, mainly relying on strategies Tailwind recommends to [componentize parts of your UI](https://tailwindcss.com/docs/extracting-components/), such as: 
+Admittedly, there are some tricks to help mitigate this, mainly relying on strategies Tailwind recommends to [componentize parts of your UI](https://tailwindcss.com/docs/extracting-components/), such as:
 
 - using Tailwind's `@apply` directive to create single classes composed of utilities.
 - writing templates or JS components that accept the data you'd like to display.

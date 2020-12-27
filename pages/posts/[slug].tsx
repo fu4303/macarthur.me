@@ -5,11 +5,11 @@ import markdownToHtml from "../../lib/markdownToHtml";
 import "prismjs/themes/prism-okaidia.css";
 
 export default function Post({ post }) {
-  return <PageLayout pageContent={post} />;
+  return <PageLayout pageContent={post} isPost={true} />;
 }
 
 export async function getStaticProps({ params }) {
-  const post = getContentBySlug(params.slug);
+  const post = getContentBySlug(params.slug, 'post');
   const content = await markdownToHtml(post.content || "");
 
   return {
