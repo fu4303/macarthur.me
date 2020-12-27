@@ -48,10 +48,10 @@ const Logo = ({
   const router = useRouter();
 
   useEffect(() => {
-    let rafId = 0;
-    let startTime = null;
+    let rafId: number = 0;
+    let startTime: number = null;
     const startingAngle = getCurrentAngle();
-    let destinationAngle = randomInRange(...selectRange(startingAngle));
+    let destinationAngle: number = randomInRange(...selectRange(startingAngle));
     destinationAngle =
       destinationAngle < startingAngle
         ? destinationAngle + 360
@@ -97,19 +97,9 @@ const Logo = ({
   }, []);
 
   const children = (
-    <>
-      <span
-        className="relative z-30 text-gray-900 font-extrabold"
-        style={{
-          // WebkitTextStroke: `${strokeWidth}px #1f2937`,
-        }}
-      >
-        Alex MacArthur
-      </span>
-      <span className="absolute z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold">
-        Alex MacArthur
-      </span>
-    </>
+    <span className="z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold">
+      Alex MacArthur
+    </span>
   );
 
   const constructedLogo = asLink ? (

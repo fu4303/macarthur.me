@@ -37,7 +37,7 @@ const Nav = ({classes = ''}) => {
   }, []);
 
   return (
-    <nav className={`py-5 px-8 w-full font-bold flex items-center justify-between ${classes}`}>
+    <nav className={`py-5 px-5 md:px-8 w-full font-bold flex items-center justify-between ${classes}`}>
 
       <span className={`transition-opacity font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
         <Logo strokeWidth="2" asLink={true} />
@@ -46,7 +46,10 @@ const Nav = ({classes = ''}) => {
       <ul className="flex space-x-4 justify-end">
         {navItems.map(item => {
           return (
-            <li className="text-xl font-thin text-gray-500 hover:text-white" key={item.link}>
+            <li
+              className="text-xl font-thin text-gray-500 hover:text-gray-900"
+              key={item.link}
+            >
               <Link href={item.link}>
                 {item.name}
               </Link>

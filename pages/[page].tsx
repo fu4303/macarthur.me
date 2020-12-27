@@ -1,11 +1,9 @@
-import PageLayout from "../../components/PageLayout";
-import { getContentBySlug, getAllPosts } from "../../lib/api";
-import markdownToHtml from "../../lib/markdownToHtml";
+import PageLayout from "../components/PageLayout";
+import { getContentBySlug, getAllPages } from "../lib/api";
+import markdownToHtml from "../lib/markdownToHtml";
 
-import "prismjs/themes/prism-okaidia.css";
-
-export default function Post({ post }) {
-  return <PageLayout pageContent={post} />;
+export default function Page({ page }) {
+  return <PageLayout pageContent={page} />;
 }
 
 export async function getStaticProps({ params }) {
@@ -17,13 +15,16 @@ export async function getStaticProps({ params }) {
       post: {
         ...post,
         content,
-      },
+      }
     },
   };
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts();
+  const posts = getAllPages();
+
+  console.log("HERE");
+  console.log(posts);
 
   return {
     paths: posts.map((post) => {

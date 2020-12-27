@@ -3,77 +3,116 @@ import { join } from "path";
 import matter from "gray-matter";
 
 const postsDirectory = join(process.cwd(), "_posts");
+const pagesDirectory = join(process.cwd(), "_pages");
 const datePattern = new RegExp(/\d{4}-\d{2}-\d{2}-/);
-const slugPattern = new RegExp(/(?:\d{4}-\d{2}-\d{2}-)(.+)(?:\.mdx?)/);
+const postSlugPattern = new RegExp(/(?:\d{4}-\d{2}-\d{2}-)(.+)(?:\.mdx?)/);
+const pageSlugPattern = new RegExp(/(.+)(?:\.mdx?)/);
 
-interface Post {
+type ContentType = 'page' | 'post';
+interface Page {
   content?: string;
   date?: string;
   title?: string;
   slug?: string;
+  ogImage?: string;
 }
 
-function getSlugFromFileName(fileName: string): string {
-  return slugPattern.exec(fileName)?.[1] || "";
+function getPostSlugFromFileName(fileName: string): string {
+  return postSlugPattern.exec(fileName)?.[1] || "";
 }
 
 function getPostFilesNames(): string[] {
   const files = fs.readdirSync(postsDirectory);
 
-  return files.filter(f => f.match(slugPattern));
+  return files.filter(f => f.match(postSlugPattern));
 }
 
-function findFileNameBySlug(slug) {
-  console.log('slug', slug);
-  console.log(getPostFilesNames());
+function getPageFilesNames(): string[] {
+  return fs.readdirSync(pagesDirectory);
+}
 
-  return getPostFilesNames().find((fileName) => {
-    const fileSlug = slugPattern.exec(fileName)[1];
+function getSlugPatternByType(contentType: ContentType) {
+  if (contentType === 'post') {
+    return postSlugPattern;
+  }
+
+  if (contentType === 'page') {
+    return pageSlugPattern;
+  }
+
+  return null;
+}
+
+function getDirectoryByType(contentType: ContentType) {
+  if (contentType === 'post') {
+    return postsDirectory;
+  }
+
+  if (contentType === 'page') {
+    return pagesDirectory;
+  }
+
+  return null;
+}
+
+function getFileNamesByType(contentType: ContentType) {
+  if (contentType === 'post') {
+    return getPostFilesNames();
+  }
+
+  if(contentType === 'page') {
+    return getPageFilesNames();
+  }
+
+  return [];
+}
+
+function findFileNameBySlug(slug, contentType: ContentType) {
+  return getFileNamesByType(contentType).find((fileName) => {
+    console.log(slug);
+    const match = getSlugPatternByType(contentType).exec(fileName);
+    const fileSlug = match ? match[1] : null;
 
     return slug === fileSlug;
   });
 }
 
-function getPostByFileName(fileName: string, fields: string[]): Post {
-  const slug = getSlugFromFileName(fileName);
-
-  return getPostBySlug(slug, fields);
+function getPostByFileName(fileName: string): Page {
+  const slug = getPostSlugFromFileName(fileName);
+  return getContentBySlug(slug, 'post');
 }
 
-export function getPostBySlug(slug, fields = []): Post {
-  const fileName = findFileNameBySlug(slug);
-  const date = fileName.match(datePattern)[0].replace(/\-$/, "");
-  const fullPath = join(postsDirectory, fileName);
+function getPageByFileName(fileName: string): Page {
+  const slug = fileName.replace(/\.md$/, "");
+
+  return getContentBySlug(slug, 'page');
+}
+
+export function getContentBySlug(slug: string, contentType: ContentType): Page {
+  const fileName = findFileNameBySlug(slug, contentType);
+  const directory = getDirectoryByType(contentType);
+  const fullPath = join(directory, fileName);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
-  const items = {};
 
-  fields.forEach((field) => {
-    if (field === "date") {
-      items[field] = date;
-    }
-
-    if (field === "slug") {
-      items[field] = slug;
-    }
-
-    if (field === "content") {
-      items[field] = content;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
-    }
-  });
-
-  return items;
+  return {
+    slug,
+    content,
+    ogImage: data.ogImage,
+    date: fileName.match(datePattern)[0].replace(/\-$/, "")
+  };
 }
 
-export function getAllPosts(fields = []) {
+export function getAllPosts() {
   const files = getPostFilesNames();
 
-  const posts = files
-    .map((file) => getPostByFileName(file, fields))
+  return files
+    .map((file) => getPostByFileName(file))
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
+}
+
+export function getAllPages() {
+  const files = getPageFilesNames();
+
+  return files.map((file) => getPageByFileName(file));
 }

@@ -3,6 +3,24 @@
   font-style: normal;
   font-weight: 100;
   font-display: swap;
+  src: url('/fonts/public-sans/PublicSans-Thin.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/fonts/public-sans/PublicSans-Thin.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url('/fonts/public-sans/PublicSans-ThinItalic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/fonts/public-sans/PublicSans-ThinItalic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
   src: url('/fonts/public-sans/PublicSans-ExtraLight.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('/fonts/public-sans/PublicSans-ExtraLight.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
@@ -10,7 +28,7 @@
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
-  font-weight: 100;
+  font-weight: 200;
   font-display: swap;
   src: url('/fonts/public-sans/PublicSans-ExtraLightItalic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('/fonts/public-sans/PublicSans-ExtraLightItalic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */

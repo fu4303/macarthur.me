@@ -10,7 +10,7 @@ export default function Container({ children, narrow = false, classes = "" }: Co
 
   return (
     <div
-      className={`mx-auto px-5 max-w-${narrow ? '3' : '6'}xl ${classes}`}
+      className={`mx-auto px-0 md:px-5 max-w-${narrow ? '3' : '6'}xl ${classes}`}
     >
       {children}
     </div>
