@@ -8,7 +8,52 @@ module.exports = {
       },
       colors: {
         midGray: '#131B2A'
-      }
+      },
+      typography: theme => ({
+        DEFAULT: {
+          css: {
+            fontWeight: 100,
+            a: {
+              color: 'inherit',
+              textDecoration: 'none',
+              fontWeight: theme('fontWeight.extralight')
+            },
+            'h2, h3, h4, h5': {
+              fontSize: theme('fontSize.3xl'),
+              fontWeight: theme('fontWeight.extrabold'),
+              marginBottom: theme('margin.5')
+            },
+            h3: {
+              fontSize: theme('fontSize.2xl')
+            },
+            h4: {
+              fontSize: theme('fontSize.xl')
+            },
+            ul: {
+              paddingLeft: theme('padding.6')
+            },
+            'ul > li::before': {
+              backgroundColor: theme('colors.gray.700'),
+            },
+            'ol > li::before': {
+              color: theme('colors.gray.700'),
+            },
+            code: {
+              fontWeight: 'inherit'
+            },
+            'code::before': {
+              content: 'none',
+            },
+            'code::after': {
+              content: 'none',
+            },
+          },
+        }
+      })
     }
   },
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('precss')
+  ]
 }

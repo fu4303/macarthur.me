@@ -4,7 +4,9 @@ export default function Footer() {
   return (
     <footer className="py-8 px-6">
       <Container classes="text-center">
-        &copy; Alex MacArthur | {new Date().getFullYear()}
+        <span>
+          &copy; Alex MacArthur | {new Date().getFullYear()}
+        </span>
       </Container>
     </footer>
   )

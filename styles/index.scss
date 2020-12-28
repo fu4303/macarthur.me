@@ -1,0 +1,74 @@
+@import "./font-public-sans";
+@import "~tailwindcss/base";
+
+body {
+  min-height: 100vh;
+}
+
+#main {
+  flex: 1;
+}
+
+#__next {
+  @apply flex flex-col relative;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+/* typography defaults */
+*:not(.remark-highlight *) {
+  @apply text-gray-700 tracking-tight;
+  font-family: 'Public Sans', sans-serif;
+  transition: all .05s ease-in-out;
+}
+
+:root {
+  --gradient-angle: 0deg;
+}
+
+.gradient-text {
+  transition: all .15s ease-in-out;
+  background: linear-gradient(var(--gradient-angle), theme('colors.gray.500') 50%, theme('colors.gray.700') 50%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.post-content {
+
+  /* code snippets */
+  .remark-highlight {
+    @apply mb-6;
+  }
+
+  .property-access {
+    @apply text-white;
+  }
+
+  code {
+    @apply bg-gray-300 rounded-sm px-1;
+    font-family: 'Public Sans', sans-serif;
+  }
+
+  code[class*="language-"], pre[class*="language-"], code[class*="language-"] *, pre[class*="language-"] * {
+    @apply text-base;
+    font-style: inherit;
+    font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    font-weight: inherit;
+  }
+
+  /* Special hover effect */
+  a {
+    transition: all .12s ease-in-out;
+    color: inherit;
+    box-shadow: 0px -.55rem 0px 0px theme('colors.red.200') inset;
+    padding-bottom: .1rem;
+
+    &:hover {
+      padding-bottom: .35rem;
+      box-shadow: 0px -4px 0px 0px theme('colors.red.400') inset;
+    }
+  }
+}
+
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";

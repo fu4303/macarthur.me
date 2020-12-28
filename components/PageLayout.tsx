@@ -30,7 +30,7 @@ export default function Post({ pageContent, isPost = false }) {
 
           <Container narrow={true}>
             <div
-              className="post-content"
+              className="post-content prose md:prose-xl"
               dangerouslySetInnerHTML={{ __html: pageContent.content }}
             />
           </Container>
