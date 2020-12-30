@@ -39,7 +39,12 @@ module.exports = {
               color: theme('colors.gray.700'),
             },
             code: {
-              fontWeight: 'inherit'
+              fontWeight: 'inherit',
+              color: theme('colors.gray.300'),
+              borderRadius: theme('border.sm'),
+              padding: theme('padding.1'),
+              fontFamily: "'Public Sans', sans-serif",
+              background: theme('colors.gray.600')
             },
             'code::before': {
               content: 'none',

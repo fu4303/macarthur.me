@@ -1,119 +1,41 @@
-import fs from "fs";
 import { join } from "path";
-import matter from "gray-matter";
+import PostCompiler from "./PostCompiler";
 
 const postsDirectory = join(process.cwd(), "_posts");
 const pagesDirectory = join(process.cwd(), "_pages");
-const datePattern = new RegExp(/\d{4}-\d{2}-\d{2}-/);
-const postSlugPattern = new RegExp(/(?:\d{4}-\d{2}-\d{2}-)(.+)(?:\.mdx?)/);
+const postSlugPattern = new RegExp(/(?:\d{4}-\d{2}-\d{2}-)(.+)(\.mdx?)?/);
 const pageSlugPattern = new RegExp(/(.+)(?:\.mdx?)/);
 
 type ContentType = 'page' | 'post';
-interface Page {
-  content?: string;
-  date?: string;
-  title?: string;
-  slug?: string;
-  ogImage?: string;
+interface ContentData {
+  slugPattern: RegExp;
+  directory: string;
 }
 
-function getPostSlugFromFileName(fileName: string): string {
-  return postSlugPattern.exec(fileName)?.[1] || "";
-}
-
-function getPostFilesNames(): string[] {
-  const files = fs.readdirSync(postsDirectory);
-
-  return files.filter(f => f.match(postSlugPattern));
-}
-
-function getPageFilesNames(): string[] {
-  return fs.readdirSync(pagesDirectory);
-}
-
-function getSlugPatternByType(contentType: ContentType) {
-  if (contentType === 'post') {
-    return postSlugPattern;
-  }
-
-  if (contentType === 'page') {
-    return pageSlugPattern;
-  }
-
-  return null;
-}
-
-function getDirectoryByType(contentType: ContentType) {
-  if (contentType === 'post') {
-    return postsDirectory;
-  }
-
-  if (contentType === 'page') {
-    return pagesDirectory;
-  }
-
-  return null;
-}
-
-function getFileNamesByType(contentType: ContentType): string[] {
-  if (contentType === 'post') {
-    return getPostFilesNames();
-  }
-
-  if(contentType === 'page') {
-    return getPageFilesNames();
-  }
-
-  return [];
-}
-
-function findFileNameBySlug(slug, contentType: ContentType) {
-  return getFileNamesByType(contentType).find((fileName) => {
-    const match = getSlugPatternByType(contentType).exec(fileName);
-    const fileSlug = match ? match[1] : null;
-
-    return slug === fileSlug;
-  });
-}
-
-function getPostByFileName(fileName: string): Page {
-  const slug = getPostSlugFromFileName(fileName);
-  return getContentBySlug(slug, 'post');
-}
-
-function getPageByFileName(fileName: string): Page {
-  const slug = fileName.replace(/\.md$/, "");
-
-  return getContentBySlug(slug, 'page');
-}
-
-export function getContentBySlug(slug: string, contentType: ContentType): Page {
-  const fileName = findFileNameBySlug(slug, contentType);
-  const directory = getDirectoryByType(contentType);
-  const fullPath = join(directory, fileName);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-  const date = fileName.match(datePattern)?.[0]?.replace(/\-$/, "") || null;
-
+function getContentData(contentType: ContentType): ContentData {
   return {
-    slug,
-    content,
-    date,
-    title: data.title,
-    ogImage: data.ogImage || null
+    slugPattern: contentType === 'post' ? postSlugPattern : pageSlugPattern,
+    directory: contentType === 'post' ? postsDirectory : pagesDirectory
   };
 }
 
-export function getAllPosts() {
-  const files = getPostFilesNames();
+export function getContentBySlug(slug: string, contentType: ContentType) {
+  const { slugPattern, directory } = getContentData(contentType);
+  const postCompiler = new PostCompiler(directory, slugPattern);
 
-  return files
-    .map((file) => getPostByFileName(file))
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  return postCompiler.getContentBySlug(slug);
+}
+
+export function getAllPosts() {
+  const { slugPattern, directory } = getContentData('post');
+  const postCompiler = new PostCompiler(directory, slugPattern);
+
+  return postCompiler.getPosts();
 }
 
 export function getAllPages() {
-  const files = getPageFilesNames();
+  const { slugPattern, directory } = getContentData('page');
+  const postCompiler = new PostCompiler(directory, slugPattern);
 
-  return files.map((file) => getPageByFileName(file));
+  return postCompiler.getPosts();
 }
