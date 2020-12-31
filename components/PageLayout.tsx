@@ -4,8 +4,40 @@ import Container from "./container";
 import Layout from "./layout";
 import Head from "next/head";
 import Title from "./title";
+import ReactMarkdown from "react-markdown"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import Image from "next/image"
 
-import "prismjs/themes/prism-okaidia.css";
+import imageData from '../lib/image-data.json';
+
+const renderers = (slug) => {
+  return {
+    image: image => {
+      const isAbsolute = image.src.match(/http(s?)\:/);
+
+      if (isAbsolute) {
+        return <img src={image.src} />
+      }
+
+      const cleanedSrc = image.src.replace(/\.\//, "");
+      const src = `/post-images/${slug}/${cleanedSrc}`;
+      const { width, height } = imageData[`${slug}/${cleanedSrc}`];
+
+      return <Image
+        className={"post-image"}
+        src={src}
+        alt={image.alt}
+        width={width}
+        height={height}
+        objectFit={'contain'}
+      />
+    },
+    code: ({ language, value }) => {
+      return <SyntaxHighlighter style={okaidia} language={language} children={value} />
+    }
+  };
+}
 
 export default function Post({ pageContent, isPost = false }) {
   const router = useRouter();
@@ -29,10 +61,20 @@ export default function Post({ pageContent, isPost = false }) {
           </Title>
 
           <Container narrow={true}>
-            <div
+
+            <ReactMarkdown
+              rawSourcePos={true}
+              className="post-content prose md:prose-xl"
+              allowDangerousHtml={true}
+              children={pageContent.content}
+              renderers={renderers(pageContent.slug)}
+            />
+
+            {/* <div
               className="post-content prose md:prose-xl"
               dangerouslySetInnerHTML={{ __html: pageContent.content }}
-            />
+            /> */}
+
           </Container>
         </article>
       </Container>

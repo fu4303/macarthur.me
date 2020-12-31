@@ -4,21 +4,32 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build:images": "node ./_scripts/build-images.js"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.3.1",
     "bezier-easing": "^2.1.0",
     "classnames": "2.2.6",
+    "glob": "^7.1.6",
     "gray-matter": "4.0.2",
+    "image-size": "^0.9.3",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-optipng": "^8.0.0",
     "next": "^10.0.4",
+    "next-compose-plugins": "^2.2.1",
+    "next-optimized-images": "^2.6.2",
     "prismjs": "^1.22.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.4.3",
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "remark-prism": "^1.3.3",
+    "rimraf": "^3.0.2",
     "sass": "^1.30.0",
+    "shelljs": "^0.8.4",
     "tailwind": "^4.0.0"
   },
   "devDependencies": {

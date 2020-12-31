@@ -10,7 +10,7 @@ export default function Post({ post }) {
 
 export async function getStaticProps({ params }) {
   const post = getContentBySlug(params.slug, 'post');
-  const content = await markdownToHtml(post.content || "");
+  const content = post.content || "";
 
   return {
     props: {

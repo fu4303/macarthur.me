@@ -12,7 +12,7 @@ module.exports = {
       typography: theme => ({
         DEFAULT: {
           css: {
-            fontWeight: 100,
+            fontWeight: 200,
             a: {
               color: 'inherit',
               textDecoration: 'none',
@@ -40,11 +40,11 @@ module.exports = {
             },
             code: {
               fontWeight: 'inherit',
-              color: theme('colors.gray.300'),
+              color: theme('colors.gray.700'),
               borderRadius: theme('border.sm'),
               padding: theme('padding.1'),
               fontFamily: "'Public Sans', sans-serif",
-              background: theme('colors.gray.600')
+              background: theme('colors.gray.200')
             },
             'code::before': {
               content: 'none',

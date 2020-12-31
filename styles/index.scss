@@ -35,6 +35,11 @@ body {
 
 .post-content {
 
+  p > div {
+    display: block;
+    overflow: auto;
+  }
+
   /* code snippets */
   .remark-highlight {
     @apply mb-6;
@@ -44,11 +49,8 @@ body {
     @apply text-white;
   }
 
-  code[class*="language-"], pre[class*="language-"], code[class*="language-"] *, pre[class*="language-"] * {
-    @apply text-base;
-    font-style: inherit;
-    font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
-    font-weight: inherit;
+  pre {
+    font-size: theme('fontSize.base') !important;
   }
 
   /* Special hover effect */
