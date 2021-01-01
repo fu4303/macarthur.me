@@ -12,11 +12,11 @@ module.exports = {
       typography: theme => ({
         DEFAULT: {
           css: {
-            fontWeight: 200,
+            fontWeight: 300,
             a: {
               color: 'inherit',
               textDecoration: 'none',
-              fontWeight: theme('fontWeight.extralight')
+              fontWeight: 'inherit'
             },
             'h2, h3, h4, h5': {
               fontSize: theme('fontSize.3xl'),
@@ -52,6 +52,9 @@ module.exports = {
             'code::after': {
               content: 'none',
             },
+            pre: {
+              fontSize: theme('fontSize.base')
+            }
           },
         }
       })

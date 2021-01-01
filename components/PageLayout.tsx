@@ -56,12 +56,14 @@ export default function Post({ pageContent, isPost = false }) {
             <meta property="og:image" content={pageContent.open_graph} />
           </Head>
 
-          <Title date={pageContent.date} isPost={isPost}>
+          <Title
+            date={pageContent.date}
+            isPost={isPost}
+          >
             {pageContent.title}
           </Title>
 
           <Container narrow={true}>
-
             <ReactMarkdown
               rawSourcePos={true}
               className="post-content prose md:prose-xl"
@@ -69,12 +71,6 @@ export default function Post({ pageContent, isPost = false }) {
               children={pageContent.content}
               renderers={renderers(pageContent.slug)}
             />
-
-            {/* <div
-              className="post-content prose md:prose-xl"
-              dangerouslySetInnerHTML={{ __html: pageContent.content }}
-            /> */}
-
           </Container>
         </article>
       </Container>

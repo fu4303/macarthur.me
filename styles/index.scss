@@ -40,19 +40,6 @@ body {
     overflow: auto;
   }
 
-  /* code snippets */
-  .remark-highlight {
-    @apply mb-6;
-  }
-
-  .property-access {
-    @apply text-white;
-  }
-
-  pre {
-    font-size: theme('fontSize.base') !important;
-  }
-
   /* Special hover effect */
   a {
     transition: all .12s ease-in-out;
