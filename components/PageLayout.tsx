@@ -7,9 +7,10 @@ import Title from "./title";
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-import Image from "next/image"
+// import Image from "next/image"
+import Image from "./image";
 
-import imageData from '../lib/image-data.json';
+// import imageData from '../lib/image-data.json';
 
 const renderers = (slug) => {
   return {
@@ -22,16 +23,18 @@ const renderers = (slug) => {
 
       const cleanedSrc = image.src.replace(/\.\//, "");
       const src = `/post-images/${slug}/${cleanedSrc}`;
-      const { width, height } = imageData[`${slug}/${cleanedSrc}`];
+      return <Image src={src} />
 
-      return <Image
-        className={"post-image"}
-        src={src}
-        alt={image.alt}
-        width={width}
-        height={height}
-        objectFit={'contain'}
-      />
+      // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
+
+      // return <Image
+      //   className={"post-image"}
+      //   src={src}
+      //   alt={image.alt}
+      //   width={width}
+      //   height={height}
+      //   objectFit={'contain'}
+      // />
     },
     code: ({ language, value }) => {
       return <SyntaxHighlighter style={okaidia} language={language} children={value} />
