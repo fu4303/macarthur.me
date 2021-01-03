@@ -54,5 +54,17 @@ body {
   }
 }
 
+.menu-toggler {
+  input {
+    transform: translateX(100vw);
+
+    &:checked {
+      & + .menu-toggler-items {
+        @apply translate-x-0 opacity-100;
+      }
+    }
+  }
+}
+
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
