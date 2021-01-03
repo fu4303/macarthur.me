@@ -16,7 +16,7 @@ body {
 }
 
 /* typography defaults */
-*:not(.remark-highlight *) {
+*:not(pre):not(pre *) {
   @apply text-gray-700 tracking-tight;
   font-family: 'Public Sans', sans-serif;
   transition: all .05s ease-in-out;
@@ -34,7 +34,6 @@ body {
 }
 
 .post-content {
-
   p > div {
     display: block;
     overflow: auto;

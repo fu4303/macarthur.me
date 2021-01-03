@@ -10,47 +10,31 @@ import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // import Image from "next/image"
 import Image from "./image";
 
-// import imageData from '../lib/image-data.json';
+const renderers = {
+  image: image => {
+    /**
+     * @todo: Figure out why SVGs are not getting found.
+     *
+     * http://localhost:3000/posts/when-dom-updates-appear-to-be-asynchronous
+     */
 
-const renderers = (slug) => {
-  return {
-    image: image => {
-      const isAbsolute = image.src.match(/http(s?)\:/);
+    return <Image src={image.src} />
 
-      console.log("HERE");
-      console.log(image.src);
+    // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
 
-      if (isAbsolute) {
-        return <img src={image.src} />
-      }
-
-      /**
-       * @todo: Figure out why SVGs are not getting found.
-       *
-       * http://localhost:3000/posts/when-dom-updates-appear-to-be-asynchronous
-       */
-
-      const cleanedSrc = image.src.replace(/\.\//, "");
-      const src = `/post-images/${slug}/${cleanedSrc}`;
-
-      return <Image src={src} />
-
-      // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
-
-      // return <Image
-      //   className={"post-image"}
-      //   src={src}
-      //   alt={image.alt}
-      //   width={width}
-      //   height={height}
-      //   objectFit={'contain'}
-      // />
-    },
-    code: ({ language, value }) => {
-      return <SyntaxHighlighter style={okaidia} language={language} children={value} />
-    }
-  };
-}
+    // return <Image
+    //   className={"post-image"}
+    //   src={src}
+    //   alt={image.alt}
+    //   width={width}
+    //   height={height}
+    //   objectFit={'contain'}
+    // />
+  },
+  code: ({ language, value }) => {
+    return <SyntaxHighlighter style={okaidia} language={language} children={value} />
+  }
+};
 
 export default function Post({ pageContent, isPost = false }) {
   const router = useRouter();
@@ -78,11 +62,24 @@ export default function Post({ pageContent, isPost = false }) {
             </Title>
 
             <ReactMarkdown
+              transformImageUri={(uri): string => {
+                console.log(uri);
+
+                const absoluteRegex = new RegExp("^(http(s?):\/\/)");
+
+                if(uri.match(absoluteRegex)) {
+                  return uri;
+                }
+
+                const cleanedSrc = uri.replace(/^\.\//, "");
+
+                return `/post-images/${pageContent.slug}/${cleanedSrc}`;
+              }}
               rawSourcePos={true}
               className="post-content prose md:prose-xl"
               allowDangerousHtml={true}
               children={pageContent.content}
-              renderers={renderers(pageContent.slug)}
+              renderers={renderers}
             />
           </Container>
         </article>

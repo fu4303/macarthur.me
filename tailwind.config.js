@@ -54,6 +54,9 @@ module.exports = {
             },
             pre: {
               fontSize: theme('fontSize.base')
+            },
+            '.property-access': {
+              color: 'white'
             }
           },
         }

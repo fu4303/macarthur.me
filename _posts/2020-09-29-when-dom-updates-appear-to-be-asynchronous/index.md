@@ -25,10 +25,8 @@ The fact that `console.log()` yields this result isn't surprising because a DOM 
 
 Despite it being synchronous, before a DOM change can be made visible _on the screen_, [several processes](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction#tldr) occur: the render tree is updated, the layout of the page is reflowed, and the result is finally painted. These processes all operate on the same thread as JavaScript's event loop, _but at a different pace._ Consider this shoddy illustration I put together:
 
-<figure>
-  <img src="./thread.svg" alt="event loop and repaint cycle illustration">
-  <figcaption>the event loop vs. the repaint cycle</figcaption>
-</figure>
+![the event loop vs. the repaint cycle](./thread.svg)
+<em>the event loop vs. the repaint cycle</em>
 
 The **horizontal bar** represents the browser's main thread — everything operates here, unless you're doing something like leveraging Web Workers (and [you probably should be](https://macarthur.me/posts/use-web-workers-for-your-event-listeners)).
 
