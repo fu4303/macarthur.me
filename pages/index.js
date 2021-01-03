@@ -4,7 +4,6 @@ import Nav from '../components/Nav';
 import Logo from '../components/Logo';
 
 export default function Index() {
-
   return (
     <>
       <Head>
@@ -13,7 +12,7 @@ export default function Index() {
 
       <Meta />
 
-      <Nav classes="absolute" />
+      <Nav isAbsolute={true} />
 
       <div className="min-h-screen">
         <main className="h-screen w-screen flex items-center justify-center p-6">

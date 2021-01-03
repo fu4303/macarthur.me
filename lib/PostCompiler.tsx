@@ -83,8 +83,12 @@ export default class PostCompiler {
         const date1 = new Date(p1.date);
         const date2 = new Date(p2.date);
 
-        return date2.getTime() > date1.getTime()
-          ? 0 : 1;
+        if (date2.getTime() === date1.getTime()) {
+          return 0;
+        }
+
+        return date2.getTime() < date1.getTime()
+          ? -1 : 1;
       });
   }
 

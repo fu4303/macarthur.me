@@ -17,12 +17,22 @@ const renderers = (slug) => {
     image: image => {
       const isAbsolute = image.src.match(/http(s?)\:/);
 
+      console.log("HERE");
+      console.log(image.src);
+
       if (isAbsolute) {
         return <img src={image.src} />
       }
 
+      /**
+       * @todo: Figure out why SVGs are not getting found.
+       *
+       * http://localhost:3000/posts/when-dom-updates-appear-to-be-asynchronous
+       */
+
       const cleanedSrc = image.src.replace(/\.\//, "");
       const src = `/post-images/${slug}/${cleanedSrc}`;
+
       return <Image src={src} />
 
       // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
@@ -59,14 +69,14 @@ export default function Post({ pageContent, isPost = false }) {
             <meta property="og:image" content={pageContent.open_graph} />
           </Head>
 
-          <Title
-            date={pageContent.date}
-            isPost={isPost}
-          >
-            {pageContent.title}
-          </Title>
-
           <Container narrow={true}>
+            <Title
+              date={pageContent.date}
+              isPost={isPost}
+            >
+              {pageContent.title}
+            </Title>
+
             <ReactMarkdown
               rawSourcePos={true}
               className="post-content prose md:prose-xl"
