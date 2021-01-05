@@ -1,5 +1,6 @@
 import { join } from "path";
 import PostCompiler from "./PostCompiler";
+import imageData from "../lib/image-data.json";
 
 const postsDirectory = join(process.cwd(), "_posts");
 const pagesDirectory = join(process.cwd(), "_pages");
@@ -38,4 +39,8 @@ export function getAllPages() {
   const postCompiler = new PostCompiler(directory, slugPattern);
 
   return postCompiler.getPosts();
+}
+
+export function getImageDataForSlug(slug: string): { [key: string]: any } {
+  return imageData[slug];
 }

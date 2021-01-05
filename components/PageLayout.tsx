@@ -10,36 +10,49 @@ import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // import Image from "next/image"
 import Image from "./image";
 
-const renderers = {
-  image: image => {
-    /**
-     * @todo: Figure out why SVGs are not getting found.
-     *
-     * http://localhost:3000/posts/when-dom-updates-appear-to-be-asynchronous
-     */
+const getRenderers = (slug, imageData) => {
 
-    return <Image src={image.src} />
 
-    // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
+  return {
+    image: image => {
+      let { src } = image;
+      let height, width;
+      const absoluteRegex = new RegExp("^(http(s?):\/\/)");
 
-    // return <Image
-    //   className={"post-image"}
-    //   src={src}
-    //   alt={image.alt}
-    //   width={width}
-    //   height={height}
-    //   objectFit={'contain'}
-    // />
-  },
-  code: ({ language, value }) => {
-    return <SyntaxHighlighter style={okaidia} language={language} children={value} />
-  }
-};
+      if (!src.match(absoluteRegex)) {
+        const cleanedSrc = src.replace(/^\.\//, "");
+        const { width: imgWidth, height: imgHeight } = imageData[cleanedSrc];
 
-export default function Post({ pageContent, isPost = false }) {
+        width = imgWidth;
+        height = imgHeight;
+
+        src = `/post-images/${slug}/${cleanedSrc}`;
+      }
+
+      return <Image src={image.src} height={height} width={width}/>
+
+      // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
+
+      // return <Image
+      //   className={"post-image"}
+      //   src={src}
+      //   alt={image.alt}
+      //   width={width}
+      //   height={height}
+      //   objectFit={'contain'}
+      // />
+    },
+    code: ({ language, value }) => {
+      return <SyntaxHighlighter style={okaidia} language={language} children={value} />
+    }
+  };
+}
+
+export default function Post({ pageData, imageData = {}, isPost = false }) {
   const router = useRouter();
+  const { title, date, slug, open_graph } = pageData;
 
-  if (!router.isFallback && !pageContent?.slug) {
+  if (!router.isFallback && !pageData?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
@@ -48,38 +61,36 @@ export default function Post({ pageContent, isPost = false }) {
       <Container>
         <article>
           <Head>
-            <title>{pageContent.title} | Alex MacArthur</title>
+            <title>{title} | Alex MacArthur</title>
 
-            <meta property="og:image" content={pageContent.open_graph} />
+            <meta property="og:image" content={open_graph} />
           </Head>
 
           <Container narrow={true}>
             <Title
-              date={pageContent.date}
+              date={date}
               isPost={isPost}
             >
-              {pageContent.title}
+              {title}
             </Title>
 
             <ReactMarkdown
-              transformImageUri={(uri): string => {
-                console.log(uri);
+              // transformImageUri={(uri): string => {
+              //   const absoluteRegex = new RegExp("^(http(s?):\/\/)");
 
-                const absoluteRegex = new RegExp("^(http(s?):\/\/)");
+              //   if (uri.match(absoluteRegex)) {
+              //     return uri;
+              //   }
 
-                if(uri.match(absoluteRegex)) {
-                  return uri;
-                }
+              //   const cleanedSrc = uri.replace(/^\.\//, "");
 
-                const cleanedSrc = uri.replace(/^\.\//, "");
-
-                return `/post-images/${pageContent.slug}/${cleanedSrc}`;
-              }}
+              //   return `/post-images/${pageData.slug}/${cleanedSrc}`;
+              // }}
               rawSourcePos={true}
               className="post-content prose md:prose-xl"
               allowDangerousHtml={true}
-              children={pageContent.content}
-              renderers={renderers}
+              children={pageData.content}
+              renderers={getRenderers(slug, imageData)}
             />
           </Container>
         </article>

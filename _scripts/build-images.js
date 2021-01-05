@@ -21,7 +21,8 @@ files.forEach(file => {
   const {width, height} = sizeOf(file);
   const newPath = `${directory}/${parts[0]}`;
 
-  imageData[`${slug}/${parts[0]}`] = { width, height };
+  imageData[slug] = imageData[slug] || {};
+  imageData[slug][parts[0]] = { width, height };
 
   if (!fs.existsSync(directory)) {
     shell.mkdir('-p', directory);

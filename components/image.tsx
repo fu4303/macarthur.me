@@ -1,22 +1,47 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function isImageLoaded(imgElement) {
-  return imgElement.complete && imgElement.naturalHeight !== 0;
+const getObserver = (imageElement, callback: () => any) => {
+  const options = {
+    rootMargin: '100px',
+    threshold: 1.0
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        observer.unobserve(imageElement);
+        callback();
+      }
+    });
+  }, options);
+
+  return {
+    observe: () => observer.observe(imageElement),
+    kill: () => observer.observe(imageElement)
+  }
 }
 
-const Image = ({src, alt = ""}) => {
+const Image = ({ src, alt = "", height = null, width = null }) => {
   const imageRef = useRef(null);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (isImageLoaded(imageRef.current)) {
-      setImageLoaded(true);
+    const { kill, observe } = getObserver(imageRef.current, () => {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, 1000);
+    });
+
+    observe();
+
+    return () => {
+      kill();
     }
-  }, [])
+  }, []);
 
   return (
     <span>
-      { imageLoaded &&
+      { isLoaded &&
         <img
           ref={imageRef}
           src={src}
@@ -24,12 +49,11 @@ const Image = ({src, alt = ""}) => {
         />
       }
 
-      { !imageLoaded &&
+      { !isLoaded &&
         <img
           ref={imageRef}
-          src={`${src}?lqip`}
+          src={`http://placekitten.com/g/200/300`}
           alt={alt}
-          onLoad={() => setImageLoaded(true)}
         />
       }
     </span>
