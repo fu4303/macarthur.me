@@ -1,9 +1,9 @@
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../components/page-layout";
 import { getContentBySlug, getAllPages } from "../lib/api";
 import markdownToHtml from "../lib/markdownToHtml";
 
 export default function Page({ page }) {
-  return <PageLayout pageContent={page} isPost={false} />;
+  return <PageLayout pageData={page} isPost={false} />;
 }
 
 export async function getStaticProps({ params }) {

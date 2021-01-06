@@ -7,12 +7,9 @@ import Title from "./title";
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-// import Image from "next/image"
 import Image from "./image";
 
 const getRenderers = (slug, imageData) => {
-
-
   return {
     image: image => {
       let { src } = image;
@@ -73,17 +70,6 @@ export default function Post({ pageData, imageData = {}, isPost = false }) {
             </Title>
 
             <ReactMarkdown
-              // transformImageUri={(uri): string => {
-              //   const absoluteRegex = new RegExp("^(http(s?):\/\/)");
-
-              //   if (uri.match(absoluteRegex)) {
-              //     return uri;
-              //   }
-
-              //   const cleanedSrc = uri.replace(/^\.\//, "");
-
-              //   return `/post-images/${pageData.slug}/${cleanedSrc}`;
-              // }}
               rawSourcePos={true}
               className="post-content prose md:prose-xl"
               allowDangerousHtml={true}

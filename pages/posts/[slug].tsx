@@ -1,6 +1,5 @@
-import PageLayout from "../../components/PageLayout";
+import PageLayout from "../../components/page-layout";
 import { getContentBySlug, getAllPosts, getImageDataForSlug } from "../../lib/api";
-// import markdownToHtml from "../../lib/markdownToHtml";
 
 import "prismjs/themes/prism-okaidia.css";
 

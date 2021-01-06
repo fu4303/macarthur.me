@@ -1,34 +1,13 @@
-import Link from 'next/link';
-import DateFormatter from '../../components/date-formatter';
-import Layout from '../../components/layout';
-import Title from '../../components/title';
-import { getAllPosts } from '../../lib/api';
+import { getPageOfPosts } from '../../lib/api';
+import PostListLayout from '../../components/post-list-layout';
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, previousPage, nextPage }) => {
   return (
-    <Layout narrow={true}>
-      <Title>
-        Posts
-      </Title>
-
-      <ul className="space-y-8">
-        {posts.map(post => {
-          return (
-            <li key={post.slug}>
-              <article>
-                <h2 className="text-3xl font-semibold">
-                  <Link href={`/posts/${post.slug}`}>
-                    {post.title}
-                  </Link>
-                </h2>
-
-                <DateFormatter dateString={post.date} />
-              </article>
-            </li>
-          )
-        })}
-      </ul>
-    </Layout>
+    <PostListLayout
+      posts={posts}
+      previousPage={previousPage}
+      nextPage={nextPage}
+    />
   )
 }
 
@@ -37,7 +16,9 @@ export default Posts;
 export async function getStaticProps({ params }) {
   return {
     props: {
-      posts: await getAllPosts()
+      posts: await getPageOfPosts(1),
+      previousPage: null,
+      nextPage: 2
     }
   }
 }
