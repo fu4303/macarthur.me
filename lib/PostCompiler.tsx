@@ -2,14 +2,6 @@ import fs from 'fs';
 import { join } from "path";
 import matter from "gray-matter";
 
-interface PostData {
-  slug: string;
-  path: string;
-  date: string;
-  title: string;
-  content: string;
-}
-
 export default class PostCompiler {
   directory: string;
   slugPattern: RegExp;

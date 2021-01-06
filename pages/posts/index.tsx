@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import Title from '../../components/title';
 import { getAllPosts } from '../../lib/api';
 
-const Posts = ({posts}) => {
+const Posts = ({ posts }) => {
   return (
     <Layout narrow={true}>
       <Title>
@@ -18,7 +18,7 @@ const Posts = ({posts}) => {
               <article>
                 <h2 className="text-3xl font-semibold">
                   <Link href={`/posts/${post.slug}`}>
-                    { post.title }
+                    {post.title}
                   </Link>
                 </h2>
 

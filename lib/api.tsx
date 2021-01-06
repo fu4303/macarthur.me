@@ -27,14 +27,14 @@ export function getContentBySlug(slug: string, contentType: ContentType) {
   return postCompiler.getContentBySlug(slug);
 }
 
-export function getAllPosts() {
+export function getAllPosts(): PostData[] {
   const { slugPattern, directory } = getContentData('post');
   const postCompiler = new PostCompiler(directory, slugPattern);
 
   return postCompiler.getPosts();
 }
 
-export function getAllPages() {
+export function getAllPages(): PostData[] {
   const { slugPattern, directory } = getContentData('page');
   const postCompiler = new PostCompiler(directory, slugPattern);
 
