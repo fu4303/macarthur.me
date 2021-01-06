@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const getObserver = (imageElement, callback: () => any) => {
+interface ImageProps {
+  src: string,
+  alt?: string,
+  height?: string,
+  width?: string,
+  classes?: string,
+  loadedClass?: string
+}
+
+const createObserver = (imageElement, callback: () => any) => {
   const options = {
     rootMargin: '100px',
     threshold: 1.0
@@ -21,15 +30,15 @@ const getObserver = (imageElement, callback: () => any) => {
   }
 }
 
-const Image = ({ src, alt = "", height = null, width = null }) => {
+const Image = ({ src, alt = "", height = "", width = "", classes = "", loadedClass = "" }: ImageProps) => {
   const imageRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const computedClasses = `${classes} ${isLoaded ? loadedClass : ''}`;
 
   useEffect(() => {
-    const { kill, observe } = getObserver(imageRef.current, () => {
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
+    const { kill, observe } = createObserver(imageRef.current, () => {
+      setShouldLoad(true);
     });
 
     observe();
@@ -41,21 +50,15 @@ const Image = ({ src, alt = "", height = null, width = null }) => {
 
   return (
     <span>
-      { isLoaded &&
-        <img
-          ref={imageRef}
-          src={src}
-          alt={alt}
-        />
-      }
-
-      { !isLoaded &&
-        <img
-          ref={imageRef}
-          src={`http://placekitten.com/g/200/300`}
-          alt={alt}
-        />
-      }
+      <img
+        ref={imageRef}
+        src={shouldLoad ? src : ""}
+        alt={alt}
+        height={height}
+        width={width}
+        className={computedClasses}
+        onLoad={() => setIsLoaded(true)}
+      />
     </span>
   )
 }

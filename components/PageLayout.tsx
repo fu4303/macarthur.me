@@ -21,7 +21,10 @@ const getRenderers = (slug, imageData) => {
 
       if (!src.match(absoluteRegex)) {
         const cleanedSrc = src.replace(/^\.\//, "");
-        const { width: imgWidth, height: imgHeight } = imageData[cleanedSrc];
+        const {
+          width: imgWidth,
+          height: imgHeight
+        } = imageData[cleanedSrc];
 
         width = imgWidth;
         height = imgHeight;
@@ -29,18 +32,13 @@ const getRenderers = (slug, imageData) => {
         src = `/post-images/${slug}/${cleanedSrc}`;
       }
 
-      return <Image src={image.src} height={height} width={width}/>
-
-      // const { width, height } = imageData[`${slug}/${cleanedSrc}`];
-
-      // return <Image
-      //   className={"post-image"}
-      //   src={src}
-      //   alt={image.alt}
-      //   width={width}
-      //   height={height}
-      //   objectFit={'contain'}
-      // />
+      return <Image
+        src={src}
+        height={height}
+        width={width}
+        classes={"transition-all opacity-0"}
+        loadedClass="opacity-100"
+      />
     },
     code: ({ language, value }) => {
       return <SyntaxHighlighter style={okaidia} language={language} children={value} />
