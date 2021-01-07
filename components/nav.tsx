@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router';
 import Logo from './logo';
 import { useEffect, useState } from 'react';
+import { request } from 'https';
 
 const navItems = [
   {
@@ -41,7 +42,7 @@ const Nav = ({classes = '', isAbsolute = false}) => {
   return (
     <nav className={`z-10 py-10 px-4 md:px-8 w-full font-bold flex items-center justify-between ${positionClass}`}>
 
-      <span className={`flex-none transition-opacity font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
+      <span className={`flex-none font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
         <Logo asLink={true} />
       </span>
 
