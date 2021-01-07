@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Meta from '../components/meta'
-import Nav from '../components/Nav';
-import Logo from '../components/Logo';
+import Nav from '../components/nav';
+import Logo from '../components/logo';
 
 export default function Index() {
   return (
