@@ -24,7 +24,7 @@ const toDegreeableValue = (value: number): number => {
 /**
  * Given an angle, find the next range the logo should rotate toward.
  */
-const selectRange = (angle: number): Array<number> => {
+const selectRange = (angle: number): Array<any> => {
   const ranges = [
     [0, 20],
     [160, 180],
@@ -51,7 +51,8 @@ const Logo = ({
     let rafId: number = 0;
     let startTime: number = null;
     const startingAngle = getCurrentAngle();
-    let destinationAngle: number = randomInRange(...selectRange(startingAngle));
+    const range = selectRange(startingAngle);
+    let destinationAngle: number = randomInRange(range[0], range[1]);
     destinationAngle =
       destinationAngle < startingAngle
         ? destinationAngle + 360
