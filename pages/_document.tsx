@@ -3,10 +3,8 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head>
-
-        </Head>
-        <body className="css-transitions-only-after-page-load">
+        <Head></Head>
+        <body>
           <Main />
           <NextScript />
         </body>

@@ -1,10 +1,6 @@
 @import "./font-public-sans";
 @import "~tailwindcss/base";
 
-.css-transitions-only-after-page-load * {
-  transition: none !important;
-}
-
 body {
   min-height: 100vh;
 }
@@ -31,7 +27,7 @@ body {
 }
 
 .gradient-text {
-  transition: all .15s ease-in-out;
+  transition: background .15s ease-in-out;
   background: linear-gradient(var(--gradient-angle), theme('colors.gray.500') 50%, theme('colors.gray.700') 50%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;

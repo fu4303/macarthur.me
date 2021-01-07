@@ -33,7 +33,7 @@ const getRenderers = (slug, imageData) => {
         src={src}
         height={height}
         width={width}
-        classes={"transition-all opacity-0"}
+        classes={"transition-opacity opacity-0"}
         loadedClass="opacity-100"
       />
     },
