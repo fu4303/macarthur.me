@@ -27,7 +27,7 @@
   status = 301
 
 [[redirects]]
-  from = "/posts/cleaning-up-redux-store-listeners-when-component-state-updates,
+  from = "/posts/cleaning-up-redux-store-listeners-when-component-state-updates"
   to = "/posts/clean-up-your-redux-store-listeners-when-component-state-updates"
   status = 301
 
