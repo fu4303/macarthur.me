@@ -1,7 +1,7 @@
 import { ReactElement, useEffect } from "react";
 import BezierEasing from "bezier-easing";
 import { useRouter } from "next/router";
-import { randomInRange } from "../utils";
+import { randomInRange } from "../lib/utils";
 
 /**
  * Get the current custom property value for the gradient angle.
