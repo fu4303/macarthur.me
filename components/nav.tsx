@@ -42,7 +42,7 @@ const Nav = ({classes = '', isAbsolute = false}) => {
     <nav className={`z-10 py-10 px-4 md:px-8 w-full font-bold flex items-center justify-between ${positionClass}`}>
 
       <span className={`flex-none transition-opacity font-bold text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
-        <Logo strokeWidth="2" asLink={true} />
+        <Logo asLink={true} />
       </span>
 
       <label
