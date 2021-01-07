@@ -1,6 +1,10 @@
 @import "./font-public-sans";
 @import "~tailwindcss/base";
 
+.css-transitions-only-after-page-load * {
+  transition: none !important;
+}
+
 body {
   min-height: 100vh;
 }
