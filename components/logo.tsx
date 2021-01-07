@@ -43,7 +43,7 @@ const selectRange = (angle: number): Array<number> => {
 const Logo = ({
   asLink = false
 }: {
-  asLink: boolean;
+  asLink?: boolean;
 }): ReactElement => {
   const router = useRouter();
 
