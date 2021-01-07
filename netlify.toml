@@ -9,30 +9,30 @@
 [[redirects]]
   from = "/typeit"
   to = "https://typeitjs.com"
-  statusCode = 301
+  status = 301
 
 [[redirects]]
   from = "/posts/lazy-load-images-in-wordpress-without-a-plugin"
   to = "/posts/build-your-own-simple-lazy-loading-functionality-in-wordpress"
-  statusCode = 301
+  status = 301
 
 [[redirects]]
   from = "/bell"
   to = "https://alexmacarthur.github.io/bell"
-  statusCode = 301
+  status = 301
 
 [[redirects]]
   from = "/notes/*"
   to = "/posts/:splat"
-  statusCode = 301
+  status = 301
 
 [[redirects]]
   from = "/posts/cleaning-up-redux-store-listeners-when-component-state-updates,
   to = "/posts/clean-up-your-redux-store-listeners-when-component-state-updates"
-  statusCode = 301
+  status = 301
 
 [[redirects]]
   from = "/posts/blog-for-your-own-sake"
   to = "https://www.ramseyinhouse.com/blog/as-an-engineer-write"
-  statusCode = 301
+  status = 301
 
