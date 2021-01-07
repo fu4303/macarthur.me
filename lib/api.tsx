@@ -54,5 +54,5 @@ export function getAllPages(): PostData[] {
 }
 
 export function getImageDataForSlug(slug: string): { [key: string]: any } {
-  return imageData[slug];
+  return imageData[slug] || {};
 }
