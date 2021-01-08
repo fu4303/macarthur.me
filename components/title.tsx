@@ -10,7 +10,7 @@ type TitleProps = {
 
 const Title = ({children, date, isPost, subtitle}: TitleProps) => {
   return (
-    <div className="my-8 lg:mb-12">
+    <div className="mt-12 mb-12 lg:mb-12">
 
       <div>
         <h1 className="text-5xl md:text-6xl font-extrabold leading-snug md:leading-none mb-2 gradient-text inline-block">
@@ -25,7 +25,7 @@ const Title = ({children, date, isPost, subtitle}: TitleProps) => {
       </div>
 
       { isPost &&
-        <span className="inline-block mb-3 mr-2">
+        <span className="inline-block mb-3 mr-4">
           <Link href="/posts">
             ← Back to Posts
             </Link>

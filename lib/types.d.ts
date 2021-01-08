@@ -10,3 +10,11 @@ interface ContentData {
   slugPattern: RegExp;
   directory: string;
 }
+
+interface PostListLayoutProps{
+  posts: PostData[];
+  nextPage: number;
+  previousPage: number;
+  currentPage: number;
+  totalPages: number;
+}

@@ -22,6 +22,10 @@ body {
   transition: all .05s ease-in-out;
 }
 
+span {
+  @apply font-light;
+}
+
 :root {
   --gradient-angle: 0deg;
 }

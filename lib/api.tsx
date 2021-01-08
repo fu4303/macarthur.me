@@ -42,6 +42,10 @@ export function getPageOfPosts(page: number): [] {
   return postChunks[page - 1];
 }
 
+export function getTotalPostPages(): number {
+  return getPostChunks().length;
+}
+
 export function getPostPageCount(): number {
   return getPostChunks().length;
 }

@@ -1,3 +1,4 @@
+import { createElement, Children } from 'react';
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import Container from "./container";
@@ -33,12 +34,24 @@ const getRenderers = (slug, imageData) => {
         src={src}
         height={height}
         width={width}
-        classes={"transition-opacity opacity-0"}
+        classes={"transition-opacity opacity-0 mx-auto block"}
         loadedClass="opacity-100"
       />
     },
     code: ({ language, value }) => {
       return <SyntaxHighlighter style={okaidia} language={language} children={value} />
+    }, 
+    heading: (props) => {
+      const flatten = (text: string, child) => {
+        return typeof child === 'string'
+          ? text + child
+          : Children.toArray(child.props.children).reduce(flatten, text);
+      };
+
+      const children = Children.toArray(props.children);
+      const text = children.reduce(flatten, '');
+      const slug = text.toLowerCase().replace(/\W/g, '-');
+      return createElement('h' + props.level, { id: slug }, props.children);
     }
   };
 }
@@ -70,8 +83,11 @@ export default function Post({ pageData, imageData = {}, isPost = false }) {
             </Title>
 
             <ReactMarkdown
+              linkTarget={(_url, _text, _title) => {
+                return "_blank";
+              }}
               rawSourcePos={true}
-              className="post-content prose md:prose-xl"
+              className="post-content mx-auto prose max-w-none md:prose-xl"
               allowDangerousHtml={true}
               children={pageData.content}
               renderers={getRenderers(slug, imageData)}

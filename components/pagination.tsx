@@ -1,24 +1,30 @@
 import Link from 'next/link'
 
-const Pagination = ({previousPage = null, nextPage = null}) => {
+const Pagination = ({previousPage = null, nextPage = null, currentPage, totalPages}) => {
+
+  const disabledClasses = 'pointer-events-none opacity-50';
+
   return (
-    <div className="flex justify-center mt-8">
+    <div className="flex flex-col items-center justify-center mt-14">
+
+      <hr className="block h-2 w-20 bg-purple-400 mb-4" />
+
+      <span className="block mt-2 mb-4">
+        {currentPage} of {totalPages}
+      </span>
+
       <ul className="flex space-x-3">
-        { previousPage &&
           <li>
             <Link href={`/posts/page/${previousPage}`}>
-              <a>Back</a>
+              <a className={`${previousPage ? '' : disabledClasses} text-xl`}>Back</a>
             </Link>
           </li>
-        }
 
-        { nextPage &&
           <li>
             <Link href={`/posts/page/${nextPage}`}>
-              <a>Next</a>
+              <a className={`${nextPage ? '' : disabledClasses} text-xl`}>Next</a>
             </Link>
           </li>
-        }
       </ul>
     </div>
   )
