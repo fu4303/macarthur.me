@@ -40,18 +40,35 @@ const getRenderers = (slug, imageData) => {
     },
     code: ({ language, value }) => {
       return <SyntaxHighlighter style={okaidia} language={language} children={value} />
-    }, 
+    },
     heading: (props) => {
+      // Recursively loop through a React element to pull out the static text.
       const flatten = (text: string, child) => {
         return typeof child === 'string'
-          ? text + child
-          : Children.toArray(child.props.children).reduce(flatten, text);
+        ? text + child
+        : Children.toArray(child.props.children).reduce(flatten, text);
       };
 
-      const children = Children.toArray(props.children);
-      const text = children.reduce(flatten, '');
-      const slug = text.toLowerCase().replace(/\W/g, '-');
-      return createElement('h' + props.level, { id: slug }, props.children);
+      // Extract the heading text.
+      const headingText = props.children.reduce((fullText, child) => {
+        return flatten(fullText, child);
+      }, "");
+
+      // Convert the text to a slug by replacing every non-word character with a "-";
+      const slug = headingText
+        .toLowerCase()
+        .replace(/[^a-zA-Z\d\s]/g, "")
+        .replace(/\s/g, "-");
+
+      const HeadingTag: any = `h${props.level}`;
+
+      return (
+        <HeadingTag id={slug}>
+          <a href={`#${slug}`}>
+            { props.children }
+          </a>
+        </HeadingTag>
+      )
     }
   };
 }

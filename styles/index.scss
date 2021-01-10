@@ -55,6 +55,19 @@ span {
       box-shadow: 0px -4px 0px 0px theme('colors.red.400') inset;
     }
   }
+
+  // Do not make heading anchor links fancy.
+  h2, h3, h4, h5, h5 {
+    a {
+      box-shadow: none;
+      padding: 0;
+
+      &:hover {
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .menu-toggler {
