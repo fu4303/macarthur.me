@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Meta from '../components/meta'
 import Nav from '../components/nav';
 import Logo from '../components/logo';
+import Container from '../components/container';
 
 export default function Index() {
   return (
@@ -24,6 +25,28 @@ export default function Index() {
           </div>
         </main>
       </div>
+
+      <Container>
+        <div>
+          <h2>What I've Been Writing</h2>
+
+          <div className="border-2 border-gray-200 rounded-lg p-10 project-card flex flex-col">
+            <h3>My post title</h3>
+
+          </div>
+        </div>
+
+        <div>
+          <h2>Projects Keeping Me Busy</h2>
+
+          <div className="border-2 border-gray-200 rounded-lg p-10 project-card flex flex-col">
+            <h3>My post title</h3>
+
+          </div>
+        </div>
+
+
+      </Container>
     </>
   )
 }

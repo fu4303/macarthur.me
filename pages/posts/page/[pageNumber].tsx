@@ -1,12 +1,14 @@
 import PostListLayout from '../../../components/post-list-layout';
-import { getPageOfPosts, getPostPageCount } from '../../../lib/api';
+import { getPageOfPosts, getPostPageCount, getTotalPostPages } from '../../../lib/api';
 
-const Posts = ({ posts, nextPage, previousPage }) => {
+const Posts = ({ posts, previousPage, nextPage, currentPage, totalPages }: PostListLayoutProps) => {
   return (
     <PostListLayout
       posts={posts}
+      currentPage={currentPage}
       previousPage={previousPage}
       nextPage={nextPage}
+      totalPages={totalPages}
     />
   )
 }
@@ -23,7 +25,9 @@ export async function getStaticProps({ params }) {
     props: {
       posts: await getPageOfPosts(pageNumber),
       previousPage: previousPage <= 0 ? null : previousPage,
-      nextPage: nextPage > numberOfPages ? null : nextPage
+      nextPage: nextPage > numberOfPages ? null : nextPage,
+      currentPage: params.pageNumber,
+      totalPages: getTotalPostPages()
     }
   }
 }

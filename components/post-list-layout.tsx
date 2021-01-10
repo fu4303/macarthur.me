@@ -3,7 +3,7 @@ import Title from './title';
 import Pagination from './pagination';
 import PostList from './post-list';
 
-const PostListLayout = ({ posts, nextPage, previousPage, currentPage, totalPages }: PostListProps) => {
+const PostListLayout = ({ posts, nextPage, previousPage, currentPage, totalPages }: PostListLayoutProps) => {
   return (
     <Layout narrow={true}>
       <Title>

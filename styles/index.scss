@@ -15,6 +15,14 @@ body {
   z-index: 1;
 }
 
+.stargazers {
+  &:hover {
+    svg {
+      stroke: theme('colors.yellow.500');
+    }
+  }
+}
+
 /* typography defaults */
 *:not(pre):not(pre *) {
   @apply text-gray-700 tracking-tight;

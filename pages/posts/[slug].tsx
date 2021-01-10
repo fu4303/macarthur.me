@@ -1,10 +1,10 @@
-import PageLayout from "../../components/page-layout";
+import PostLayout from "../../components/post-layout";
 import { getContentBySlug, getAllPosts, getImageDataForSlug } from "../../lib/api";
 
 import "prismjs/themes/prism-okaidia.css";
 
 export default function Post({ post, imageData }) {
-  return <PageLayout pageData={post} imageData={imageData} isPost={true} />;
+  return <PostLayout pageData={post} imageData={imageData} isPost={true} />;
 }
 
 export async function getStaticProps({ params }) {

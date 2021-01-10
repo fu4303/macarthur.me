@@ -1,7 +1,7 @@
 import { getPageOfPosts, getTotalPostPages } from '../../lib/api';
 import PostListLayout from '../../components/post-list-layout';
 
-const Posts = ({ posts, previousPage, nextPage, currentPage, totalPages }: PostListProps) => {
+const Posts = ({ posts, previousPage, nextPage, currentPage, totalPages }: PostListLayoutProps) => {
   return (
     <PostListLayout
       posts={posts}

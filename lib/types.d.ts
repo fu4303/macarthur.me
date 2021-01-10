@@ -11,7 +11,7 @@ interface ContentData {
   directory: string;
 }
 
-interface PostListLayoutProps{
+interface PostListLayoutProps {
   posts: PostData[];
   nextPage: number;
   previousPage: number;
