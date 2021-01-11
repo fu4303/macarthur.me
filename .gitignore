@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+lib/repo-data.json
+
 # next.js
 /.next/
 /out/

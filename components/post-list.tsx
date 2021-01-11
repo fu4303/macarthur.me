@@ -8,7 +8,7 @@ const PostList = ({posts}) => {
         return (
           <li key={post.slug}>
             <article>
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-2xl font-bold">
                 <Link href={`/posts/${post.slug}`}>
                   {post.title}
                 </Link>

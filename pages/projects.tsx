@@ -17,7 +17,7 @@ const Arrow = (props) => {
   return (
     <span {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path className="stroke-current" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        <path className="stroke-current" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
       </svg>
     </span>
   )
@@ -46,7 +46,7 @@ const Projects = ({ repos }) => {
         </p>
       </div>
 
-      <ul className="grid grid-cols-2 gap-8">
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {repos.map((repo) => {
           const linkProps = { href: repo.html_url, target: "_blank" };
 
@@ -90,89 +90,11 @@ export default Projects;
  * - has a tag
  */
 export async function getStaticProps() {
+  const { getOpenSourceRepos } = require('../lib/github');
 
-  return { props: { repos: []} }
-
-  const gitHub = require('octonode');
-
-  const client = gitHub.client(process.env.GITHUB_ACCESS_TOKEN);
-  let [, data] = await client.getAsync("/users/alexmacarthur/repos", { per_page: 100, type: 'public' });
-
-  const commitPromises = data.map(async repo => {
-    return await client.getAsync(`/repos/alexmacarthur/${repo.name}/commits`, { per_page: 1 });
-  });
-  const tagPromises = data.map(async repo => {
-    return await client.getAsync(`/repos/alexmacarthur/${repo.name}/tags`, { per_page: 1 });
-  });
-
-  let commitData = await Promise.allSettled(commitPromises) as any;
-  commitData = commitData
-    .filter(commit => commit.status === "fulfilled")
-    .map(commit => commit.value[1][0])
-    .reduce((allCommitData, commit) => {
-      const repoName = commit?.commit.url.match(/alexmacarthur\/(.+)\/git/)[1];
-
-      allCommitData[repoName] = commit;
-
-      return allCommitData;
-    }, {});
-
-  let tagData = await Promise.allSettled(tagPromises) as any;
-  tagData = tagData
-    .filter(tag => tag.status === "fulfilled")
-    .filter(tag => tag.value[1].length > 0)
-    .map(tag => tag.value[1][0])
-    .reduce((alltagData, tag) => {
-      const repoName = tag.zipball_url.match(/alexmacarthur\/(.+)\/zipball/)[1];
-      alltagData[repoName] = tag;
-
-      return alltagData;
-    }, {});
-
-  const repos = data
-    // Only permit those with stars and are NOT forks.
-    .filter(repo => {
-      const hasStars = repo.stargazers_count > -1;
-      const isFork = repo.fork;
-
-      return hasStars && !isFork;
-    })
-
-    // Only permit those with recent-ish commits.
-    .filter(repo => {
-      const commit = commitData[repo.name];
-
-      if(!commit) {
-        return false;
-      }
-
-      const lastCommitDate = commit?.commit?.author?.date;
-      const updatedDate = new Date(lastCommitDate);
-      const nowDate = new Date();
-      const pastTime = nowDate.setMonth(nowDate.getMonth() - 12);
-
-      return updatedDate.getTime() > pastTime;
-    })
-
-    // Only those that have a tag.
-    .filter(repo => {
-      return !!tagData[repo.name];
-    })
-
-    // Sort by number of stars.
-    .sort(function (a, b) {
-      return b.stargazers_count - a.stargazers_count;
-    })
-
-    // Normalize the data.
-    .map(repo => {
-      return {
-        html_url: repo.html_url,
-        description: repo.description,
-        name: repo.name,
-        stargazers_count: repo.stargazers_count
-      }
-    });
+  const repos = (process.env.NODE_ENV === 'development')
+    ? require('../lib/repo-data.json')
+    : await getOpenSourceRepos()
 
   return {
     props: {

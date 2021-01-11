@@ -19,6 +19,7 @@ module.exports = {
               fontWeight: 'inherit'
             },
             'h2, h3, h4, h5': {
+              color: theme('colors.gray.500'),
               fontSize: theme('fontSize.3xl'),
               fontWeight: theme('fontWeight.extrabold'),
               marginBottom: theme('margin.5')

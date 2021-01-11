@@ -13,7 +13,7 @@ const Title = ({children, date, isPost, subtitle}: TitleProps) => {
     <div className="mt-6 mb-12 lg:mb-12">
 
       <div>
-        <h1 className="text-5xl md:text-6xl font-extrabold md:leading-normal mb-2 gradient-text inline-block">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-2 gradient-text inline-block" style={{lineHeight: 'normal'}}>
           {children}
         </h1>
 
