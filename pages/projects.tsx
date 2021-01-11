@@ -1,7 +1,7 @@
-import Layout from '../components/layout'
-import Container from '../components/container'
 import PageLayout from '../components/page-layout';
 import Title from '../components/title'
+import Card from '../components/card';
+import Button from '../components/button';
 
 const Star = (props) => {
   return (
@@ -13,29 +13,49 @@ const Star = (props) => {
   )
 }
 
-const Arrow = (props) => {
-  return (
-    <span {...props}>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path className="stroke-current" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-      </svg>
-    </span>
-  )
-}
-
-const Projects = ({ repos }) => {
+const Projects = ({ repos, specialProjects }) => {
   return (
     <PageLayout>
       <Title>
         Projects
       </Title>
 
-      <h2 className="text-4xl font-semibold mb-6">Featured Projects</h2>
+      <div className="mb-12">
+        <h2 className="text-4xl font-semibold mb-6">Featured</h2>
 
-      <div className="mb-8">
-        <p className="prose">
+        <div className="mb-8">
+          <p className="prose">
 
-        </p>
+          </p>
+        </div>
+
+        <ul className="grid gap-5 grid-cols-1 md:grid-cols-2">
+          { specialProjects.map(project => {
+            return (
+              <>
+              <Card classes="grid gap-6" key={project.link} element="li">
+                <div className="flex">
+                  <h3 className="font-bold text-3xl pr-3 mb-3">
+                    <a href={project.link} target="_blank">
+                      {project.name}
+                    </a>
+                  </h3>
+                </div>
+
+                <p className="prose">
+                  {project.description}
+                </p>
+
+                <div className="mt-auto">
+                  <Button href={project.link} target="_blank">
+                    Learn More
+                  </Button>
+                </div>
+              </Card>
+              </>
+            );
+          })}
+        </ul>
       </div>
 
       <h2 className="text-4xl font-semibold mb-6">Open Source</h2>
@@ -51,30 +71,30 @@ const Projects = ({ repos }) => {
           const linkProps = { href: repo.html_url, target: "_blank" };
 
           return (
-            <li key={repo.html_url} className="border-2 border-gray-200 rounded-lg p-10 project-card flex flex-col">
+              <Card classes="flex flex-col" element="li" key={repo.html_url}>
+                <div className="flex justify-between mb-4">
+                  <h3 className="font-bold text-3xl pr-3">
+                    <a {...linkProps}>
+                      {repo.name}
+                    </a>
+                  </h3>
 
-              <div className="flex justify-between mb-4">
-                <h3 className="font-bold text-3xl pr-3">
-                  <a {...linkProps}>
-                    {repo.name}
+                  <a className="flex items-center space-x-1 stargazers" {...linkProps} >
+                    <Star className="block h-6 w-6" />
+                    <span>{repo.stargazers_count}</span>
                   </a>
-                </h3>
+                </div>
 
-                <a className="flex items-center space-x-1 stargazers" {...linkProps} >
-                  <Star className="block h-6 w-6" />
-                  <span>{repo.stargazers_count}</span>
-                </a>
-              </div>
+                <div className="mb-8">
+                  <p>{repo.description}</p>
+                </div>
 
-              <div className="mb-8">
-                <p>{repo.description}</p>
-              </div>
-
-              <a {...linkProps} className={"text-purple-400 inline-flex items-center space-x-2 hover:text-purple-500 mt-auto"}>
-                <span>Learn More</span>
-                <Arrow className="block h-6 w-6" />
-              </a>
-            </li>
+                <div className="mt-auto">
+                  <Button {...linkProps} naked={true}>
+                    Learn More
+                  </Button>
+                </div>
+              </Card>
           )
         })}
       </ul>
@@ -98,7 +118,19 @@ export async function getStaticProps() {
 
   return {
     props: {
-      repos
+      repos,
+      specialProjects: [
+        {
+          name: "TypeIt",
+          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learnig to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
+          link: "https://typeitjs.com"
+        },
+        {
+          name: "JamComments",
+          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learnig to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
+          link: "https://jamcomments.com"
+        },
+      ]
     }
   }
 }

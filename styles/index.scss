@@ -30,6 +30,15 @@ body {
   transition: all .05s ease-in-out;
 }
 
+.button {
+  @apply transition-all inline-flex items-center space-x-2 px-4 py-2 rounded-md;
+  @apply text-white bg-purple-400 hover:text-white hover:bg-purple-500;
+
+  &.naked {
+    @apply text-purple-400 hover:text-purple-500;
+  }
+}
+
 span {
   @apply font-light;
 }
