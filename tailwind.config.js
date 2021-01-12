@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         midGray: '#131B2A'
       },
+      zIndex: {
+        '-10': '-10',
+      },
       typography: theme => ({
         DEFAULT: {
           css: {

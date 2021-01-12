@@ -16,39 +16,45 @@ const Star = (props) => {
 const Projects = ({ repos, specialProjects }) => {
   return (
     <PageLayout>
-      <Title>
+      <Title subtitle="Code I Write on the Side">
         Projects
       </Title>
 
       <div className="mb-12">
-        <h2 className="text-4xl font-semibold mb-6">Featured</h2>
+        <h2 className="text-4xl font-semibold mb-6">Some Big Ones</h2>
 
         <div className="mb-8">
-          <p className="prose">
-
+          <p className="prose max-w-none">
+            I maintain and further develop a couple of projects on a more significant basis.
           </p>
         </div>
 
-        <ul className="grid gap-5 grid-cols-1 md:grid-cols-2">
+        <ul className="grid gap-8 grid-cols-1 md:grid-cols-2">
           { specialProjects.map(project => {
             return (
               <>
-              <Card classes="grid gap-6" key={project.link} element="li">
-                <div className="flex">
-                  <h3 className="font-bold text-3xl pr-3 mb-3">
+              <Card key={project.link} classes="flex flex-col" element="li">
+                <div className="mb-6">
+                  <h3 className="font-bold text-3xl mb-2">
                     <a href={project.link} target="_blank">
                       {project.name}
                     </a>
                   </h3>
+
+                  <small className="prose max-w-none italic leading-tight">
+                    {project.subheading}
+                  </small>
                 </div>
 
-                <p className="prose">
-                  {project.description}
-                </p>
+                <div className="mb-8">
+                  <p className="prose max-w-none">
+                    {project.description}
+                  </p>
+                </div>
 
                 <div className="mt-auto">
                   <Button href={project.link} target="_blank">
-                    Learn More
+                    {project.link.replace(/https:\/\//, "")}
                   </Button>
                 </div>
               </Card>
@@ -58,11 +64,11 @@ const Projects = ({ repos, specialProjects }) => {
         </ul>
       </div>
 
-      <h2 className="text-4xl font-semibold mb-6">Open Source</h2>
+      <h2 className="text-4xl font-semibold mb-6">Some Open Source Ones</h2>
 
       <div className="mb-8">
-        <p className="prose">
-          A number of the side projects that keep me busy are open-sourced. Here are just a few!
+        <p className="prose max-w-none">
+          Aside from those, I've open-sourced a good share of resources via GitHub as well. Here are just a few.
         </p>
       </div>
 
@@ -86,7 +92,7 @@ const Projects = ({ repos, specialProjects }) => {
                 </div>
 
                 <div className="mb-8">
-                  <p>{repo.description}</p>
+                  <p className="prose max-w-none">{repo.description}</p>
                 </div>
 
                 <div className="mt-auto">
@@ -122,12 +128,14 @@ export async function getStaticProps() {
       specialProjects: [
         {
           name: "TypeIt",
-          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learnig to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
+          subheading: "The most versatile animated typing utility on the planet.",
+          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learning to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
           link: "https://typeitjs.com"
         },
         {
           name: "JamComments",
-          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learnig to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
+          subheading: "A stupid-simple comment service for the Jamstack.",
+          description: "JamComments is a comment service that integrates directly into static site generators like Gatsby, Eleventy, and NextJS. It was built out of dissatisfaction with other solutions that require you to load a bloated, invasive third-party script in order to render comments client-side.",
           link: "https://jamcomments.com"
         },
       ]

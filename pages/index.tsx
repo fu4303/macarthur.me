@@ -18,15 +18,15 @@ export default function Index() {
       <div className="min-h-screen">
         <main className="h-screen w-screen flex items-center justify-center p-6">
           <div className="text-white">
-            <h1 className="font-semibold leading-none text-7xl text-gray-900">
+            <h1 className="font-semibold leading-none text-5xl md:text-7xl text-gray-900 mb-2">
               <Logo />
             </h1>
-            <span className="pl-2 md:pl-0 text-xl md:text-2xl leading-10 inline-block text-gray-500 font-light">is a web developer in Nashville-ish, TN.</span>
+            <span className="md:pl-0 text-xl md:text-2xl leading-tight md:leading-10 inline-block text-gray-500 font-light">is a web developer in Nashville-ish, TN.</span>
           </div>
         </main>
       </div>
 
-      <Container>
+      {/* <Container>
         <div>
           <h2>What I've Been Writing</h2>
 
@@ -44,9 +44,7 @@ export default function Index() {
 
           </div>
         </div>
-
-
-      </Container>
+      </Container> */}
     </>
   )
 }

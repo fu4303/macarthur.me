@@ -15,7 +15,7 @@ export default function Layout({ children, narrow = false }: LayoutProps) {
       <Meta />
         <Nav />
         <main id="main">
-          <Container narrow={narrow} classes={"px-5"}>
+          <Container narrow={narrow} classes={"px-4"}>
             {children}
           </Container>
         </main>

@@ -13,15 +13,15 @@ const Title = ({children, date, isPost, subtitle}: TitleProps) => {
     <div className="mt-6 mb-12 lg:mb-12">
 
       <div>
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-2 gradient-text inline-block" style={{lineHeight: 'normal'}}>
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-2 gradient-text inline-block leading-tight">
           {children}
         </h1>
 
-        {/* {subtitle &&
-          <h2>
+        {subtitle &&
+          <h2 className="font-light text-2xl italic text-gray-500">
             {subtitle}
           </h2>
-        } */}
+        }
       </div>
 
       { isPost &&

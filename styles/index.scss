@@ -9,6 +9,21 @@ body {
   flex: 1;
 }
 
+p,
+span,
+li,
+ol,
+ul,
+i,
+blockquote,
+h1, h2, h3, h4, h5 {
+  &:not(pre, pre *) {
+    @apply text-gray-700 tracking-tight;
+    font-family: 'Public Sans', sans-serif;
+    transition: all .05s ease-in-out;
+  }
+}
+
 #__next {
   @apply flex flex-col relative;
   min-height: 100vh;
@@ -21,13 +36,6 @@ body {
       stroke: theme('colors.yellow.500');
     }
   }
-}
-
-/* typography defaults */
-*:not(pre):not(pre *) {
-  @apply text-gray-700 tracking-tight;
-  font-family: 'Public Sans', sans-serif;
-  transition: all .05s ease-in-out;
 }
 
 .button {
@@ -87,13 +95,33 @@ span {
   }
 }
 
-.menu-toggler {
+.nav {
   input {
     transform: translateX(100vw);
 
     &:checked {
-      & + .menu-toggler-items {
-        @apply translate-x-0 opacity-100;
+      & ~ .nav-menu-wrapper .nav-menu-items {
+        @apply opacity-100 visible;
+
+        ul {
+          @apply translate-x-0;
+        }
+      }
+
+      & ~ .nav-menu-label .menu-bar {
+        @apply bg-white;
+
+        &-1 {
+          transform: translate3d(0, 1rem, 0) rotate(-45deg);
+        }
+
+        &-2 {
+          opacity: 0;
+        }
+
+        &-3 {
+          transform: translate3d(0, -1rem, 0) rotate(45deg);
+        }
       }
     }
   }
