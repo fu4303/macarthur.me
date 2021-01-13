@@ -24,6 +24,21 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slice {
+  $slice-width: 15rem;
+  max-width: 100vw;
+
+  @screen lg {
+    width: calc(100% + #{$slice-width});
+    transform: translateX(-#{$slice-width/2});
+  }
+}
+
 #__next {
   @apply flex flex-col relative;
   min-height: 100vh;
@@ -97,8 +112,6 @@ span {
 
 .nav {
   input {
-    transform: translateX(100vw);
-
     &:checked {
       & ~ .nav-menu-wrapper .nav-menu-items {
         @apply opacity-100 visible;
@@ -124,6 +137,12 @@ span {
         }
       }
     }
+  }
+}
+
+form {
+  input, textarea {
+    @apply border border-gray-300 rounded-sm w-full p-1;
   }
 }
 

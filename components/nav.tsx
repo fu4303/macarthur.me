@@ -16,6 +16,10 @@ const navItems = [
   {
     name: "About",
     link: "/about"
+  },
+  {
+    name: "Contact",
+    link: "/contact"
   }
 ];
 
@@ -40,7 +44,7 @@ const Nav = ({isAbsolute = false}) => {
   const positionClass = isAbsolute ? "absolute" : "relative";
 
   return (
-    <nav className={`overflow-hidden z-10 py-10 px-4 md:px-8 w-full font-bold flex items-center justify-between nav ${positionClass}`}>
+    <nav className={`z-10 py-10 px-4 md:px-8 w-full font-bold flex items-center justify-between nav ${positionClass}`}>
 
       <input type="checkbox" id="menuToggle" className="absolute opacity-0 lg:hidden -z-10" />
 
@@ -99,7 +103,7 @@ const Nav = ({isAbsolute = false}) => {
             {navItems.map(item => {
               return (
                 <li
-                className="text-4xl lg:text-xl font-light text-white lg:text-gray-500 hover:text-gray-900 lg:font-200"
+                className="text-6xl lg:text-xl font-bold lg:font-light text-white lg:text-gray-500 hover:text-white lg:hover:text-gray-900 lg:font-200"
                 key={item.link}
                 >
                   <Link href={item.link}>

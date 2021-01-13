@@ -12,7 +12,7 @@ const Card = ({
   ...otherProps
 }: CardProps ) => {
   const Element = element as any;
-  const defaultClasses = "border-2 border-gray-200 rounded-lg p-10 ";
+  const defaultClasses = "border-2 border-gray-200 rounded-lg p-6 md:p-8 ";
 
   return (
     <Element className={defaultClasses + classes} {...otherProps}>

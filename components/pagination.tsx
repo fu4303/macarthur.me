@@ -5,9 +5,9 @@ const Pagination = ({previousPage = null, nextPage = null, currentPage, totalPag
   const disabledClasses = 'pointer-events-none opacity-50';
 
   return (
-    <div className="flex flex-col items-center justify-center mt-14">
+    <div className="flex flex-col items-center justify-center mt-20">
 
-      <hr className="block h-2 w-20 bg-purple-400 mb-4" />
+      <hr className="border-0 block h-1 w-20 bg-purple-400 mb-4" />
 
       <span className="block mt-2 mb-4">
         {currentPage} of {totalPages}
@@ -16,13 +16,13 @@ const Pagination = ({previousPage = null, nextPage = null, currentPage, totalPag
       <ul className="flex space-x-3">
           <li>
             <Link href={`/posts/page/${previousPage}`}>
-              <a className={`${previousPage ? '' : disabledClasses} text-xl`}>Back</a>
+              <a className={`${previousPage ? '' : disabledClasses} text-xl font-light`}>Back</a>
             </Link>
           </li>
 
           <li>
             <Link href={`/posts/page/${nextPage}`}>
-              <a className={`${nextPage ? '' : disabledClasses} text-xl`}>Next</a>
+            <a className={`${nextPage ? '' : disabledClasses} text-xl font-light`}>Next</a>
             </Link>
           </li>
       </ul>

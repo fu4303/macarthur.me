@@ -1,5 +1,4 @@
 import PageLayout from '../components/page-layout';
-import Title from '../components/title'
 import Card from '../components/card';
 import Button from '../components/button';
 
@@ -15,59 +14,55 @@ const Star = (props) => {
 
 const Projects = ({ repos, specialProjects }) => {
   return (
-    <PageLayout>
-      <Title subtitle="Code I Write on the Side">
-        Projects
-      </Title>
-
+    <PageLayout title="Projects" subtitle="Code I Write on the Side">
       <div className="mb-12">
         <h2 className="text-4xl font-semibold mb-6">Some Big Ones</h2>
 
-        <div className="mb-8">
-          <p className="prose max-w-none">
+        <div className="mb-12">
+          <p className="prose md:prose-lg max-w-none">
             I maintain and further develop a couple of projects on a more significant basis.
           </p>
         </div>
 
-        <ul className="grid gap-8 grid-cols-1 md:grid-cols-2">
-          { specialProjects.map(project => {
-            return (
-              <>
-              <Card key={project.link} classes="flex flex-col" element="li">
-                <div className="mb-6">
-                  <h3 className="font-bold text-3xl mb-2">
-                    <a href={project.link} target="_blank">
-                      {project.name}
-                    </a>
-                  </h3>
+        <div className="slice mb-20">
+          <ul className="grid gap-8 grid-cols-1 md:grid-cols-2">
+            {specialProjects.map(project => {
+              return (
+                <Card key={project.link} classes="flex flex-col" element="li">
+                  <div className="mb-6">
+                    <h3 className="font-bold text-3xl mb-2">
+                      <a href={project.link} target="_blank">
+                        {project.name}
+                      </a>
+                    </h3>
 
-                  <small className="prose max-w-none italic leading-tight">
-                    {project.subheading}
-                  </small>
-                </div>
+                    <small className="prose md:prose-lg max-w-none italic leading-tight">
+                      {project.subheading}
+                    </small>
+                  </div>
 
-                <div className="mb-8">
-                  <p className="prose max-w-none">
-                    {project.description}
-                  </p>
-                </div>
+                  <div className="mb-8">
+                    <p className="prose md:prose-lg max-w-none">
+                      {project.description}
+                    </p>
+                  </div>
 
-                <div className="mt-auto">
-                  <Button href={project.link} target="_blank">
-                    {project.link.replace(/https:\/\//, "")}
-                  </Button>
-                </div>
-              </Card>
-              </>
-            );
-          })}
-        </ul>
+                  <div className="mt-auto">
+                    <Button href={project.link} target="_blank">
+                      {project.link.replace(/https:\/\//, "")}
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })}
+          </ul>
+        </div>
       </div>
 
       <h2 className="text-4xl font-semibold mb-6">Some Open Source Ones</h2>
 
       <div className="mb-8">
-        <p className="prose max-w-none">
+        <p className="prose md:prose-lg max-w-none">
           Aside from those, I've open-sourced a good share of resources via GitHub as well. Here are just a few.
         </p>
       </div>
@@ -92,7 +87,7 @@ const Projects = ({ repos, specialProjects }) => {
                 </div>
 
                 <div className="mb-8">
-                  <p className="prose max-w-none">{repo.description}</p>
+                  <p className="prose md:prose-lg max-w-none">{repo.description}</p>
                 </div>
 
                 <div className="mt-auto">
@@ -129,13 +124,13 @@ export async function getStaticProps() {
         {
           name: "TypeIt",
           subheading: "The most versatile animated typing utility on the planet.",
-          description: "TypeIt is a JavaScript library for creating dynamic typewriter effects. I began working on it back in 2015 as a means of learning to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
+          description: "The most versatile JavaScript library for creating typewriter effects. It started back in 2015 as a means of learning to write better JavaScript. Since then, it's gone through several evolutions is now one of my favorite \"small\" projects to maintain.",
           link: "https://typeitjs.com"
         },
         {
           name: "JamComments",
           subheading: "A stupid-simple comment service for the Jamstack.",
-          description: "JamComments is a comment service that integrates directly into static site generators like Gatsby, Eleventy, and NextJS. It was built out of dissatisfaction with other solutions that require you to load a bloated, invasive third-party script in order to render comments client-side.",
+          description: "A stupid-simple comment service built for static site generators like Gatsby, Eleventy, and NextJS. It was built out of dissatisfaction with other solutions that require you to load a bloated, invasive third-party script in order to render comments client-side.",
           link: "https://jamcomments.com"
         },
       ]

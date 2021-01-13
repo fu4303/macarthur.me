@@ -1,4 +1,4 @@
-import { createElement, Children } from 'react';
+import { Children } from 'react';
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import Container from "./container";
@@ -73,7 +73,7 @@ const getRenderers = (slug, imageData) => {
   };
 }
 
-export default function PostLayout({ pageData, imageData = {}, isPost = false }) {
+export default function PostLayout({ pageData, imageData = {}, isPost = null }) {
   const router = useRouter();
   const { title, date, slug, open_graph } = pageData;
 
@@ -81,35 +81,43 @@ export default function PostLayout({ pageData, imageData = {}, isPost = false })
     return <ErrorPage statusCode={404} />;
   }
 
+  const ContainerContent: any = () => (
+    <Container narrow={true}>
+      <Title
+        date={date}
+        isPost={isPost}
+      >
+        {title}
+      </Title>
+
+      <ReactMarkdown
+        linkTarget={(_url, _text, _title) => {
+          return "_blank";
+        }}
+        rawSourcePos={true}
+        className="post-content mx-auto prose max-w-none md:prose-lg"
+        allowDangerousHtml={true}
+        children={pageData.content}
+        renderers={getRenderers(slug, imageData)}
+      />
+    </Container>
+  );
+
   return (
     <Layout>
       <Head>
         <title>{title} | Alex MacArthur</title>
 
-        <meta property="og:image" content={open_graph} />
+        {open_graph && <meta property="og:image" content={open_graph} />}
       </Head>
 
-      <article>
-        <Container narrow={true}>
-          <Title
-            date={date}
-            isPost={isPost}
-          >
-            {title}
-          </Title>
+      {isPost && <ContainerContent />}
 
-          <ReactMarkdown
-            linkTarget={(_url, _text, _title) => {
-              return "_blank";
-            }}
-            rawSourcePos={true}
-            className="post-content mx-auto prose max-w-none md:prose-xl"
-            allowDangerousHtml={true}
-            children={pageData.content}
-            renderers={getRenderers(slug, imageData)}
-          />
-        </Container>
-      </article>
+      {!isPost &&
+        <article>
+          <ContainerContent />
+        </article>
+      }
     </Layout>
   );
 }
