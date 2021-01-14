@@ -1,4 +1,6 @@
 import DateFormatter from "./date-formatter";
+import Button from "./button";
+import Arrow from "./arrow";
 import Link from 'next/link'
 
 type TitleProps = {
@@ -10,10 +12,10 @@ type TitleProps = {
 
 const Title = ({children, date, isPost, subtitle}: TitleProps) => {
   return (
-    <div className="mt-6 mb-12 lg:mb-12">
+    <div className="mt-1 lg:mt-6 mb-6 lg:mb-12">
 
       <div>
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-2 gradient-text inline-block leading-tight">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-2 gradient-text inline-block leading-none lg:leading-tight">
           {children}
         </h1>
 
@@ -25,10 +27,18 @@ const Title = ({children, date, isPost, subtitle}: TitleProps) => {
       </div>
 
       { isPost &&
-        <span className="inline-block mb-3 mr-4">
-          <Link href="/posts">
-            ← Back to Posts
-            </Link>
+        <span className="inline-block mb-3 mr-4 text-base">
+          <Button
+            href="/posts"
+            internal={true}
+            naked={true}
+            pointLeft={true}
+            small={true}
+            classes={"text-gray-500"}
+            inheritColor={true}
+          >
+            Back to Posts
+          </Button>
         </span>
       }
 

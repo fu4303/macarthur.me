@@ -25,7 +25,8 @@ module.exports = {
               color: theme('colors.gray.500'),
               fontSize: theme('fontSize.3xl'),
               fontWeight: theme('fontWeight.extrabold'),
-              marginBottom: theme('margin.5')
+              marginBottom: theme('margin.5'),
+              lineHeight: theme('lineHeight.tight')
             },
             h3: {
               fontSize: theme('fontSize.2xl')
@@ -33,8 +34,8 @@ module.exports = {
             h4: {
               fontSize: theme('fontSize.xl')
             },
-            ul: {
-              paddingLeft: theme('padding.6')
+            'ul, ol': {
+              paddingLeft: theme('padding.4')
             },
             'ul > li::before': {
               backgroundColor: theme('colors.gray.700'),

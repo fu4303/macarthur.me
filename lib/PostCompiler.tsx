@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { join } from "path";
 import matter from "gray-matter";
+import { stripMarkdown } from './markdown';
 
 export default class PostCompiler {
   directory: string;
@@ -89,8 +90,15 @@ export default class PostCompiler {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
 
+    const strippedContent = stripMarkdown(content)
+      .replace(/\s\s+/g, ' ')
+      .replace(/\r?\n|\r/g, '');
+    const words = strippedContent.split(' ');
+    const excerpt = words.slice(0, 50).join(' ') + '...';
+
     return {
       content,
+      excerpt,
       title: data.title,
       ogImage: data.ogImage || ""
     }

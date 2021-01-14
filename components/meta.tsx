@@ -1,8 +1,9 @@
 import Head from 'next/head'
 
-export default function Meta() {
+export default function Meta({isPost = false, description = ""}) {
   return (
     <Head>
+      <title>Alex MacArthur // Web Developer in Nashville</title>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -28,9 +29,10 @@ export default function Meta() {
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <meta
         name="description"
-        content={`I'm Alex MacArthur, a web developer in Nashville-ish, TN.`}
+        key="meta:description"
+        content={description || `I'm Alex MacArthur, a web developer in Nashville-ish, TN.`}
       />
-      <meta property="og:image" content={'https://macarthur.me/open-graph.jpg'} />
+      <meta property="og:image" content={'https://macarthur.me/open-graph.jpg'} key="og:image" />
     </Head>
   )
 }

@@ -9,6 +9,7 @@ import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import Image from "./image";
+import Meta from './meta';
 
 const getRenderers = (slug, imageData) => {
   return {
@@ -105,6 +106,7 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
 
   return (
     <Layout>
+      <Meta isPost={true} description="hey"/>
       <Head>
         <title>{title} | Alex MacArthur</title>
 

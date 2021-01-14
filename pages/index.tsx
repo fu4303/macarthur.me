@@ -2,15 +2,10 @@ import Head from 'next/head';
 import Meta from '../components/meta'
 import Nav from '../components/nav';
 import Logo from '../components/logo';
-import Container from '../components/container';
 
 export default function Index() {
   return (
     <>
-      <Head>
-        <title>Alex MacArthur</title>
-      </Head>
-
       <Meta />
 
       <Nav isAbsolute={true} />

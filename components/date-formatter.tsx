@@ -8,7 +8,7 @@ export default function DateFormatter({ dateString, className = "" }: { dateStri
 
   return <time
     dateTime={dateString}
-    className={`font-light text-gray-500 ${className}`}>
+    className={`font-normal text-base text-gray-400 ${className}`}>
       {formattedDate
     }</time>;
 }

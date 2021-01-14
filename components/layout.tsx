@@ -13,12 +13,12 @@ export default function Layout({ children, narrow = false }: LayoutProps) {
   return (
     <>
       <Meta />
-        <Nav />
-        <main id="main">
-          <Container narrow={narrow} classes={"px-4"}>
-            {children}
-          </Container>
-        </main>
+      <Nav />
+      <main id="main">
+        <Container narrow={narrow} classes={"px-4"}>
+          {children}
+        </Container>
+      </main>
       <Footer />
     </>
   )

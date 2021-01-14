@@ -1,6 +1,5 @@
 import MarkdownLayout from "../components/markdown-layout";
 import { getContentBySlug, getAllPages } from "../lib/api";
-import markdownToHtml from "../lib/markdownToHtml";
 
 export default function Page({ page }) {
   return <MarkdownLayout pageData={page} isPost={false} />;
@@ -8,7 +7,7 @@ export default function Page({ page }) {
 
 export async function getStaticProps({ params }) {
   const page = getContentBySlug(params.page, 'page');
-  const content = await markdownToHtml(page.content || "");
+  const content = page.content || "";
 
   return {
     props: {

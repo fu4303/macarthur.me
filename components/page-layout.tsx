@@ -9,7 +9,6 @@ export default function PageLayout ({children, title, subtitle = "", open_graph 
       <Container narrow={true}>
         <Head>
           <title>{title} | Alex MacArthur</title>
-
           {open_graph && <meta property="og:image" content={open_graph} />}
         </Head>
 

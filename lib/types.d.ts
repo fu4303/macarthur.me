@@ -5,6 +5,7 @@ interface PostData {
   date: string;
   title: string;
   content: string;
+  excerpt?: string;
 }
 interface ContentData {
   slugPattern: RegExp;

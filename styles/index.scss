@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5 {
   @apply text-white bg-purple-400 hover:text-white hover:bg-purple-500;
 
   &.naked {
-    @apply text-purple-400 hover:text-purple-500;
+    @apply bg-transparent hover:bg-transparent text-purple-400 hover:text-purple-500;
   }
 }
 

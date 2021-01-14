@@ -9,20 +9,20 @@ const Pagination = ({previousPage = null, nextPage = null, currentPage, totalPag
 
       <hr className="border-0 block h-1 w-20 bg-purple-400 mb-4" />
 
-      <span className="block mt-2 mb-4">
+      <span className="block mt-1 mb-2 text-base">
         {currentPage} of {totalPages}
       </span>
 
       <ul className="flex space-x-3">
           <li>
             <Link href={`/posts/page/${previousPage}`}>
-              <a className={`${previousPage ? '' : disabledClasses} text-xl font-light`}>Back</a>
+              <a className={`${previousPage ? '' : disabledClasses} text-base font-light`}>Back</a>
             </Link>
           </li>
 
           <li>
             <Link href={`/posts/page/${nextPage}`}>
-            <a className={`${nextPage ? '' : disabledClasses} text-xl font-light`}>Next</a>
+            <a className={`${nextPage ? '' : disabledClasses} text-base font-light`}>Next</a>
             </Link>
           </li>
       </ul>
