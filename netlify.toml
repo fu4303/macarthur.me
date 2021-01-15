@@ -12,6 +12,11 @@
   status = 301
 
 [[redirects]]
+  from = "/posts/page/1"
+  to = "/posts"
+  status = 301
+
+[[redirects]]
   from = "/posts/lazy-load-images-in-wordpress-without-a-plugin"
   to = "/posts/build-your-own-simple-lazy-loading-functionality-in-wordpress"
   status = 301

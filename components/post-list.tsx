@@ -22,7 +22,7 @@ const PostList = ({posts}) => {
               </small>
 
               <Button naked={true} small={true} href={`/posts/${post.slug}`} internal={true}>
-                Read More
+                Read It
               </Button>
             </article>
           </li>
