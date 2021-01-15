@@ -1,6 +1,6 @@
 ---
 title: Should We All Start Implementing Differential Serving?
-open_graph: https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=1200&w=1200
+ogImage: https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=1200&w=1200
 ---
 
 There's been a lot of discussion around the potential to serve browsers the JavaScript bundles they can support. For example, if a user's on Internet Explorer, serve a transpiled, polyfilled bundle. If they're on a modern version of Chrome, deliver the slimmer, non-transpiled version.
@@ -67,7 +67,7 @@ I ran through some scenarios loading a **~300kb transpiled file** and a **~50kb 
 **Modern via JS:** loading the slim version after feature detection with JS.
 
 Approach   | Queued At | Download Time | Ready to Use
------- | ------ | ------ | ------ 
+------ | ------ | ------ | ------
 Standard | 20ms | 35ms | 55ms
 Modern via HTML | 20ms | 15ms | 35ms
 Modern via JS | 120ms | 15ms | 135ms
@@ -86,19 +86,19 @@ She explains that when loading the page, not-ancient browsers (meaning those sin
 
 #### Can we make this more performant?
 
-A couple of options did come to mind: 
+A couple of options did come to mind:
 
 First, I tried loading the scripts in the `<head>` of the document rather than the `<body>`. It didn't help much. I saved around 10-15ms due to the file being queued sooner, which doesn't make up for the ~100ms lost in comparison to embedding those files into the document.
 
 Second, I experimented with preloading the modern bundle in the `<head>` of the page. Queue times were _much_ sooner in the page lifecycle, since speculative parsing can be leveraged, and since older browsers [don't support the preload resource hint](https://caniuse.com/#feat=link-rel-preload), they won't unnecessarily download assets they shouldn't. This sounds good, but it also means that those same browsers will be slave to the gross loading times we discovered above. Depending on your industry, that's often still a _lot_ of users.
 
-So, after all of that, the client-side approach turned out to be less than impressive. 
+So, after all of that, the client-side approach turned out to be less than impressive.
 
 ## What does all this mean?
 
 The big implication of this stuff should be pretty obvious: as it's been pitched, differential serving isn't ready for mainstream implementation. As far as I've seen, there's just too much hassle and unpredictability for not enough gain.
 
-And even if it's a matter of waiting for browsers to more consistently handle the `module` / `nomodule` trick, by the time they do, it might not be worth creating two different bundles at all. [Support for ES2015 is getting _really_ good](https://caniuse.com/#feat=es6), with **~91%** of users being on browsers with full support, and **~96%** having at least partial support. And on top of that, the release rhythm for most browsers is pretty quick nowadays -- around every couple of months or so, based on [Chromium's](https://www.chromium.org/developers/calendar) and [Firefox's](https://wiki.mozilla.org/Release_Management/Calendar) release calendars. 
+And even if it's a matter of waiting for browsers to more consistently handle the `module` / `nomodule` trick, by the time they do, it might not be worth creating two different bundles at all. [Support for ES2015 is getting _really_ good](https://caniuse.com/#feat=es6), with **~91%** of users being on browsers with full support, and **~96%** having at least partial support. And on top of that, the release rhythm for most browsers is pretty quick nowadays -- around every couple of months or so, based on [Chromium's](https://www.chromium.org/developers/calendar) and [Firefox's](https://wiki.mozilla.org/Release_Management/Calendar) release calendars.
 
 The point is that it probably won't be long before "modern JavaScript" will just be understood as "JavaScript," and worrying about getting differential serving down will probably amount to a lot of wasted energy.
 

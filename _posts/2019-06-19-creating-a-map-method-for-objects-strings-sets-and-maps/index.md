@@ -1,9 +1,9 @@
 ---
 title: 'Creating a .map() Method for Objects, Strings, Sets, and Maps'
-open_graph: https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=750&w=1260
+ogImage: https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=750&w=1260
 ---
 
-It’s a well-established truth of the universe that JavaScript's `Array.prototype.map()` is one of the best parts of the language, allowing us to write cleaner, simpler code to manipulate array values, instead of using something like `forEach()`. 
+It’s a well-established truth of the universe that JavaScript's `Array.prototype.map()` is one of the best parts of the language, allowing us to write cleaner, simpler code to manipulate array values, instead of using something like `forEach()`.
 
 For example, let’s say we want to create a copy of an array with values that are tripled.
 
@@ -21,7 +21,7 @@ console.log(someNumz); //-- [2, 3, 5, 4, 5]
 console.log(someTripledNumz); //-- [6, 9, 15, 12, 15]
 ```
 
-That works, but it’s rough around the edges. We need to declare an empty `someTripledNumz` array above, and _then_ go through the process of tripling everything. But with `.map()`, things look better: 
+That works, but it’s rough around the edges. We need to declare an empty `someTripledNumz` array above, and _then_ go through the process of tripling everything. But with `.map()`, things look better:
 
 **The Cool Way**
 
@@ -35,12 +35,12 @@ console.log(someTripledNumz); //-- [6, 9, 15, 12, 15]
 
 ## What if we want to `map()` over the values of an _object_?
 
-As it stands, you can’t. There’s no `.map()` method that exists on any object for us to use out of the box. But, thanks to [prototypal inheritance](https://medium.com/@kevincennis/prototypal-inheritance-781bccc97edb), JavaScript provides a way to make that happen. We're gonna try it out, so that afterward, we'll be able to do something like this: 
+As it stands, you can’t. There’s no `.map()` method that exists on any object for us to use out of the box. But, thanks to [prototypal inheritance](https://medium.com/@kevincennis/prototypal-inheritance-781bccc97edb), JavaScript provides a way to make that happen. We're gonna try it out, so that afterward, we'll be able to do something like this:
 
 ```javascript
 let oldObject = {
   first: 1,
-  second: 2, 
+  second: 2,
   third: 3
 };
 
@@ -55,13 +55,13 @@ console.log(newObject);
 
 ## Let’s Map() Over an Object
 
-First, let's add an empty `.map()` method to the `Object` prototype. That method will accept a single argument: the callback method we’d like to fire on each of the values.  
+First, let's add an empty `.map()` method to the `Object` prototype. That method will accept a single argument: the callback method we’d like to fire on each of the values.
 
 ```javascript
 Object.prototype.map = function (func) {}
 ```
 
-Next up, let’s pull all of our values out of the object we we’d like to map (it’ll be available within the `this` object), and actually `map()` over them like any other array, firing our function on each item. 
+Next up, let’s pull all of our values out of the object we we’d like to map (it’ll be available within the `this` object), and actually `map()` over them like any other array, firing our function on each item.
 
 ```javascript
 Object.prototype.map = function (func) {
@@ -75,7 +75,7 @@ Object.prototype.map = function (func) {
 }
 ```
 
-Notice that when we fire that method, we’re also passing in the `index` and the original object itself as parameters. This is to keep our method as close to the actual [specification](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#Syntax) as reasonably possible. 
+Notice that when we fire that method, we’re also passing in the `index` and the original object itself as parameters. This is to keep our method as close to the actual [specification](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#Syntax) as reasonably possible.
 
 Once we have those manipulated values, we can piece our object back together with the appropriate keys.
 
@@ -92,14 +92,14 @@ Object.prototype.map = function (func) {
   // Reconstruct our object with each modified value.
   let mappedObject = {};
   Object.keys(this).forEach(function (key, index) {
-      mappedObject[key] = newValues[index]; 
+      mappedObject[key] = newValues[index];
   });
-  
+
   return mappedObject;
 }
 ```
 
-We did it! But if you’re like me, you’re hungry for more. So, let’s: 
+We did it! But if you’re like me, you’re hungry for more. So, let’s:
 
 ![Map all the things!](map-all-the-things.jpg)
 
@@ -107,21 +107,21 @@ Sidebar: It was _really_ difficult to commit to using that meme. So overused. So
 
 ## Let’s Map() Over a String()
 
-This one’s a bit simpler than our `Object` map. Turn the target string into an array, `map()` over it as per usual, and turn it back into a string: 
+This one’s a bit simpler than our `Object` map. Turn the target string into an array, `map()` over it as per usual, and turn it back into a string:
 
 ```javascript
 String.prototype.map = function(func) {
   let stringArray = this.split("");
-    
+
   let newStringArray = stringArray.map((item, index) => {
     return func.call(window, item, index, this);
   });
-    
+
   return newStringArray.join("");
 };
 ```
 
-Then, we can do something like this: 
+Then, we can do something like this:
 
 ```javascript
 let newString = "I want to scream this!".map(function (item, index, thing) {
@@ -135,7 +135,7 @@ console.log(newString);
 
 ## Let’s Map() Over a Set()
 
-Since it’s array-like, mapping over a Set is also relatively straightforward. Make it into an array, do the things, turn it back into a set. Thanks to the syntax of modern JavaScript, it looks pretty clean. 
+Since it’s array-like, mapping over a Set is also relatively straightforward. Make it into an array, do the things, turn it back into a set. Thanks to the syntax of modern JavaScript, it looks pretty clean.
 
 ```javascript
 Set.prototype.map = function(func) {
@@ -175,7 +175,7 @@ console.log([...myMap]);
 // [ [ 'item 1', 'value 1' ], [ 'item 2', 'value 2' ] ]
 ```
 
-So, our prototype method beings like this: 
+So, our prototype method beings like this:
 
 ```javascript
 Map.prototype.map = function(func) {
@@ -195,7 +195,7 @@ Map.prototype.map = function(func) {
 };
 ```
 
-And finally, piece that sucker back together by creating a new Map and adding values it it from our `newMapAsArray`. 
+And finally, piece that sucker back together by creating a new Map and adding values it it from our `newMapAsArray`.
 
 ```javascript
 Map.prototype.map = function(func) {
@@ -216,7 +216,7 @@ Map.prototype.map = function(func) {
 };
 ```
 
-Let’s try it out. If you weren’t aware, the keys or values don’t _have_ to be of a particular type — objects, numbers, functions, etc. So, `map()` with responsibility. 
+Let’s try it out. If you weren’t aware, the keys or values don’t _have_ to be of a particular type — objects, numbers, functions, etc. So, `map()` with responsibility.
 
 ```javascript
 let myMap = new Map();

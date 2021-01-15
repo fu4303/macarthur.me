@@ -1,11 +1,11 @@
 ---
 title: Using the Negation Pseudo-Class to Select Elements with No Class
-open_graph: ""
+ogImage: ""
 ---
 
 If you've been a developer for more than 7 minutes, you've probably felt uncomfortably pressured into doing something weird with your code, like specifically styling plain, classless, attribute-less elements. Don't ask for the details, just accept the reality of this happening sometimes.
 
-When I meet scenarios like this, by default, I instantly architecting the most terrible, complicated solution that's tied to my unique context. 
+When I meet scenarios like this, by default, I instantly architecting the most terrible, complicated solution that's tied to my unique context.
 
 ```css
 .page-whatever-wordpress-plugin .this-class + .that-class > h3:nth-child(3) ~ span {
@@ -39,7 +39,7 @@ But this time, I don't care about what the value is. I want to know if the attri
 
 And remember, `class` _is_ just an HTML attribute. Meaning, we can do completely permissible, non-hacky things like this:
 
-* Select all elements that have no class: 
+* Select all elements that have no class:
 ```css
 *:not([class]) {
 }
@@ -53,4 +53,4 @@ And remember, `class` _is_ just an HTML attribute. Meaning, we can do completely
 
 Beyond that, we can do a wide range of things more concerned with the _existence_ of an attribute rather than the attribute's value. [See a brief example on CodePen.](https://codepen.io/alexmacarthur/pen/zpJeeG/)
 
-And with that, another weird, one-off challenge resolved with tools we already had available to us. 
+And with that, another weird, one-off challenge resolved with tools we already had available to us.

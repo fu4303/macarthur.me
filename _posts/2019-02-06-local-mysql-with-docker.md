@@ -1,6 +1,6 @@
 ---
 title: Quickly Spin Up MySQL w/ Docker Compose
-open_graph: https://images.pexels.com/photos/15798/night-computer-hdd-hard-drive.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
+ogImage: https://images.pexels.com/photos/15798/night-computer-hdd-hard-drive.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
 ---
 
 I've often needed to quickly spin up a local instance of MySQL. [Docker Compose](https://docs.docker.com/compose/) this makes it stupid easy. Rather than running a long, convoluted `docker` command, I can configure an image just the way I want it while maintaining the ability to turn it easily turn it on and off as needed.
@@ -20,7 +20,7 @@ Paste the following into your `docker-compose.yml` file:
 ```
 version: '3'
 
-services: 
+services:
   db:
     container_name: docker-local-mysql
     image: mysql:5.7.21

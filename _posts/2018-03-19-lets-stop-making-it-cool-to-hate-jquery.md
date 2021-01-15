@@ -1,13 +1,13 @@
 ---
 title: Let's Stop Making it Cool to Hate jQuery
-open_graph: "https://images.pexels.com/photos/249798/pexels-photo-249798.png?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb"
+ogImage: "https://images.pexels.com/photos/249798/pexels-photo-249798.png?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb"
 ---
 
 When I started web development, beginning a new project often felt like drowning and then being asked to write JavaScript that worked. At the time, all I needed to do was perform some DOM stuff: make an element disappear on a click, add some classes, animate a dropdown. For all of these tasks, jQuery provided functionality that was simple to implement, reliable across browsers, and most important at the time, easy for me to understand what the heck was going on.
 
 Since then, the native JavaScript API has improved, browsers have stepped up their game, and educational resources have become even more accessible. As a result, dependence on jQuery has expectedly decreased. But along with that, it's also become very cool to hate it with a passionate, fiery rage.
 
-I'll never say that you _can't_ hate jQuery, but you do need to have a legitimate reason you can articulate, because the case to give the library the reverence it deserves is pretty solid, and the case that we should quickly run from it because "😠😠😠JQUERY😠😠😠" is weak and based on some concerns that I think are largely exaggerated.  
+I'll never say that you _can't_ hate jQuery, but you do need to have a legitimate reason you can articulate, because the case to give the library the reverence it deserves is pretty solid, and the case that we should quickly run from it because "😠😠😠JQUERY😠😠😠" is weak and based on some concerns that I think are largely exaggerated.
 
 ### jQuery helped make the web -- and you -- what they are today.
 
@@ -21,11 +21,11 @@ _**"But if you're gonna learn JavaScript, learn JavaScript! Not some abstraction
 
 ### It's probably not hurting anybody.
 
-While a lot of the dismissal of jQuery often just sounds like "because jQuery," one of the more common concrete objections is the performance implications of using or sticking with the library. And it usually comes in two parts. 
+While a lot of the dismissal of jQuery often just sounds like "because jQuery," one of the more common concrete objections is the performance implications of using or sticking with the library. And it usually comes in two parts.
 
-**_"jQuery is BLOATED!"_** Great concern, but if we're loading our scripts like we should -- at the bottom of the page, where they don't block page rendering -- this concern becomes significantly less, uh... significant. It's not a free pass on library size, since the time required to load, parse, and execute JavaScript does impact user experience, but to fiercely dismiss a library because of the 30kb of minified, gzipped weight it adds to your application just isn't good enough. 
+**_"jQuery is BLOATED!"_** Great concern, but if we're loading our scripts like we should -- at the bottom of the page, where they don't block page rendering -- this concern becomes significantly less, uh... significant. It's not a free pass on library size, since the time required to load, parse, and execute JavaScript does impact user experience, but to fiercely dismiss a library because of the 30kb of minified, gzipped weight it adds to your application just isn't good enough.
 
-That 'good enough' level drops even further when you consider how willing we are to throw in other modern packages of similar file size without much thought. Often, the same people who want to violently kill jQuery are the same ones who are completely fine loading React or Vue onto a page for a relatively small feature. Just take a glance at the weight of React specifically, which is, at best, approximately the same in foot print size, and at worst, even heavier than jQuery, minified and gzipped. 
+That 'good enough' level drops even further when you consider how willing we are to throw in other modern packages of similar file size without much thought. Often, the same people who want to violently kill jQuery are the same ones who are completely fine loading React or Vue onto a page for a relatively small feature. Just take a glance at the weight of React specifically, which is, at best, approximately the same in foot print size, and at worst, even heavier than jQuery, minified and gzipped.
 
 ```
 React 16.2.0 + React DOM = ~32KB
@@ -48,4 +48,4 @@ Don't think I'm trying to make the case that we should still lean toward grabbin
 
 But if you're working with a codebase that incorporates jQuery, it _really is OK_ to keep using it. You're not a bad person, and you're not a crappy developer. In fact, if you're probably one of the smarter ones, because you're not frantically running from a library that still does a darn good job at what it was designed to do.
 
-So, don't fret. When the time is right, dispose of jQuery. But when you do, do it out of smart decision making -- when the time is right, when the ROI is significant, and when your project calls for it. Nothing else. 
+So, don't fret. When the time is right, dispose of jQuery. But when you do, do it out of smart decision making -- when the time is right, when the ROI is significant, and when your project calls for it. Nothing else.

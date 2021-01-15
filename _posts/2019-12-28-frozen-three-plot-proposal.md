@@ -1,6 +1,6 @@
 ---
 title: A Plot Proposal for Frozen III
-open_graph: >-
+ogImage: >-
   https://images.pexels.com/photos/326240/pexels-photo-326240.jpeg?cs=srgb&dl=full-frame-shot-of-snowflakes-326240.jpg&fm=jpg
 ---
 

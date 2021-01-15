@@ -1,16 +1,16 @@
 ---
 title: Building a Lambda Function with Netlify
 last_updated: "2019-06-05"
-open_graph: "https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb"
+ogImage: "https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb"
 ---
- 
+
 A while back, I wrote my first Lambda function with Firebase. Like every Lambda function tutorial on the web shows you how to do, mine processes a payment via Stripe when someone purchases a license for [TypeIt](https://typeitjs.com), the most versatile JavaScript animated typing utility on the planet. The process was pretty straightforward -- Firebase's CLI, documentation, and support are all great. Even so, I had some reservations about the setup.
 
-First off, TypeIt's site is hosted with Netlify, with which I am madly in love, so development of the function felt... detached. I couldn't easily manage everything within the same repository, and I had to keep tabs on three different services to make this all happen -- Netlify, Firebase, and Stripe. 
+First off, TypeIt's site is hosted with Netlify, with which I am madly in love, so development of the function felt... detached. I couldn't easily manage everything within the same repository, and I had to keep tabs on three different services to make this all happen -- Netlify, Firebase, and Stripe.
 
-Second, I'm a cheapskate, and Firebase doesn't have a free tier that permits calls to external services like Stripe. Maybe that's changed, but last I checked, this was the case. 
+Second, I'm a cheapskate, and Firebase doesn't have a free tier that permits calls to external services like Stripe. Maybe that's changed, but last I checked, this was the case.
 
-With all that in mind, I nearly peed myself when Netlify's Lambda function service was rolled out, and I immediately dove into migrating my Firebase function to Netlify. It was so fun, I've documented that experience. I'll quickly take you through how to leverage some of the features that make Netlify great, in combination with the power of a Lambda function. Hopefully, you'll get a sense of why a service like this with a provider like this is uniquely awesome. 
+With all that in mind, I nearly peed myself when Netlify's Lambda function service was rolled out, and I immediately dove into migrating my Firebase function to Netlify. It was so fun, I've documented that experience. I'll quickly take you through how to leverage some of the features that make Netlify great, in combination with the power of a Lambda function. Hopefully, you'll get a sense of why a service like this with a provider like this is uniquely awesome.
 
 I'll be using some pretty bare bones here, but you can implement the function with any type of static application you want -- Jekyll, Gatsby, whatever. _Just make sure you have a static site you're able to host with Netlify, and that it uses webpack (we'll be using its `DefinePlugin`, specifically)._ I'm starting with an `index.html` file, some CSS, JavaScript, and some tools to pull it all together. You can see the full setup [here](https://github.com/alexmacarthur/netlify-function-example). You'll also need a Stripe account, which you can get for free [here](https://dashboard.stripe.com/register).
 
@@ -36,7 +36,7 @@ The `netlify.toml` file is responsible for defining things like build commands, 
 After defining that directory as well as a couple other nice-to-haves, we're left with this, which sits in the root of our project. For more information on how this file works and its capabilities, [read the documentation](https://www.netlify.com/docs/netlify-toml-reference/);
 
 ```
-# netlify.toml 
+# netlify.toml
 
 [build]
   command = "npm run build"
@@ -48,11 +48,11 @@ Translation: On build, Netlify will build our stuff using the specified build co
 
 **Next, let's set up some actions in our `package.json` to run our code locally and build it for production.**
 
-We'll configure everything to run a small development server _and_ a Lambda function server at the same time. To do this, we'll use the `concurrently` package, which will need to be installed as well: 
+We'll configure everything to run a small development server _and_ a Lambda function server at the same time. To do this, we'll use the `concurrently` package, which will need to be installed as well:
 
 `npm install concurrently -D`
 
-Following that, our `scripts` will look something like this: 
+Following that, our `scripts` will look something like this:
 
 ```json
 "scripts": {
@@ -67,19 +67,19 @@ When `npm run dev` is fired, we'll have a working development server for loading
 
 **After that, let's define some variables we'll need.** Specifically, I'm talking about Stripe publishable and secret keys, which are 1) pieces of sensitive information we don't want to commit to our repository, and 2) not the same between our development and production environments.
 
-It's possible to define things like this in a `netlify.toml` file, but because of those sensitivity concerns, we're going to set these values in Netlify's admin under the "Build & deploy" section. This will prevent us from having to commit them to version control. You can get these keys from your Stripe dashboard. 
+It's possible to define things like this in a `netlify.toml` file, but because of those sensitivity concerns, we're going to set these values in Netlify's admin under the "Build & deploy" section. This will prevent us from having to commit them to version control. You can get these keys from your Stripe dashboard.
 
 ![Define Our Environment Variables](environment-variables.jpg)
 
 You'll notice I also threw our `LAMBDA_ENDPOINT` in there too. More on that in a second.
 
-To access these Stripe keys locally, we'll be using the [dotenv](https://github.com/motdotla/dotenv) (thanks to [Phil Hawksworth](https://www.hawksworx.com/) for that tip!). What it does is pretty simple: when we reference an environment variable that isn't defined in Node's `process.env` object (like when we're working locally), fill it in by referring to a `.env` file we'll have in our project. This file _won't_ be committed to the repository, and will only contain test keys. That said, put this file into your `.gitignore` file to prevent it from ever being pushed up. This is... _key_. 
+To access these Stripe keys locally, we'll be using the [dotenv](https://github.com/motdotla/dotenv) (thanks to [Phil Hawksworth](https://www.hawksworx.com/) for that tip!). What it does is pretty simple: when we reference an environment variable that isn't defined in Node's `process.env` object (like when we're working locally), fill it in by referring to a `.env` file we'll have in our project. This file _won't_ be committed to the repository, and will only contain test keys. That said, put this file into your `.gitignore` file to prevent it from ever being pushed up. This is... _key_.
 
 ```
 echo ".env" >> .gitignore
 ```
 
-Install the package and create that `.env` file. 
+Install the package and create that `.env` file.
 
 ```
 npm install dotenv -D
@@ -108,7 +108,7 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 ```
 
-**Now, let's set appropriate headers.** We'll want to make sure we're allowing access to our function via AJAX, and also ensure that we can pass data successfully. For now, I'm just going to open it up to requests from any domain, but you'll want to change that when you deploy. Because I want to later leverage JavaScript's enhanced object literals, I also saved a default status code: 
+**Now, let's set appropriate headers.** We'll want to make sure we're allowing access to our function via AJAX, and also ensure that we can pass data successfully. For now, I'm just going to open it up to requests from any domain, but you'll want to change that when you deploy. Because I want to later leverage JavaScript's enhanced object literals, I also saved a default status code:
 
 ```js
 // purchase.js
@@ -152,7 +152,7 @@ exports.handler = function(event, context, callback) {
 }
 ```
 
-Now, if we run `npm run lambda-serve` and head to `http://localhost:9000/purchase`, we should see 'Let there be light!' in the browser. Good sign! 
+Now, if we run `npm run lambda-serve` and head to `http://localhost:9000/purchase`, we should see 'Let there be light!' in the browser. Good sign!
 
 **Add a small check to make sure we're only dealing with POST requests.** For the longest time, I was having an issue correctly parsing data from a request, only to discover it was because it wasn't the data from my POST request I was trying to parse -- it was from a preflight OPTIONS request that comes in to ensure the CORS protocol is understood. To prevent this from happening, use this:
 
@@ -211,13 +211,13 @@ exports.handler = async function(event) {
 
 While we're here, let's break down this `data.token`, `data.amount`, and `data.idempotency_key` stuff for which we're checking.
 
-`token`: This will be the unique payment token be generated by our checkout form on the front end. In it, the user's email address is also included, which comes in handy to trigger email receipts.  
+`token`: This will be the unique payment token be generated by our checkout form on the front end. In it, the user's email address is also included, which comes in handy to trigger email receipts.
 
 `amount`: This will be the price of the widget, measured in cents. So, `1000` is actually `$10.00`.
 
 `idempotency_key`: This is a good idea to pass to better [prevent the same operation from being accidentally performed twice](https://stripe.com/docs/api?lang=curl#idempotent_requests). It doesn't necessarily matter what that value actually is -- just that it's unique.
 
-**If the body has everything we require, pass it to Stripe to create a charge.** After we get a response back, we're returning the status of that charge back to the browser. Feel free to elaborate on this as you see fit. Create customers, trigger emails following a successful charge, whatever you like. The point is we create a charge and immediately let the browser know if it was successful or not. 
+**If the body has everything we require, pass it to Stripe to create a charge.** After we get a response back, we're returning the status of that charge back to the browser. Feel free to elaborate on this as you see fit. Create customers, trigger emails following a successful charge, whatever you like. The point is we create a charge and immediately let the browser know if it was successful or not.
 
 ```js
 // purchase.js
@@ -280,7 +280,7 @@ At this point, we're ready to start work on the front end, which will consist of
 <script src="https://checkout.stripe.com/checkout.js"></script>
 ```
 
-**Configure webpack to make our environment variables available on the front end.** Much like we did before, we'll initialize `dotenv` so we can access environment variables locally. At the top of our `webpack.config.js` file, let's add this: 
+**Configure webpack to make our environment variables available on the front end.** Much like we did before, we'll initialize `dotenv` so we can access environment variables locally. At the top of our `webpack.config.js` file, let's add this:
 
 ```js
 // front-end.js
@@ -289,8 +289,8 @@ require('dotenv').config();
 
 const webpack = require('webpack');
 
-module.exports = { 
-  // webpack configuration... 
+module.exports = {
+  // webpack configuration...
 }
 ```
 
@@ -314,7 +314,7 @@ module.exports = {
 }
 ```
 
-**Now, let's create a Stripe Checkout handler in our front-end.js file, and include that bundled `bundle.js` file at the bottom of `index.html`.** 
+**Now, let's create a Stripe Checkout handler in our front-end.js file, and include that bundled `bundle.js` file at the bottom of `index.html`.**
 
 ```js
 // front-end.js
@@ -349,7 +349,7 @@ document.querySelector("button").addEventListener("click", function() {
 
 At this point, when a user clicks the button on our page, a beautiful Stripe checkout form should pop up, ready to collect that user's payment information. Once that form is submitted, we send that information to our function.
 
-**Send the generated token to our Lambda function via AJAX.** Add this to your `front-end.js` file, right after our token is generated. I'm using the browser's [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), but really doesn't matter what you choose. 
+**Send the generated token to our Lambda function via AJAX.** Add this to your `front-end.js` file, right after our token is generated. I'm using the browser's [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), but really doesn't matter what you choose.
 
 ```js
 // front-end.js
@@ -388,9 +388,9 @@ To generate our `idempotency_key`, I'm using the [uuid](https://www.npmjs.com/pa
 import uuid from 'uuid/v4';
 ```
 
-Great, we've thrown a bunch of code together. Now... 
+Great, we've thrown a bunch of code together. Now...
 
-**Let's spin it up locally!** If you recall the actions we set up, using `npm run dev` will spin up a webpack dev server, as well as trigger `netlify-lambda` to serve our function. Run that command, and our application should be available at `http://localhost:8080`. Click the button, enter your payment information (use `4242424242424242` for the card number in development mode), and you *should* see a successful response in the console. Of course, this is web development we're doing here, where very little goes right the first time, so have some patience as you work out any issues you have standing it up. 
+**Let's spin it up locally!** If you recall the actions we set up, using `npm run dev` will spin up a webpack dev server, as well as trigger `netlify-lambda` to serve our function. Run that command, and our application should be available at `http://localhost:8080`. Click the button, enter your payment information (use `4242424242424242` for the card number in development mode), and you *should* see a successful response in the console. Of course, this is web development we're doing here, where very little goes right the first time, so have some patience as you work out any issues you have standing it up.
 
 ## Time to Deploy!
 
@@ -398,9 +398,9 @@ Great, we've thrown a bunch of code together. Now...
 
 ## Resources
 
-If you want to dig into this particular example more yourself, check out [the repo on Github](https://github.com/alexmacarthur/netlify-function-example). There, I have a simple working demo that actually submits a fake payment to Stripe. If you wish that payment to be not fake, we can have that arranged. 
+If you want to dig into this particular example more yourself, check out [the repo on Github](https://github.com/alexmacarthur/netlify-function-example). There, I have a simple working demo that actually submits a fake payment to Stripe. If you wish that payment to be not fake, we can have that arranged.
 
-When you're ready to explore Lambda functions with Netlify yourself, [dig in here](https://www.netlify.com/docs/functions/). 
+When you're ready to explore Lambda functions with Netlify yourself, [dig in here](https://www.netlify.com/docs/functions/).
 
 ## Make Sense?
 

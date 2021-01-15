@@ -1,6 +1,6 @@
 ---
 title: When It Makes Sense to Use a Utility Function Instead of a Polyfill
-open_graph: >-
+ogImage: >-
   https://images.unsplash.com/photo-1553343801-5d4a45829f2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100
 ---
 
@@ -8,7 +8,7 @@ Modern iterations of JavaScript have introduced some nice methods that make writ
 
 ```js
 const players = [
-  {id: 3, name: "Bob"}, 
+  {id: 3, name: "Bob"},
   {id: 9, name: "Bill"},
   {id: 2, name: "Baker"},
   {id: 4, name: "Bo"},
@@ -78,7 +78,7 @@ if (!Array.prototype.find) {
 
 And from what I can find, that's a pretty common thing. The `Array.prototype.fill()` polyfill weighs in at about [928 bytes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill#Polyfill), `Array.prototype.findIndex()` comes in at [1,549 bytes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex#Polyfill), and `Array.from()` sits at [2,665 bytes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from#Polyfill).
 
-The range in file size will obviously vary from polyfill to polyfill, but the implication is still clear. These tools aren't built to satisfy you and your specific context, and so that means you'll likely be subscribing to more than what your circumstances require by leveraging them. 
+The range in file size will obviously vary from polyfill to polyfill, but the implication is still clear. These tools aren't built to satisfy you and your specific context, and so that means you'll likely be subscribing to more than what your circumstances require by leveraging them.
 
 ## A Small Utility May Save You Some Bytes
 
@@ -100,7 +100,7 @@ const find = (arr, func) => {
 }
 
 const players = [
-    {id: 3, name: "Bob"}, 
+    {id: 3, name: "Bob"},
     {id: 9, name: "Bill"},
     {id: 2, name: "Baker"},
     {id: 4, name: "Bo"},
@@ -127,13 +127,13 @@ const findIndex = (arr, func) => {
 }
 
 const players = [
-    {id: 3, name: "Bob"}, 
+    {id: 3, name: "Bob"},
     {id: 9, name: "Bill"},
     {id: 2, name: "Baker"},
     {id: 4, name: "Bo"},
 ];
 
-const player = findIndex(players, p => p.id === 9); 
+const player = findIndex(players, p => p.id === 9);
 
 // 1
 ```
@@ -160,17 +160,17 @@ For one more example, here's how a simple utility method for `fill()` might look
 const fill = ({array, value, start = 0, end = undefined}) => {
   end = end ? end + 1 : array.length;
   array.splice(
-    start, 
-    end - start, 
+    start,
+    end - start,
     array.slice(start, end).map(i => value)
   );
   return [].concat.apply([], array);
 }
 
 fill({
-  array: [1, 2, 3, 4, 5], 
-  value: "x", 
-  start: 1, 
+  array: [1, 2, 3, 4, 5],
+  value: "x",
+  start: 1,
   end: 3
 });
 
@@ -185,7 +185,7 @@ You might be thinking of something like [Lodash](https://lodash.com/) here. Depe
 
 For example, our `findIndex` implementation was less than 10 lines of code. But Lodash's version is [11 lines](https://github.com/lodash/lodash/blob/4.6.0-npm-packages/lodash.findindex/index.js#L1743), and it also depends on a shared `baseFindIndex` method, which accounts for [_another_ 11 lines](https://github.com/lodash/lodash/blob/4.6.0-npm-packages/lodash.findindex/index.js#L175).
 
-Libraries like this can provide confidence that writing your own utilities may not, and it may also be a slimmer approach than pulling in a polyfill. But even so, you'll probably be signing up for a bit of weight that you could likely avoid by rolling something yourself. 
+Libraries like this can provide confidence that writing your own utilities may not, and it may also be a slimmer approach than pulling in a polyfill. But even so, you'll probably be signing up for a bit of weight that you could likely avoid by rolling something yourself.
 
 ## Sometimes, a Polyfill _Does_ Make Sense
 

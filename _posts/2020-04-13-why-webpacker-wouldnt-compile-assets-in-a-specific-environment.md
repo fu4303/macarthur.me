@@ -1,6 +1,6 @@
 ---
 title: Why Webpacker Wouldn't Compile Assets in a Specific Environment
-open_graph: https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200
+ogImage: https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200
 ---
 
 A while back, I started working in a Rails application in which I needed to introduce a JavaScript file that'd be compiled with Webpacker. To do so, I created the file in my `packs` directory and loaded it up via `content_for`:
@@ -41,7 +41,7 @@ development:
   <<: *default
     # other settings...
 
-test: 
+test:
     <<: *default
     # other settings...
 
@@ -51,7 +51,7 @@ production:
     # other settings...
 ```
 
-I felt good about this... until it failed. 
+I felt good about this... until it failed.
 
 ## Problem #2: Webpacker wasn't respecting default settings in its configuration file.
 
@@ -68,7 +68,7 @@ My tests were being run in the `build` environment -- not `test`. And as it turn
 Like most bugs that tempt you to rip your hair out, the solution turned out to be two lines:
 
 ```yaml
-build: 
+build:
     <<: *default
 ```
 

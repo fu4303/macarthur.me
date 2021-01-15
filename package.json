@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
-    "build": "npm run build:images && next build && next export",
+    "build": "npm run build:images && next build && next export && npm run build:sitemap",
     "start": "next start",
-    "build:images": "node ./_scripts/build-images.js"
+    "build:images": "node ./_scripts/build-images.js",
+    "build:sitemap": "node ./_scripts/build-sitemap.js"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.3.1",
     "bezier-easing": "^2.1.0",
     "classnames": "2.2.6",
-    "glob": "^7.1.6",
+    "globby": "^11.0.2",
     "gray-matter": "4.0.2",
     "image-size": "^0.9.3",
     "imagemin-mozjpeg": "^9.0.0",
@@ -21,6 +22,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-optimized-images": "^2.6.2",
     "octonode": "^0.10.0",
+    "prettier": "^2.2.1",
     "prismjs": "^1.22.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

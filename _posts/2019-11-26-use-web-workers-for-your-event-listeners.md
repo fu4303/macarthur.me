@@ -1,6 +1,6 @@
 ---
 title: For the Sake of Your Event Listeners, Use Web Workers
-open_graph: >-
+ogImage: >-
   https://images.unsplash.com/photo-1542044801-30d3e45ae49a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100
 ---
 
@@ -20,14 +20,14 @@ const openMenuButton = document.getElementById('#openMenuButton');
 const resultBox = document.getElementById('resultBox');
 
 calculateResultsButton.addEventListener('click', (e) => {
-    // "Why put this into a Worker when I 
+    // "Why put this into a Worker when I
     // can't update the DOM until it's done anyway?"
     const result = performLongRunningCalculation();
     resultBox.innerText = result;
 });
 
 openMenuButton.addEventListener('click', (e) => {
-    // Do stuff to open menu. 
+    // Do stuff to open menu.
 });
 ```
 
@@ -35,7 +35,7 @@ Here, I update the text of a box after performing some sort of presumably heavy 
 
 ## The Jank, Illustrated
 
-In the example below, clicking "Freeze" will kick off a synchronous pause for three seconds (simulating a long-running calculation) before incrementing the click count, and the "Increment" button will increment that count immediately. During the first button's pause, the whole thread is at a standstill, preventing _any_ other main thread activities from firing until the event loop can turn over again. 
+In the example below, clicking "Freeze" will kick off a synchronous pause for three seconds (simulating a long-running calculation) before incrementing the click count, and the "Increment" button will increment that count immediately. During the first button's pause, the whole thread is at a standstill, preventing _any_ other main thread activities from firing until the event loop can turn over again.
 
 To witness this, click the first button and immediately click the second.
 
@@ -89,10 +89,10 @@ If you dig into that code a bit, you'll notice that while the Web Worker API cou
 
 ## Start Threadin' (Where It Makes Sense)
 
-If your application is typical, it probably has a lot of listenin' going on. And it also probably does a lot of computing that just doesn't need to happen on the main thread. So, do these listeners and your users a favor by considering where it makes sense to employ Web Workers. 
+If your application is typical, it probably has a lot of listenin' going on. And it also probably does a lot of computing that just doesn't need to happen on the main thread. So, do these listeners and your users a favor by considering where it makes sense to employ Web Workers.
 
-To be clear, going all-in and throwing literally _all_ non-UI work into worker threads is probably the wrong approach. You might just be introducing a lot of refactoring & complexity to your app for little gain. Instead, maybe start by identifying notably intense processes and spin up a small Web Worker for them. Over time, it could make sense to stick your feet in a little deeper and rethink your UI/Worker architecture more at a wider scale. 
+To be clear, going all-in and throwing literally _all_ non-UI work into worker threads is probably the wrong approach. You might just be introducing a lot of refactoring & complexity to your app for little gain. Instead, maybe start by identifying notably intense processes and spin up a small Web Worker for them. Over time, it could make sense to stick your feet in a little deeper and rethink your UI/Worker architecture more at a wider scale.
 
-Whatever the case, dig into it. With their solid browser support and the growing performance demands of modern applications, we're running out of reasons to not invest in tools like this. 
+Whatever the case, dig into it. With their solid browser support and the growing performance demands of modern applications, we're running out of reasons to not invest in tools like this.
 
 Happy threadin'!

@@ -1,9 +1,9 @@
 ---
 title: Introducing Better Resource Hints, a Performance-Enhancing Plugin for WordPress
-open_graph: "https://images.pexels.com/photos/8775/traffic-car-vehicle-black.jpg"
+ogImage: "https://images.pexels.com/photos/8775/traffic-car-vehicle-black.jpg"
 ---
 
-It's easy to rattle off a bunch of ways you can improve the performance of your website: 
+It's easy to rattle off a bunch of ways you can improve the performance of your website:
 
 * minify your CSS & JS
 * optimize your images
@@ -15,9 +15,9 @@ Those are all important, but there's also a more modern, less-discussed approach
 
 And now, it's a lot easier to implement and manage these hints on your WordPress site.
 
-I just introduced [Better Resource Hints](https://wordpress.org/plugins/better-resource-hints/), a WordPress plugin that enables you to intelligently implement different resource hints for your website with little intimidation or complicated configuration. Just by turning it on, the plugin will take a conservative but effective approach to setting up these hints, and allow you to beef it up if needed. 
+I just introduced [Better Resource Hints](https://wordpress.org/plugins/better-resource-hints/), a WordPress plugin that enables you to intelligently implement different resource hints for your website with little intimidation or complicated configuration. Just by turning it on, the plugin will take a conservative but effective approach to setting up these hints, and allow you to beef it up if needed.
 
-Specifically, this plugin leverages the following types of hints: 
+Specifically, this plugin leverages the following types of hints:
 
 **Preconnecting** – This one is similar to the more common hint “dns-prefetch,” but a more beefier version. Instead of just resolving the DNS as early as possible, the preconnect hint handles TLS negotiations and TCP handshakes, resulting in reduced page latency.
 

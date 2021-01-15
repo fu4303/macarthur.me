@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import Container from "./container";
 import Layout from "./layout";
-import Head from "next/head";
 import Title from "./title";
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -76,7 +75,7 @@ const getRenderers = (slug, imageData) => {
 
 export default function PostLayout({ pageData, imageData = {}, isPost = null }) {
   const router = useRouter();
-  const { title, date, slug, open_graph } = pageData;
+  const { title, date, slug, ogImage, excerpt } = pageData;
 
   if (!router.isFallback && !pageData?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -106,12 +105,12 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
 
   return (
     <Layout>
-      <Meta isPost={true} description="hey"/>
-      <Head>
-        <title>{title} | Alex MacArthur</title>
-
-        {open_graph && <meta property="og:image" content={open_graph} />}
-      </Head>
+      <Meta
+        isPost={true}
+        title={title}
+        image={ogImage}
+        description={excerpt}
+      />
 
       {isPost && <ContainerContent />}
 

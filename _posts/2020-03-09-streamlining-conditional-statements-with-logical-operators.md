@@ -1,6 +1,6 @@
 ---
 title: 'Streamlining Conditional Statements with Logical Operators'
-open_graph: >-
+ogImage: >-
   https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=100
 ---
 
@@ -59,7 +59,7 @@ But it feels stringy and a little more difficult to read than something like thi
 ```javascript
 if (isFamily(person)) {
   return "hug";
-} 
+}
 
 if (isBuddy(person)){
   return "high five";
@@ -74,7 +74,7 @@ What's interesting here is that while it's easier to read _as code_, it's not at
 
 Soon enough, my preference changed again. This time, toward leveraging [logical operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators) for simple expressions.
 
-After executing one side of the `&&` or `||` operators, JavaScript will _short-circuit_ if it's logically unnecessary to run the remaining expression(s), returning the value of the last expression that was evaluated. You've probably seen short-circuiting used with the `||` operator when setting fallback values for variables. 
+After executing one side of the `&&` or `||` operators, JavaScript will _short-circuit_ if it's logically unnecessary to run the remaining expression(s), returning the value of the last expression that was evaluated. You've probably seen short-circuiting used with the `||` operator when setting fallback values for variables.
 
 ```javascript
 const myVar = "left side" || "right side";
@@ -88,7 +88,7 @@ This tactic is cleaner than using a ternary, and far more elegant than an `if/el
 
 ##### Good: `If/Then` Block
 ```javascript
-let myVar; 
+let myVar;
 
 if (otherVal) {
   myVar = otherVal;
@@ -158,10 +158,10 @@ Or, for a more modern approach, you could use `Array.prototype.find()` to _find_
 
 ##### Option #2: `Array.prototype.find()`
 
-```javascript 
+```javascript
 const possibilities = [
-  val1, 
-  val2, 
+  val1,
+  val2,
   val3
 ];
 
@@ -177,10 +177,10 @@ But by using a logical operator, all that mess can be pulled together more elega
 ##### Option #3: Logical Operators
 
 ```javascript
-let firstTruthyReturnValue = 
-  tryIt(var1) || 
-  tryIt(var2) || 
-  tryIt(var3) || 
+let firstTruthyReturnValue =
+  tryIt(var1) ||
+  tryIt(var2) ||
+  tryIt(var3) ||
   "default value";
 ```
 

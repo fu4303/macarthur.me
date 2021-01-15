@@ -1,7 +1,7 @@
 ---
 title: When DOM Updates Appear to Be Asynchronous
 subtitle: A bit of exploration into JavaScript's event loop, the browser's repaint cycle, and how we can reliably navigate the mix.
-open_graph: 'https://images.pexels.com/photos/552598/pexels-photo-552598.jpeg?cs=srgb&h=1200&w=1200'
+ogImage: 'https://images.pexels.com/photos/552598/pexels-photo-552598.jpeg?cs=srgb&h=1200&w=1200'
 ---
 
 Imagine we have some JavaScript on a page that updates an element's contents and immediately logs those contents out:

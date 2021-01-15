@@ -1,6 +1,6 @@
 ---
 title: Writing a Regular Expression to Target Images Without a Class
-open_graph: 'https://images.unsplash.com/photo-1497796742626-fe30f204ec54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100'
+ogImage: 'https://images.unsplash.com/photo-1497796742626-fe30f204ec54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100'
 ---
 
 A while back, [I wrote about](https://macarthur.me/posts/build-your-own-simple-lazy-loading-functionality-in-wordpress) building your own lazy loading functionality into WordPress. In that post, I use a regular expression to add a `lazy-load` class to image tags that don't already have _any_ class.

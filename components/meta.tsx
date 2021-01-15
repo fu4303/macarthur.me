@@ -1,9 +1,56 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useRouter } from 'next/router'
 
-export default function Meta({isPost = false, description = ""}) {
+const FB_ADMINS = "502371334";
+const TWITTER_HANDLE = "@amacarthur";
+const ALTERNATE_NAME = "Alex MacArthur";
+const SITE_URL = "https://macarthur.me";
+
+export default function Meta({
+  isPost = false,
+  description = "I'm Alex MacArthur, a web developer in Nashville-ish, TN.",
+  title = "",
+  image = "https://macarthur.me/open-graph.jpg"
+}) {
+  const router = useRouter();
+  const url = `${SITE_URL}${router.asPath}`.replace(/\/$/, '');
+  const computedTitle = title
+    ? `${title} // Alex MacArthur`
+    : "Alex MacArthur // Web Developer in Nashville" ;
+
+  const schemaOrgJSONLD: any[] = [
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      url: SITE_URL,
+      name: computedTitle,
+      alternateName: ALTERNATE_NAME
+    }
+  ];
+
+  if (isPost) {
+    schemaOrgJSONLD.push([
+      {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        url: url,
+        name: computedTitle,
+        alternateName: ALTERNATE_NAME,
+        headline: computedTitle,
+        image: {
+          "@type": "ImageObject",
+          url: image
+        },
+        description
+      }
+    ]);
+  }
+
   return (
     <Head>
-      <title>Alex MacArthur // Web Developer in Nashville</title>
+      <title>
+        { computedTitle }
+      </title>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -26,13 +73,27 @@ export default function Meta({isPost = false, description = ""}) {
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
       <meta name="theme-color" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <meta
-        name="description"
-        key="meta:description"
-        content={description || `I'm Alex MacArthur, a web developer in Nashville-ish, TN.`}
-      />
-      <meta property="og:image" content={'https://macarthur.me/open-graph.jpg'} key="og:image" />
+      <link rel="alternate" type="application/rss+xml" href="/feed.xml" key="xml_feed" />
+
+      {/* Schema.org */}
+      <script type="application/ld+json">
+        {JSON.stringify(schemaOrgJSONLD)}
+      </script>
+
+      {/* OpenGraph */}
+      <meta property="og:url" content={url} key="og:url" />
+      <meta property="og:title" content={computedTitle} key="og:title" />
+      <meta property="og:description" content={description} key="og:description" />
+      <meta property="og:image" content={image} key="og:image" />
+      <meta property="fb:admins" content={FB_ADMINS} key="fb:admins" />
+      {isPost ? <meta property="og:type" content="article" key="og:type"/> : null}
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+      <meta name="twitter:creator" content={TWITTER_HANDLE} key="twitter:creator" />
+      <meta name="twitter:title" content={computedTitle} key="twitter:title" />
+      <meta name="twitter:description" content={description} key="twitter:description" />
+      <meta name="twitter:image" content={image} key="twitter:image" />
     </Head>
   )
 }

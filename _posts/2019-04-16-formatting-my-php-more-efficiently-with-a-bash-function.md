@@ -1,9 +1,9 @@
 ---
 title: Formatting My PHP More Efficiently with a Bash Function
-open_graph: /uploads/shell.jpg
+ogImage: /uploads/shell.jpg
 ---
 
-For quite some time now, I’ve been working with a PHP application that, up until recently, had no clearly-defined coding standards in place. At some point, the decision was made to enforce PSR-2, and to do so at an incremental level. When a file is touched, format to PSR-2. 
+For quite some time now, I’ve been working with a PHP application that, up until recently, had no clearly-defined coding standards in place. At some point, the decision was made to enforce PSR-2, and to do so at an incremental level. When a file is touched, format to PSR-2.
 
 To do this in the command line, I’ve been using [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer). It’s pretty straightforward in how it works. Call the command, pass a file, specify a standard:
 
@@ -31,7 +31,7 @@ To actually use the function, you’ll need to reload your configuration file.
 source ~/.zshrc
 ```
 
-After that, you’re ready to run! Instead of specifying a long command name, pasting in the file path, and setting a standard, you can just run this to get the same result. 
+After that, you’re ready to run! Instead of specifying a long command name, pasting in the file path, and setting a standard, you can just run this to get the same result.
 
 ```
 fphp /path/to/file.php
@@ -61,7 +61,7 @@ function fphp {
 }
 ```
 
-Run `source ~/.zshrc`, and now we can easily format multiple files at once: 
+Run `source ~/.zshrc`, and now we can easily format multiple files at once:
 
 ```
 fphp /path/to/file.php /path/to/some/other/file.php
@@ -69,7 +69,7 @@ fphp /path/to/file.php /path/to/some/other/file.php
 
 ## We've Only Bashed the Surface
 
-Obviously, my use case here is pretty specific, and there are a bazillion other ways Bash funcification (just coined that; it better stick) can optimize your command line workflow. As a top-of-mind example, my teammate and _buddy_ [Buddy Reno has written about using them](https://medium.freecodecamp.org/bash-shortcuts-to-enhance-your-git-workflow-5107d64ea0ff) to awesomely overhaul how you use Git in your projects. 
+Obviously, my use case here is pretty specific, and there are a bazillion other ways Bash funcification (just coined that; it better stick) can optimize your command line workflow. As a top-of-mind example, my teammate and _buddy_ [Buddy Reno has written about using them](https://medium.freecodecamp.org/bash-shortcuts-to-enhance-your-git-workflow-5107d64ea0ff) to awesomely overhaul how you use Git in your projects.
 
 Whatever your entry point has been or will be, do your part and be generous with your findings! To start, if you've got a Bash-related tip that's been helpful to you in the past, share it here!
 

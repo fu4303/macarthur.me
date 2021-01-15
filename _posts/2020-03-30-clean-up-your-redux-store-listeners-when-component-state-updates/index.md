@@ -1,10 +1,10 @@
 ---
 title: Clean Up Your Redux Store Listeners When Component State Updates
-open_graph: >-
+ogImage: >-
   https://images.unsplash.com/photo-1529700215145-58542a1f36b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100
 ---
 
-I'm writing a Gutenberg block for [TypeIt](https://typeitjs.com) that'll allow content creators to easily drop typewriter effects into WordPress. The Gutenberg infrastructure is heavily rooted in the React ecosystem, so building a block feels very much like building a React application. 
+I'm writing a Gutenberg block for [TypeIt](https://typeitjs.com) that'll allow content creators to easily drop typewriter effects into WordPress. The Gutenberg infrastructure is heavily rooted in the React ecosystem, so building a block feels very much like building a React application.
 
 One piece of this ecosystem that's new to me, however, is [Redux](https://redux.js.org/), and soon after I dove into it, I ran into a problem that had my head tilting for quite some time -- enough time to warrant writing it down in case I ever need to explain it to myself again.
 
@@ -20,7 +20,7 @@ In my code, I have a global Redux store that's responsible for holding the [base
 
 **I attempted to solve this by updating local block state whenever my global store changed.** To pull it off, in my block's component, I used Redux's `subscribe` method to listen for any global store changes. When they occurred, I checked if the options for my specific block have changed, and if they did, I updated my block's `attributes` (the `prop` used in a Gutenberg block to save and manage block data).
 
-That looked something like this (a bit stripped down for brevity): 
+That looked something like this (a bit stripped down for brevity):
 
 ```javascript
 const { useEffect } = wp.element;
@@ -29,7 +29,7 @@ const { subscribe } = wp.data;
 registerBlockType('wp-typeit/block', {
   // ...
   edit: ({ attributes, setAttributes }) => {
-    // ... 
+    // ...
     useEffect(() => {
       subscribe(() => {
         let baseSettings = wp.data.select('wp-typeit/store').getSettings()[instanceId]
@@ -43,13 +43,13 @@ registerBlockType('wp-typeit/block', {
 }
 ```
 
-This _looked_ pretty safe. But when a global store change occurred, an infinite loop was set off within the component. I soon realized that the `setAttributes` method provided by Gutenberg triggered _another_ store change (I don't yet know why). Unexpected, but it still shouldn't be a problem. After all, the next time the listener fires, my global settings _should_ exactly match my local attributes, preventing the `setAttributes` method from being called again. 
+This _looked_ pretty safe. But when a global store change occurred, an infinite loop was set off within the component. I soon realized that the `setAttributes` method provided by Gutenberg triggered _another_ store change (I don't yet know why). Unexpected, but it still shouldn't be a problem. After all, the next time the listener fires, my global settings _should_ exactly match my local attributes, preventing the `setAttributes` method from being called again.
 
 But that was apparently incorrect. As it turned out, within that `subscribe` listener, _my local state wasnt't getting updated at all._ And so every time the listener fired, that equality check would fail every time, over and over again. Infinite loop.
 
 ## Remember, This Is React
 
-It took a bit, but the solution to this problem arose after remembering how React handles updates to its state. Every time a component's state (including props) is changed, that component is re-rendered, and it's only _after_ that rerender when the updated state (including props) is available. 
+It took a bit, but the solution to this problem arose after remembering how React handles updates to its state. Every time a component's state (including props) is changed, that component is re-rendered, and it's only _after_ that rerender when the updated state (including props) is available.
 
 But my `subscribe` listener wasn't respecting that. It was being activated _once_ after the component mounted, and so it was only aware of the version of the props it had at that specific time. I could call `setAttributes` all I wanted, but that specific listener instance would behave as if nothing happened at all.
 
@@ -64,13 +64,13 @@ useEffect(() => {
 
 ## The Solution: Clean Up Store Listeners
 
-In order to perform future store comparisons after my local state was updated, **I needed to throw away my `subscribe` listener every time a local state change occurred**. With my specific circumstances, that meant a few tweaks: 
+In order to perform future store comparisons after my local state was updated, **I needed to throw away my `subscribe` listener every time a local state change occurred**. With my specific circumstances, that meant a few tweaks:
 
-1. **Extract the `unsubscribe` method** returned [when a subscribe listener is created](https://redux.js.org/api/store#subscribelistener). 
-2. **Unsubscribe immediately before the `setAttributes` method fires.** Since `setAttributes` triggers a global store change, this unplugs the listener to prevent it from firing before the local state is technically updated. 
-1. **Instead of setting up a single listener on `mount`, do so _every time_ the block is updated.** To avoid listeners becoming stacked upon listeners, I'm using the [cleanup mechanism](https://reactjs.org/docs/hooks-effect.html#example-using-hooks-1) built into the `useEffect` hook by returning from the hook with an `unsubscribe()` method call. Even though I'm already unsubscribing every time I call `setAttributes`, this will cover my butt any time a different state change occurs, totally unrelated to these settings. The objective is to never have more than one store listener active in the component at once, and this helps guarantee that. 
+1. **Extract the `unsubscribe` method** returned [when a subscribe listener is created](https://redux.js.org/api/store#subscribelistener).
+2. **Unsubscribe immediately before the `setAttributes` method fires.** Since `setAttributes` triggers a global store change, this unplugs the listener to prevent it from firing before the local state is technically updated.
+1. **Instead of setting up a single listener on `mount`, do so _every time_ the block is updated.** To avoid listeners becoming stacked upon listeners, I'm using the [cleanup mechanism](https://reactjs.org/docs/hooks-effect.html#example-using-hooks-1) built into the `useEffect` hook by returning from the hook with an `unsubscribe()` method call. Even though I'm already unsubscribing every time I call `setAttributes`, this will cover my butt any time a different state change occurs, totally unrelated to these settings. The objective is to never have more than one store listener active in the component at once, and this helps guarantee that.
 
-In all, those changes look like this: 
+In all, those changes look like this:
 
 ```diff
 const { useEffect } = wp.element;

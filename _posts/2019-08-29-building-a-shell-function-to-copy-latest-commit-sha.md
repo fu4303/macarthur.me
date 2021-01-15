@@ -1,6 +1,6 @@
 ---
 title: Building a Shell Function to Copy the Latest Git Commit SHA
-open_graph: https://images.pexels.com/photos/134059/pexels-photo-134059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200
+ogImage: https://images.pexels.com/photos/134059/pexels-photo-134059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200
 ---
 
 Frequently enough, I find myself needing to copy the SHA of the latest commit in project, and doing it manually was becoming a chore. I'd been getting more comfortable and excited about improving efficiency by rolling custom shell functions ([like I wrote about here](/posts/formatting-my-php-more-efficiently-with-a-bash-function)), and so this felt like a good candidate for another one. After a bit of searching, this was confirmed -- very little was out there on someone else building a simple terminal command to do such a thing. So, I went for it.
@@ -10,11 +10,11 @@ Frequently enough, I find myself needing to copy the SHA of the latest commit in
 **Solution:** Make a shell function that'll allow me to do it with a simple terminal command.
 
 ## Building the Function
-Most of the experimentation I did for this was done in a regular shell script on my machine. But to quickly test the script as a terminal command, I copied my iterations inside my `~/.zshrc` and sourced it with `source ~/.zshrc`. Over time, this is how those iterations progressed. 
+Most of the experimentation I did for this was done in a regular shell script on my machine. But to quickly test the script as a terminal command, I copied my iterations inside my `~/.zshrc` and sourced it with `source ~/.zshrc`. Over time, this is how those iterations progressed.
 
 ### Iteration #1 :: Stupid Simple
 
-Setting up the basics of the function was pretty straightforward: 
+Setting up the basics of the function was pretty straightforward:
 
 ```bash
 # `clc` stands for `copy last commit`.
@@ -39,7 +39,7 @@ function clc {
         echo "$LAST_COMMIT_SHA" | tr -d '\n' | pbcopy
         echo "Copied ${LAST_COMMIT_SHA}."
 +    }
-+    
++
 +    # Added to check out branch, if parameter is set.
 +    if [ ! -z "$1" ]; then
 +        if git checkout $1 >/dev/null; then
@@ -92,7 +92,7 @@ function clc {
     # Added to check out branch, if parameter is set.
     if [ ! -z "$1" ]; then
 +        IS_DIRTY=$(git status -s)
-+    
++
 +        if [[ ! -z $IS_DIRTY ]]; then
 +            git stash push -u >/dev/null
 +            echo "Stashed unstaged stages."
@@ -121,7 +121,7 @@ Because it tripped me up, take extra notice that I'm not using a simple `git sta
 
 At this point, I was feeling pretty good about myself. I had worked through all the weird shell issues I had hit along the way, and actually published this very blog post on the whole process.
 
-And then, a couple of Reddit users (thanks, [nunull](https://www.reddit.com/user/nunull/) and [austin-schaffer](https://www.reddit.com/user/austin-schaffer/)!) pointed out that I don't actually _need_ to perform a checkout just to get at a commit SHA. This should have been obvious since was already using `git rev-parse HEAD` to pull the SHA. Swapping out `HEAD` for whatever branch I need would have done the trick, completely removing the need for any of that complicated checkout and stash logic 🤦. 
+And then, a couple of Reddit users (thanks, [nunull](https://www.reddit.com/user/nunull/) and [austin-schaffer](https://www.reddit.com/user/austin-schaffer/)!) pointed out that I don't actually _need_ to perform a checkout just to get at a commit SHA. This should have been obvious since was already using `git rev-parse HEAD` to pull the SHA. Swapping out `HEAD` for whatever branch I need would have done the trick, completely removing the need for any of that complicated checkout and stash logic 🤦.
 
 With that revelation, the function goes from all of those lines of code down to just a few:
 
@@ -154,9 +154,9 @@ curl https://gist.githubusercontent.com/alexmacarthur/933a50c3e072baaf7b6ed18b94
 
 ### Running the Command
 
-After doing that, source it up with `source ~/.zshrc`, and you should be able to run the command. 
+After doing that, source it up with `source ~/.zshrc`, and you should be able to run the command.
 
-Running `clc` will return something like this: 
+Running `clc` will return something like this:
 
 ```
 Copied 3ccbd742f916659c50cbff6c2f63e2ba28a168b5 from master.
@@ -168,6 +168,6 @@ Running `clc new-branch` will return something like this:
 Copied 3ccbd742f916659c50cbff6c2f63e2ba28a168b5 from new-branch.
 ```
 
-## Did I Miss Something? 
+## Did I Miss Something?
 
 It wouldn't surprise me. If you have any suggestions or improvements, let me know!

@@ -1,6 +1,6 @@
 ---
 title: Don't Feel Bad About Using XMLHttpRequest
-open_graph: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100"
+ogImage: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=100"
 ---
 
 A while back, I began contributing to a small JavaScript library responsible for sending a POST request with some data to an endpoint. At the time, it used [axios](https://github.com/axios/axios) to make that request, and I wanted to simplify things by shedding a dependency. The obvious alternative was `fetch` -- modern, native, and ergonomic.
@@ -22,7 +22,7 @@ For my simple needs, this just felt like too much, especially considering the st
 
 ## Making Prehistoric HTTP Requests
 
-So, I thought back to what our ancestors used to do such things: `XMLHttpRequest`. The O.G. of HTTP requests in JavaScript. I've heard rumors of this thing. The verbosity. The insanity it's left in its wake. 
+So, I thought back to what our ancestors used to do such things: `XMLHttpRequest`. The O.G. of HTTP requests in JavaScript. I've heard rumors of this thing. The verbosity. The insanity it's left in its wake.
 
 Despite that reputation, I gave it a shot wiring it up. And as it turned out, **for simple requests, most of those rumors were overblown.** After the switch, my implementation went from something like this:
 
@@ -31,7 +31,7 @@ try  {
     let response = await axios.post('http://localhost:4000', {
         name: 'Alex'
     }, {
-        headers: { 
+        headers: {
             'x-api-key': 'my-api-key'
         }
     });
@@ -89,11 +89,11 @@ Being polyfill-free, I don't need to worry about asking other teams to deal with
 
 ### 3. Less risky implementation.
 
-When pulling in the package, teams don't need to deal with the array of potential issues that come up from introducing global dependencies, such as double-loading polyfills that are already being pulled in, or subtle differences in how a polyfill behaves relative to the actual specification. Any risk in implementing the library is limited to the package code itself. In general, the JavaScript polyfill landscape is the [wild west](https://twitter.com/BenLesh/status/1283491594327515140), with no guarantees that packages will meet the full specification of an API (in fact, many don't intend to). Being able to sidestep the unavoidable risks in dealing with them is huge. 
+When pulling in the package, teams don't need to deal with the array of potential issues that come up from introducing global dependencies, such as double-loading polyfills that are already being pulled in, or subtle differences in how a polyfill behaves relative to the actual specification. Any risk in implementing the library is limited to the package code itself. In general, the JavaScript polyfill landscape is the [wild west](https://twitter.com/BenLesh/status/1283491594327515140), with no guarantees that packages will meet the full specification of an API (in fact, many don't intend to). Being able to sidestep the unavoidable risks in dealing with them is huge.
 
 ## Some Common Objections
 
-Despite these good things, there are a few objections I've seen come up a few times: 
+Despite these good things, there are a few objections I've seen come up a few times:
 
 ### 1. We should lean into writing modern JavaScript!
 
@@ -111,7 +111,7 @@ Yeah, it is. That's why I'm placing decent emphasis on it being best for _simple
 
 ### 4. I like my Promise-based API!
 
-Me too! But thankfully, it's easy enough to wrap an `XMLHttpRequest` implementation in a Promise to retain that interface. You'll get those ergonomics, and you'll still have to deal with one less polyfill than if you had gone with something like `fetch`. 
+Me too! But thankfully, it's easy enough to wrap an `XMLHttpRequest` implementation in a Promise to retain that interface. You'll get those ergonomics, and you'll still have to deal with one less polyfill than if you had gone with something like `fetch`.
 
 ```js
 const fire = () => {

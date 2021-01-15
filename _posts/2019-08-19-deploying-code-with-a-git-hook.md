@@ -1,6 +1,6 @@
 ---
 title: Deploying Code with a Git Hook on a DigitalOcean Droplet
-open_graph: 'https://images.pexels.com/photos/256229/pexels-photo-256229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200'
+ogImage: 'https://images.pexels.com/photos/256229/pexels-photo-256229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1200'
 ---
 
 I've been working on a project involving long-running, resource-intensive batch jobs in Node. At first, when my needs were simpler, I used Heroku to run these jobs. It was great, but eventually, the price:performance ratio offered became a little too unwieldy, and I chose to make a move from Heroku to DigitalOcean.
@@ -42,7 +42,7 @@ And paste the following bones in there:
 
 while read oldrev newrev ref
 do
-    # We gonna do stuff. 
+    # We gonna do stuff.
 done
 ```
 
@@ -129,7 +129,7 @@ do
 
         # "Deploy" the branch we just pushed to a specific directory.
         git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH
-+    else 
++    else
 +       echo "Not master branch. Skipping."
 +    fi
 done
@@ -158,17 +158,17 @@ do
 
         # "Deploy" the branch we just pushed to a specific directory.
         git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH
-    else 
+    else
         echo "Not master branch. Skipping."
     fi
 
 +   # Source nvm to make it available for use inside this script.
 +   . $HOME/.nvm/nvm.sh
-+    
++
 +   # Use the LTS version of Node.
 +   nvm use --lts
-+   
-+   # Navigate to where my deployed code lives. 
++
++   # Navigate to where my deployed code lives.
 +   cd /home/neat-app-deployed
 +
 +   # Install dependencies in production mode.

@@ -1,13 +1,13 @@
 ---
 title: A Simpler Unit Testing Setup for WordPress
-open_graph: "https://images.pexels.com/photos/1366942/pexels-photo-1366942.jpeg?cs=srgb&dl=beaker-biology-chemical-1366942.jpg&fm=jpg"
+ogImage: "https://images.pexels.com/photos/1366942/pexels-photo-1366942.jpeg?cs=srgb&dl=beaker-biology-chemical-1366942.jpg&fm=jpg"
 ---
 
 When I was getting started in web development, I remember how conceptually overwhelming it was to understand the whys, whats, and hows around things like unit testing. And to make it even more difficult, WordPress was the environment in which I spent most of my time &mdash; a platform not well-known for its strong culture of unit testing.
 
-As far as I can tell, the most-recommended resource for unit testing in WordPress is the [scaffolding provided by the WP-CLI.](https://make.wordpress.org/cli/handbook/plugin-unit-tests/) Run a command, and it'll do things like download a copy of WordPress, set up a test database, and provide some nice-to-have methods for integrating your tests with the WP infrastructure itself. The problem is that every time I’ve tried to get this set up — for both themes and plugins — I’ve run into unexpected database or file structure issues. I spend a good share of time working through them, and then *maybe* have enough mental motivation to write a test. 
+As far as I can tell, the most-recommended resource for unit testing in WordPress is the [scaffolding provided by the WP-CLI.](https://make.wordpress.org/cli/handbook/plugin-unit-tests/) Run a command, and it'll do things like download a copy of WordPress, set up a test database, and provide some nice-to-have methods for integrating your tests with the WP infrastructure itself. The problem is that every time I’ve tried to get this set up — for both themes and plugins — I’ve run into unexpected database or file structure issues. I spend a good share of time working through them, and then *maybe* have enough mental motivation to write a test.
 
-***There’s got to be an easier way to set this stuff up.*** 
+***There’s got to be an easier way to set this stuff up.***
 
 I like what the WP-CLI approach has to offer. The helper methods provided by `WP_UnitTestCase` (the class you can extend rather than `PHPUnit\Framework\TestCase`) alone might make it worth working through the setup friction. But sometimes, you just wanna start writing some friggin' tests to build some value for your theme or plugin. In those cases, there's a better way: **hook it up yourself.** It's not as scary as it sounds.
 
@@ -15,7 +15,7 @@ I like what the WP-CLI approach has to offer. The helper methods provided by `WP
 
 For this run-through, I'll be using my [wp-skateboard](https://github.com/alexmacarthur/wp-skateboard) setup, which runs on Docker, but it really doesn't matter whether you're using this, Vagrant, or anything else. But if you are using Docker, make sure you run any of the following commands inside your running container. To help with that, `wp-skateboard` allows you to run `make bash` to easily enter the container with a bash prompt.
 
-We’ll also be using Composer for package management and autoloading. And because most tutorials I’ve found focus on plugins, we’ll stick there too. 
+We’ll also be using Composer for package management and autoloading. And because most tutorials I’ve found focus on plugins, we’ll stick there too.
 
 #### Install PHPUnit with Composer.
 
@@ -31,7 +31,7 @@ After that, add bit of autoloading data that’ll come in handy later. Here, we 
 }
 ```
 
-Next up, we need to install PHPUnit. 
+Next up, we need to install PHPUnit.
 
 `composer require phpunit/phpunit --dev`
 
@@ -75,15 +75,15 @@ Here, we’re loading a `bootstrap.php` file, which will be created in our plugi
 - `wp-load.php` - This is a file from WordPress core that’ll load the CMS functionality we’ll need to run our plugin’s code as we test it.
 
 ```php
-<?php 
+<?php
 
 // bootstrap.php
 
 require_once(__DIR__ . "/../vendor/autoload.php");
 require_once(__DIR__ . "/../../../../wp-load.php");
-``` 
+```
 
-With this in place, these two files will be loaded every time our test suite runs, providing us with the resources we need to test. 
+With this in place, these two files will be loaded every time our test suite runs, providing us with the resources we need to test.
 
 Also, take note of this line back in our `phpunit.xml` file:
 
@@ -91,9 +91,9 @@ Also, take note of this line back in our `phpunit.xml` file:
 <directory suffix="Test.php">./tests/</directory>
 ```
 
-What this is doing is specifying the type of named files we’re doing to run as tests within the `./tests` directory. Since that suffix is set to “Test.php,” any file that ends with that string will be run. 
+What this is doing is specifying the type of named files we’re doing to run as tests within the `./tests` directory. Since that suffix is set to “Test.php,” any file that ends with that string will be run.
 
-At this point, try running `vendor/bin/phpunit` again. This time, you should see something that looks more like this: 
+At this point, try running `vendor/bin/phpunit` again. This time, you should see something that looks more like this:
 
 ```bash
 PHPUnit 7.3.5 by Sebastian Bergmann and contributors.
@@ -121,7 +121,7 @@ class SomeClassTest extends \PHPUnit\Framework\TestCase
 }
 ```
 
-Running `vendor/bin/phpunit` should produce something like the following: 
+Running `vendor/bin/phpunit` should produce something like the following:
 
 ```bash
 PHPUnit 8.2.3 by Sebastian Bergmann and contributors.
@@ -130,11 +130,11 @@ PHPUnit 8.2.3 by Sebastian Bergmann and contributors.
 
 Time: 2.59 seconds, Memory: 54.25 MB
 ```
-Noice. 
+Noice.
 
 #### Let's make things more WordPress-y.
 
-From here on out, we can start leveraging the WordPress ecosystem as needed. For a stupid example, let’s say we have a method that’ll retrieve the content of a post in an emotionalized based on the tags attached to the post. Specifically, we’ll format the content differently if the post is tagged `angry`, `excited`, or `obnoxious`. 
+From here on out, we can start leveraging the WordPress ecosystem as needed. For a stupid example, let’s say we have a method that’ll retrieve the content of a post in an emotionalized based on the tags attached to the post. Specifically, we’ll format the content differently if the post is tagged `angry`, `excited`, or `obnoxious`.
 
 ```php
 <?php
@@ -171,7 +171,7 @@ function getEmotionalizedContent($postId)
 
 Because our PHPUnit configuration is set to import WordPress core, our tests will have access to this plugin (make sure it’s active in the WP admin!), as well as everything else loaded by WordPress’ `wp-load.php` file. So, we should be ready to dive in & test.
 
-First off, let’s add some code to `SomePostClass` that’ll provide us with a post to manipulate and clean up after we’re finished. 
+First off, let’s add some code to `SomePostClass` that’ll provide us with a post to manipulate and clean up after we’re finished.
 
 ```php
 class SomePostClass extends \PHPUnit\Framework\TestCase
@@ -194,9 +194,9 @@ class SomePostClass extends \PHPUnit\Framework\TestCase
 }
 ```
 
-Leveraging `setUp()` and `tearDown()`, we’re creating a fresh WP post and deleting it after any given test method is complete. Since we’re passing `true` to `wp_delete_post`, it’ll also [clean up any attached post meta we create along the way.](https://codex.wordpress.org/Function_Reference/wp_delete_post) 
+Leveraging `setUp()` and `tearDown()`, we’re creating a fresh WP post and deleting it after any given test method is complete. Since we’re passing `true` to `wp_delete_post`, it’ll also [clean up any attached post meta we create along the way.](https://codex.wordpress.org/Function_Reference/wp_delete_post)
 
-After that, we can add our method-specific tests to cover all of our cases. 
+After that, we can add our method-specific tests to cover all of our cases.
 
 ```php
 public function test_getEmotionalizedContent_shouldBeAngryWhenTagIsApplied()
@@ -212,7 +212,7 @@ public function test_getEmotionalizedContent_shouldBeExcitedWhenTagIsApplied()
 {
     wp_set_post_tags($this->testPostId, 'excited', true);
     $this->assertStringEndsWith(
-        "!", 
+        "!",
         getEmotionalizedContent($this->testPostId)
     );
 }
@@ -221,7 +221,7 @@ public function test_getEmotionalizedContent_shouldBeObnoxiousWhenTagIsApplied()
 {
     wp_set_post_tags($this->testPostId, 'obnoxious', true);
     $this->assertEquals(
-        getEmotionalizedContent($this->testPostId), 
+        getEmotionalizedContent($this->testPostId),
         "This 👏 is 👏 just 👏 some 👏 sample 👏 post 👏 content."
     );
 }
@@ -242,7 +242,7 @@ public function test_getEmotionalizedContent_shouldBeEverythingWhenTagAreApplied
 }
 ```
 
-Running `vendor/bin/phpunit` again, you should see some success: 
+Running `vendor/bin/phpunit` again, you should see some success:
 
 ```bash
 root@bc37c28f5d63:/var/www/html/wp-content/plugins/unit-testing-plugin# vendor/bin/phpunitPHPUnit 8.2.3 by Sebastian Bergmann and contributors.
@@ -254,17 +254,17 @@ Time: 3.44 seconds, Memory: 32.00 MB
 OK (4 tests, 5 assertions)
 ```
 
-Gr8 work. But as your tests grow, it’s likely that you’ll need to interact with posts throughout several different classes. So, let’s abstract a bit of this WordPress-specific stuff out into its own class that extends `\PHPUnit\Framework\TestCase`. 
+Gr8 work. But as your tests grow, it’s likely that you’ll need to interact with posts throughout several different classes. So, let’s abstract a bit of this WordPress-specific stuff out into its own class that extends `\PHPUnit\Framework\TestCase`.
 
 ```php
-<?php 
+<?php
 
 namespace PluginTests;
 
 class PostTestCase extends \PHPUnit\Framework\TestCase
 {
     public $testPostId;
-    
+
     public function setUp(): void
     {
         $this->testPostId = wp_insert_post([
@@ -280,25 +280,25 @@ class PostTestCase extends \PHPUnit\Framework\TestCase
 }
 ```
 
-Then, in our test class, we can extend this new helper class: 
+Then, in our test class, we can extend this new helper class:
 
 ```diff
 -class SomePostTest extends \PHPUnit\Framework\TestCase
 +class SomePostTest extends \PluginTests\PostTestCase
 ```
 
-Thanks to that bit of autoloading configuration we did earlier, we don’t need to include our new helper class — it happens automatically, out of sight. And as a result, from here on out, we can easily access `$this->testPostId` and any other resource we choose to make available in `PostTestCase`, rather than handling all of the setup and cleanup within our individual test classes. 
+Thanks to that bit of autoloading configuration we did earlier, we don’t need to include our new helper class — it happens automatically, out of sight. And as a result, from here on out, we can easily access `$this->testPostId` and any other resource we choose to make available in `PostTestCase`, rather than handling all of the setup and cleanup within our individual test classes.
 
-As the need arises, you can create your own different test cases from which to extend, perhaps based on the type of resource you need. For example, a `\PluginTests\UserTestCase` might be good to have in order to easily test code pertaining to WordPress user objects. 
+As the need arises, you can create your own different test cases from which to extend, perhaps based on the type of resource you need. For example, a `\PluginTests\UserTestCase` might be good to have in order to easily test code pertaining to WordPress user objects.
 
 
 ## Yeah, Trade-Offs Exist
 
-The value this entire approach gives is (hopefully) a quicker path to start writing tests in WordPress. That said, there are some trade-offs that come along it. For example: 
+The value this entire approach gives is (hopefully) a quicker path to start writing tests in WordPress. That said, there are some trade-offs that come along it. For example:
 
 
 - **If you’re not careful in how you clean up the data you create when running tests, your local DB could get pretty muddy.** In many cases, it might be better to manually create a test DB and point your application to that while testing. I’m sure there’s some clever programmatic way to do this with the setup I’ve explained, but I haven’t explored those waters much.
-- **You miss out on the features included with the WordPress-recommended test suite setup.** Yeah, a lot of this would be nice to be able to leverage, but I’ve found that I don’t need much in order to set up valuable tests for my code using this simplified approach here. That could change at any given moment, but until that happens, I’m good with this being sacrificed. 
+- **You miss out on the features included with the WordPress-recommended test suite setup.** Yeah, a lot of this would be nice to be able to leverage, but I’ve found that I don’t need much in order to set up valuable tests for my code using this simplified approach here. That could change at any given moment, but until that happens, I’m good with this being sacrificed.
 
 
 ## Feedback: Whatcha Got?
