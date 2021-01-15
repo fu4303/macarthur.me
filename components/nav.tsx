@@ -46,15 +46,17 @@ const Nav = ({isAbsolute = false}) => {
   return (
     <nav className={`z-10 py-10 px-4 md:px-8 w-full font-bold flex items-center justify-between nav ${positionClass}`}>
 
-      <input type="checkbox" id="menuToggle" className="absolute opacity-0 lg:hidden -z-10" />
+      <input type="checkbox" id="menuToggle" className="absolute opacity-0 lg:hidden -z-10" aria-labelledby="menuToggleLabel" />
 
-      <span className={`flex-none font-bold text-2xl lg:text-3xl ${shouldHideLogo ? 'opacity-0' : ''}`}>
+      <span className={`flex-none font-bold text-2xl lg:text-3xl ${shouldHideLogo ? 'opacity-0 pointer-events-none' : ''}`}>
         <Logo asLink={true} />
       </span>
 
       <label
         className="cursor-pointer relative z-20 lg:hidden nav-menu-label"
-        htmlFor="menuToggle">
+        htmlFor="menuToggle"
+        id="menuToggleLabel"
+      >
         <MenuToggle />
       </label>
 
