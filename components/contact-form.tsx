@@ -30,6 +30,8 @@ const ContactForm = () => {
         flex: "1",
       }}
     >
+      <input type="hidden" name="form-name" value="Contact" />
+
       <p hidden>
         <label>
           Don’t fill this out: <input name="bot-field" />
@@ -72,11 +74,11 @@ const ContactForm = () => {
         <button type="submit" className="button">Send</button>
       </p>
 
-      {validationMessage && (
-        <span className={""}>
+      {/* {validationMessage && ( */}
+        <span className={"block bg-green-200 text-green-700 px-3 py-2 rounded-md"}>
           {validationMessage}
         </span>
-      )}
+      {/* )} */}
     </form>
   )
 }
