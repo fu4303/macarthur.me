@@ -17,7 +17,7 @@ const PostList = ({posts}) => {
 
               <DateFormatter dateString={post.date} className="inline-block mb-3" />
 
-              <small className="block text-gray-400 mb-2">
+              <small className="block text-gray-500 mb-2">
                 {post.excerpt}
               </small>
 

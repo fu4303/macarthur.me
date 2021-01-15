@@ -4,9 +4,15 @@ import Arrow from './arrow';
 
 const Button = ({ children, href = "", small = false, classes = "", pointLeft = false, naked = false, internal = false, inheritColor = false, ...otherProps }) => {
   const defaultClasses = `transition-all inline-flex items-center cursor-pointer ${small ? 'text-base' : ''} ${pointLeft ? 'flex-row-reverse' : ''} `;
-  const buttonColors = naked
+  let buttonColors = naked
     ? "text-purple-400 hover:text-purple-500 "
     : "text-white bg-purple-400 hover:text-white hover:bg-purple-500";
+
+  if(inheritColor) {
+    buttonColors = naked
+      ? "text-gray-500 hover:text-gray-700 "
+      : "text-white bg-gray-500 hover:text-white hover:bg-gray-700";
+  }
   const buttonPadding = naked
     ? ""
     : "px-4 py-2 rounded-md";
@@ -20,7 +26,6 @@ const Button = ({ children, href = "", small = false, classes = "", pointLeft = 
       <a {...otherProps}
         className={defaultClasses + buttonColors + buttonPadding + classes}
         href={href}
-        style={styles}
       >
         {children}
         <Arrow className={`block ${iconMargin} ${iconDimensions} ${iconRotation}`} />
