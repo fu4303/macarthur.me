@@ -27,7 +27,7 @@ const ContactForm = () => {
       )}
 
       <form
-        name="Contact"
+        name="contact"
         method="post"
         action="/thanks/"
         data-netlify="true"
@@ -38,7 +38,7 @@ const ContactForm = () => {
         }}
       >
 
-        <input type="hidden" name="form-name" value="Contact" />
+        <input type="hidden" name="form-name" value="contact" />
 
         <p hidden>
           <label>
