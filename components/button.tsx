@@ -17,7 +17,11 @@ const Button = ({ children, href = "", small = false, classes = "", pointLeft = 
 
   const ButtonLink = forwardRef(() => {
     return (
-      <a {...otherProps} className={defaultClasses + buttonColors + buttonPadding + classes} href={href} style={styles} >
+      <a {...otherProps}
+        className={defaultClasses + buttonColors + buttonPadding + classes}
+        href={href}
+        style={styles}
+      >
         {children}
         <Arrow className={`block ${iconMargin} ${iconDimensions} ${iconRotation}`} />
       </a>

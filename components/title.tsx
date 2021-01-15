@@ -1,7 +1,5 @@
 import DateFormatter from "./date-formatter";
 import Button from "./button";
-import Arrow from "./arrow";
-import Link from 'next/link'
 
 type TitleProps = {
   children: React.ReactNode,
@@ -15,7 +13,7 @@ const Title = ({children, date, isPost, subtitle}: TitleProps) => {
     <div className="mt-1 lg:mt-6 mb-6 lg:mb-12">
 
       <div>
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-2 gradient-text inline-block leading-none lg:leading-tight">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-2 gradient-text inline-block leading-none">
           {children}
         </h1>
 
