@@ -1,6 +1,9 @@
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
+    fontFamily: {
+      sans: ["Public Sans", "sans-serif"],
+    },
     extend: {
       fontSize: {
         '7xl': '6rem',
