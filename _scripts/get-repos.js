@@ -8,8 +8,12 @@ const { getOpenSourceRepos } = require("../lib/github");
 
 rimraf.sync(`${process.cwd()}/lib/repo-data.json`);
 
-getOpenSourceRepos().then(repos => {
-  fs.writeFileSync(`${process.cwd()}/lib/repo-data.json`, JSON.stringify(repos));
+try {
+  getOpenSourceRepos().then(repos => {
+    fs.writeFileSync(`${process.cwd()}/lib/repo-data.json`, JSON.stringify(repos));
 
-  console.log(`Fetched ${repos.length} repos!`);
-});
+    console.log(`Fetched ${repos.length} repos!`);
+  });
+} catch(e) {
+  console.log(e.message);
+}
