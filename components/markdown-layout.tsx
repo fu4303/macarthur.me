@@ -1,85 +1,41 @@
-import { Children } from 'react';
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import Container from "./container";
 import Layout from "./layout";
 import Title from "./title";
-import ReactMarkdown from "react-markdown"
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-import Image from "./image";
 import Meta from './meta';
+import { activateImage, createObserver } from '../lib/images';
+import { useRef, useEffect } from 'react';
 
-const getRenderers = (slug, imageData) => {
-  return {
-    image: image => {
-      let { src } = image;
-      let height, width;
-      const absoluteRegex = new RegExp("^(http(s?):\/\/)");
-
-      if (!src.match(absoluteRegex)) {
-        const cleanedSrc = src.replace(/^\.\//, "");
-        const {
-          width: imgWidth,
-          height: imgHeight
-        } = imageData[cleanedSrc];
-
-        width = imgWidth;
-        height = imgHeight;
-
-        src = `/post-images/${slug}/${cleanedSrc}`;
-      }
-
-      return <Image
-        src={src}
-        height={height}
-        width={width}
-        classes={"transition-opacity opacity-0 mx-auto block"}
-        loadedClass="opacity-100"
-      />
-    },
-    code: ({ language, value }) => {
-      return <SyntaxHighlighter style={okaidia} language={language} children={value} />
-    },
-    heading: (props) => {
-      // Recursively loop through a React element to pull out the static text.
-      const flatten = (text: string, child) => {
-        return typeof child === 'string'
-        ? text + child
-        : Children.toArray(child.props.children).reduce(flatten, text);
-      };
-
-      // Extract the heading text.
-      const headingText = props.children.reduce((fullText, child) => {
-        return flatten(fullText, child);
-      }, "");
-
-      // Convert the text to a slug by replacing every non-word character with a "-";
-      const slug = headingText
-        .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]/g, "")
-        .replace(/\s/g, "-");
-
-      const HeadingTag: any = `h${props.level}`;
-
-      return (
-        <HeadingTag id={slug}>
-          <a href={`#${slug}`}>
-            { props.children }
-          </a>
-        </HeadingTag>
-      )
-    }
-  };
-}
+import 'prismjs/themes/prism-okaidia.css';
 
 export default function PostLayout({ pageData, imageData = {}, isPost = null }) {
+  const contentRef = useRef(null);
   const router = useRouter();
   const { title, date, slug, ogImage, excerpt } = pageData;
 
   if (!router.isFallback && !pageData?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+
+  useEffect(() => {
+    const images = [...contentRef.current.querySelectorAll('[data-lazy-src]')];
+    const observers = images.map(image => {
+      const observer = createObserver(image, () => {
+        activateImage(image, (e => {
+          e.target.classList.add('opacity-100');
+        }));
+      });
+
+      observer.observe();
+
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(({ kill }) => kill());
+    }
+  }, []);
 
   const ContainerContent: any = () => (
     <Container narrow={true}>
@@ -91,18 +47,10 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
 
       </Title>
 
-      <div dangerouslySetInnerHTML={{__html: pageData.content}}></div>
-{/*
-      <ReactMarkdown
-        linkTarget={(_url, _text, _title) => {
-          return "_blank";
-        }}
-        rawSourcePos={true}
+      <div
+        ref={contentRef}
         className="post-content mx-auto prose max-w-none md:prose-lg"
-        allowDangerousHtml={true}
-        children={pageData.content}
-        renderers={getRenderers(slug, imageData)}
-      /> */}
+        dangerouslySetInnerHTML={{__html: pageData.content}}></div>
     </Container>
   );
 

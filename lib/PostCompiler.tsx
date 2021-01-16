@@ -23,7 +23,7 @@ export default class PostCompiler {
           slug,
           path: name,
           date: this.getDate(name),
-          ...this.getContent(name)
+          ...this.getContent(name, slug)
         }
       });
 
@@ -37,7 +37,7 @@ export default class PostCompiler {
           slug,
           path,
           date: this.getDate(name),
-          ...this.getContent(path)
+          ...this.getContent(path, slug)
         }
       });
 
@@ -85,7 +85,7 @@ export default class PostCompiler {
       });
   }
 
-  getContent(filePath: string) {
+  getContent(filePath: string, slug: string) {
     const fullPath = join(this.directory, filePath);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
@@ -97,7 +97,7 @@ export default class PostCompiler {
     const excerpt = words.slice(0, 50).join(' ') + '...';
 
     return {
-      content: processMarkdown(content),
+      content: processMarkdown(content, slug),
       excerpt,
       title: data.title,
       ogImage: data.ogImage || ""
