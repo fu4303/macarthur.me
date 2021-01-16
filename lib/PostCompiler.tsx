@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from "path";
 import matter from "gray-matter";
-import { stripMarkdown } from './markdown';
+import { processMarkdown, stripMarkdown } from './markdown';
 
 export default class PostCompiler {
   directory: string;
@@ -23,7 +23,7 @@ export default class PostCompiler {
           slug,
           path: name,
           date: this.getDate(name),
-          ...this.processMarkdown(name)
+          ...this.getContent(name)
         }
       });
 
@@ -37,7 +37,7 @@ export default class PostCompiler {
           slug,
           path,
           date: this.getDate(name),
-          ...this.processMarkdown(path)
+          ...this.getContent(path)
         }
       });
 
@@ -85,7 +85,7 @@ export default class PostCompiler {
       });
   }
 
-  processMarkdown(filePath: string) {
+  getContent(filePath: string) {
     const fullPath = join(this.directory, filePath);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
@@ -97,7 +97,7 @@ export default class PostCompiler {
     const excerpt = words.slice(0, 50).join(' ') + '...';
 
     return {
-      content,
+      content: processMarkdown(content),
       excerpt,
       title: data.title,
       ogImage: data.ogImage || ""

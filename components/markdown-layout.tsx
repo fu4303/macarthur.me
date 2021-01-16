@@ -88,8 +88,11 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
         isPost={isPost}
       >
         {title}
+
       </Title>
 
+      <div dangerouslySetInnerHTML={{__html: pageData.content}}></div>
+{/*
       <ReactMarkdown
         linkTarget={(_url, _text, _title) => {
           return "_blank";
@@ -99,7 +102,7 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
         allowDangerousHtml={true}
         children={pageData.content}
         renderers={getRenderers(slug, imageData)}
-      />
+      /> */}
     </Container>
   );
 
