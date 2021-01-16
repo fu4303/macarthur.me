@@ -113,9 +113,13 @@ export default Projects;
 export async function getStaticProps() {
   const { getOpenSourceRepos } = require('../lib/github');
 
-  const repos = (process.env.NODE_ENV === 'development')
-    ? require('../lib/repo-data.json')
-    : await getOpenSourceRepos()
+  // const repos = (process.env.NODE_ENV === 'development')
+  //   ? require('../lib/repo-data.json')
+  //   : await getOpenSourceRepos()
+
+  const repos = await getOpenSourceRepos();
+
+  console.log('got em');
 
   return {
     props: {
