@@ -19,7 +19,6 @@ const Button = ({ children, href = "", small = false, classes = "", pointLeft = 
   const iconDimensions = small ? 'h-4 w-4' : 'h-6 w-6';
   const iconRotation = pointLeft ? 'transform rotate-180' : '';
   const iconMargin = pointLeft ? 'mr-2' : 'ml-2';
-  const styles = inheritColor ? { color: 'inherit !important'} : {}
 
   const ButtonLink = forwardRef(() => {
     return (

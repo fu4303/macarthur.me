@@ -63,6 +63,9 @@ module.exports = {
             pre: {
               fontSize: theme('fontSize.base')
             },
+            'pre code::after': {
+              content: 'none'
+            },
             '.property-access': {
               color: 'white'
             }
