@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 
-const FB_ADMINS = "502371334";
-const TWITTER_HANDLE = "@amacarthur";
-const ALTERNATE_NAME = "Alex MacArthur";
-const SITE_URL = "https://macarthur.me";
+import {
+  FB_ADMINS,
+  TWITTER_HANDLE,
+  ALTERNATE_NAME,
+  SITE_URL
+} from '../lib/constants';
 
 export default function Meta({
   isPost = false,
@@ -16,7 +18,7 @@ export default function Meta({
   const url = `${SITE_URL}${router.asPath}`.replace(/\/$/, '');
   const computedTitle = title
     ? `${title} // Alex MacArthur`
-    : "Alex MacArthur // Web Developer in Nashville" ;
+    : "Alex MacArthur // Web Developer in Nashville";
 
   const schemaOrgJSONLD: any[] = [
     {
@@ -49,7 +51,7 @@ export default function Meta({
   return (
     <Head>
       <title>
-        { computedTitle }
+        {computedTitle}
       </title>
       <link
         rel="apple-touch-icon"
@@ -87,7 +89,7 @@ export default function Meta({
       <meta property="og:description" content={description} key="og:description" />
       <meta property="og:image" content={image} key="og:image" />
       <meta property="fb:admins" content={FB_ADMINS} key="fb:admins" />
-      {isPost ? <meta property="og:type" content="article" key="og:type"/> : null}
+      {isPost ? <meta property="og:type" content="article" key="og:type" /> : null}
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" key="twitter:card" />

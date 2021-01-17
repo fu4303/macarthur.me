@@ -2,19 +2,19 @@ import Footer from './footer'
 import Meta from './meta'
 import Nav from './nav';
 import Container from './container';
-import { ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 
 type LayoutProps = {
   children: ReactNode,
   narrow?: boolean
 }
 
-export default function Layout({ children, narrow = false }: LayoutProps) {
+const Layout = forwardRef(({ children, narrow = false }: LayoutProps, ref: any) => {
   return (
     <>
       <Meta />
       <Nav />
-      <main id="main">
+      <main id="main" ref={ref}>
         <Container narrow={narrow} classes={"px-4"}>
           {children}
         </Container>
@@ -22,4 +22,6 @@ export default function Layout({ children, narrow = false }: LayoutProps) {
       <Footer />
     </>
   )
-}
+});
+
+export default Layout;

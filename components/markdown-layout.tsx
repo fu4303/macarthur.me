@@ -4,6 +4,8 @@ import Container from "./container";
 import Layout from "./layout";
 import Title from "./title";
 import Meta from './meta';
+import Bio from './bio';
+import SocialShare from './social-share';
 import { activateImage, createObserver } from '../lib/images';
 import { useRef, useEffect } from 'react';
 
@@ -12,7 +14,7 @@ import 'prismjs/themes/prism-okaidia.css';
 export default function PostLayout({ pageData, imageData = {}, isPost = null }) {
   const contentRef = useRef(null);
   const router = useRouter();
-  const { title, date, slug, ogImage, excerpt } = pageData;
+  const { title, date, ogImage, excerpt } = pageData;
 
   if (!router.isFallback && !pageData?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -20,6 +22,9 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
 
   useEffect(() => {
     const images = [...contentRef.current.querySelectorAll('[data-lazy-src]')];
+    console.log(contentRef.current);
+    console.log(images);
+
     const observers = images.map(image => {
       const observer = createObserver(image, () => {
         activateImage(image, (e => {
@@ -38,7 +43,7 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
   }, []);
 
   const ContainerContent: any = () => (
-    <Container narrow={true}>
+    <>
       <Title
         date={date}
         isPost={isPost}
@@ -48,28 +53,34 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
       </Title>
 
       <div
-        ref={contentRef}
         className="post-content mx-auto prose max-w-none md:prose-lg"
         dangerouslySetInnerHTML={{__html: pageData.content}}></div>
-    </Container>
+    </>
   );
 
   return (
-    <Layout>
+    <Layout ref={contentRef} >
       <Meta
         isPost={true}
         title={title}
         image={ogImage}
         description={excerpt}
       />
+      <Container narrow={true}>
 
-      {isPost && <ContainerContent />}
+      {!isPost && <ContainerContent />}
 
-      {!isPost &&
-        <article>
-          <ContainerContent />
-        </article>
+      {isPost &&
+        <>
+          <article className="mb-12">
+            <ContainerContent />
+          </article>
+
+          <Bio />
+          <SocialShare title={title} url="hey" />
+        </>
       }
+      </Container>
     </Layout>
   );
 }
