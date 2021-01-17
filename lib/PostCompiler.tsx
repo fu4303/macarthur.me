@@ -4,16 +4,22 @@ import matter from "gray-matter";
 import { processMarkdown, stripMarkdown } from './markdown';
 
 export default class PostCompiler {
+  posts: PostData[];
   directory: string;
   slugPattern: RegExp;
   datePattern: RegExp = new RegExp(/\d{4}-\d{2}-\d{2}-/);
 
   constructor(directory: string, slugPattern: RegExp) {
+    this.posts = [];
     this.directory = directory;
     this.slugPattern = slugPattern;
   }
 
   getPosts() {
+    if(this.posts.length > 0) {
+      return this.posts;
+    }
+
     const files: PostData[] = this.readFiles()
       .map((dirent): PostData => {
         const { name } = dirent;
@@ -41,7 +47,9 @@ export default class PostCompiler {
         }
       });
 
-    return this.sortByDate([...directories, ...files]);
+    this.posts = this.sortByDate([...directories, ...files]);
+
+    return this.posts;
   }
 
   getContentBySlug(slug: string): PostData {
