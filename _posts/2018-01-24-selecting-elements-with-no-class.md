@@ -35,7 +35,7 @@ This trick isn't new, but I'd usually seen it used to avoid selecting elements b
 
 But this time, I don't care about what the value is. I want to know if the attribute exists on the element at all.
 
-### You can use the negation pseudo-class to (not) select only by attribute too.
+### You can use the negation pseudo-class to (not) select only by attribute too. *crazy text*
 
 And remember, `class` _is_ just an HTML attribute. Meaning, we can do completely permissible, non-hacky things like this:
 

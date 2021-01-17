@@ -117,9 +117,7 @@ export async function getStaticProps() {
   //   ? require('../lib/repo-data.json')
   //   : await getOpenSourceRepos()
 
-  const repos = await getOpenSourceRepos();
-
-  console.log('got em');
+  const repos = [];
 
   return {
     props: {
