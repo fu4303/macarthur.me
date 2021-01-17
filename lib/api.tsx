@@ -13,26 +13,13 @@ const pageCompiler = new PostCompiler(pagesDirectory, pageSlugPattern);
 
 const PER_PAGE = 5;
 
-// function getContentData(contentType: ContentType): ContentData {
-//   return {
-//     slugPattern: contentType === 'post' ? postSlugPattern : pageSlugPattern,
-//     directory: contentType === 'post' ? postsDirectory : pagesDirectory
-//   };
-// }
-
 export function getContentBySlug(slug: string, contentType: ContentType) {
-  // const { slugPattern, directory } = getContentData(contentType);
-  // const postCompiler = new PostCompiler(directory, slugPattern);
-
   const compiler = contentType === "post" ? postCompiler : pageCompiler;
 
   return compiler.getContentBySlug(slug);
 }
 
 export function getAllPosts(): PostData[] {
-  // const { slugPattern, directory } = getContentData('post');
-  // const postCompiler = new PostCompiler(directory, slugPattern);
-
   return postCompiler.getPosts();
 }
 
@@ -56,9 +43,6 @@ export function getPostPageCount(): number {
 }
 
 export function getAllPages(): PostData[] {
-  // const { slugPattern, directory } = getContentData('page');
-  // const postCompiler = new PostCompiler(directory, slugPattern);
-
   return pageCompiler.getPosts();
 }
 

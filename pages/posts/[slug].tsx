@@ -4,7 +4,11 @@ import { getContentBySlug, getAllPosts, getImageDataForSlug } from "../../lib/ap
 import "prismjs/themes/prism-okaidia.css";
 
 export default function Post({ post, imageData }) {
-  return <MarkdownLayout pageData={post} imageData={imageData} isPost={true} />;
+  return <MarkdownLayout
+    pageData={post}
+    imageData={imageData}
+    isPost={true}
+  />;
 }
 
 export async function getStaticProps({ params }) {
