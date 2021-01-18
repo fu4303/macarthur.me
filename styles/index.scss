@@ -14,6 +14,19 @@ svg {
   max-height: 100%;
 }
 
+.icon {
+  path {
+    @apply transition-all;
+    fill: theme('colors.gray.700');
+  }
+
+  &:hover {
+    path {
+      fill: theme('colors.purple.500');
+    }
+  }
+}
+
 p,
 span,
 li,
@@ -41,6 +54,15 @@ h1, h2, h3, h4, h5 {
   @screen lg {
     width: calc(100% + #{$slice-width});
     transform: translateX(-#{$slice-width/2});
+  }
+}
+
+.divider {
+  @apply border-0 bg-gray-300 w-full max-w-xl mx-auto;
+  height: 1px;
+
+  &.divider--wide {
+    @apply max-w-5xl;
   }
 }
 

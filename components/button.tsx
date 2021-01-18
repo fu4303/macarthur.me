@@ -6,12 +6,12 @@ const Button = ({ children, href = "", small = false, classes = "", pointLeft = 
   const defaultClasses = `transition-all inline-flex items-center cursor-pointer ${small ? 'text-base' : ''} ${pointLeft ? 'flex-row-reverse' : ''} `;
   let buttonColors = naked
     ? "text-purple-400 hover:text-purple-500 "
-    : "text-white bg-purple-400 hover:text-white hover:bg-purple-500";
+    : "text-white bg-purple-400 hover:text-white hover:bg-purple-500 ";
 
   if(inheritColor) {
     buttonColors = naked
       ? "text-gray-500 hover:text-gray-700 "
-      : "text-white bg-gray-500 hover:text-white hover:bg-gray-700";
+      : "text-white bg-gray-500 hover:text-white hover:bg-gray-700 ";
   }
   const buttonPadding = naked
     ? ""

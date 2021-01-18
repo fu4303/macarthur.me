@@ -8,6 +8,7 @@ import Bio from './bio';
 import SocialShare from './social-share';
 import { activateImage, createObserver } from '../lib/images';
 import { useRef, useEffect } from 'react';
+import { fullUrlFromPath } from '../lib/utils'
 
 import 'prismjs/themes/prism-okaidia.css';
 
@@ -21,9 +22,9 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
   }
 
   useEffect(() => {
+    if (!contentRef.current) return;
+
     const images = [...contentRef.current.querySelectorAll('[data-lazy-src]')];
-    console.log(contentRef.current);
-    console.log(images);
 
     const observers = images.map(image => {
       const observer = createObserver(image, () => {
@@ -72,12 +73,14 @@ export default function PostLayout({ pageData, imageData = {}, isPost = null }) 
 
       {isPost &&
         <>
-          <article className="mb-12">
+          <article className="mb-16">
             <ContainerContent />
           </article>
 
-          <Bio />
-          <SocialShare title={title} url="hey" />
+          <div className="max-w-xl mx-auto">
+            <Bio />
+            <SocialShare title={title} url={fullUrlFromPath(router.asPath)} />
+          </div>
         </>
       }
       </Container>

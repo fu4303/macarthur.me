@@ -1,38 +1,38 @@
-import { SITE_URL} from '../lib/constants';
+import { SITE_URL } from '../lib/constants';
 import LinkedInIcon from './icon-linkedin';
 import TwitterIcon from './icon-twitter';
 import FacebookIcon from './icon-facebook';
 import { createElement } from 'react';
 
-const SocialShare = ({title, url}) => {
+const SocialShare = ({ title, url }) => {
   const encodedTitle = encodeURIComponent(title);
+
   const links = [
     {
-      url: `https://twitter.com/intent/tweet?text=${encodedTitle} - @amacarthur} ${url}`,
+      url: `https://twitter.com/intent/tweet?text=${encodedTitle}%20-%20@amacarthur%0A%0A${url}`,
       icon: TwitterIcon
     },
     {
       url: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
       icon: FacebookIcon
-    }, {
+    },
+    {
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${encodedTitle}&source=${SITE_URL}`,
       icon: LinkedInIcon
     }
   ];
 
-  const Divider = () => {
-    return <hr className="border-0 bg-gray-300 w-full max-w-xl mx-auto mt-20" style={{ height: '1px' }} />;
-  }
-
   return (
-    <div>
-      <Divider />
-      <div className="flex justify-center items-center py-10">
-        <span className="block mr-10 prose">
-          Helpful, interesting, or something else positive? Share!
+    <div className="mt-16">
+
+      <hr className="divider" />
+
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center pt-14 pb-0 md:space-x-6">
+        <span className="block prose">
+          Helpful, interesting, or something else positive? Share it!
         </span>
 
-        <ul className="flex">
+        <ul className="flex space-x-1 mb-3 md:mb-0">
           {links.map(link => {
             const { icon, url } = link;
 
@@ -46,7 +46,7 @@ const SocialShare = ({title, url}) => {
           })}
         </ul>
       </div>
-      <Divider />
+
     </div>
   )
 };
