@@ -6,7 +6,7 @@ export default function Footer() {
       <hr className="divider divider--wide" />
       <Container classes="text-center pt-6">
         <span className="text-base">
-          &copy; Alex MacArthur | {new Date().getFullYear()}
+          &copy; Alec Campbell | {new Date().getFullYear()}
         </span>
       </Container>
     </footer>
