@@ -70,7 +70,7 @@ const Projects = ({ repos, specialProjects }) => {
         </div>
       </div>
 
-      <h2 className="text-4xl font-semibold mb-6">Some Open Source Ones</h2>
+      <h2 className="text-4xl font-semibold mb-6">Some Open Source Stuff</h2>
 
       <div className="mb-8">
         <p className="prose md:prose-lg max-w-none">
