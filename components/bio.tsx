@@ -12,7 +12,7 @@ const Bio = () => {
 
       <div className="-mt-1">
         <p className="prose">
-          Alex MacArthur is a software developer working for Dave Ramsey in
+          Alec Campbell is a software developer working for Dave Ramsey in
           Nashville, TN. Soli Deo gloria.
         </p>
       </div>
