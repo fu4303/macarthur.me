@@ -13,7 +13,7 @@ export default function PageLayout({
     <Layout>
       <Container narrow={true}>
         <Head>
-          <title>{title} | Alex MacArthur</title>
+          <title>{title} | Alex Campbell</title>
           {open_graph && <meta property="og:image" content={open_graph} />}
         </Head>
 
