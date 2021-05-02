@@ -10,7 +10,7 @@ import {
 
 export default function Meta({
   isPost = false,
-  description = "I'm Alex MacArthur, a web developer in Nashville-ish, TN.",
+  description = "I'm Alex Campbell, a jack of most trades in Free Union, Va.",
   title = "",
   subTitle = "",
   image = "https://macarthur.me/open-graph.jpg",
@@ -19,7 +19,7 @@ export default function Meta({
   const url = `${SITE_URL}${router.asPath}`.replace(/\/$/, "");
   const computedTitle = title
     ? `${title} // Alex MacArthur`
-    : "Alex MacArthur // Web Developer in Nashville";
+    : "Alec Campbell // in Free Union, Virginia";
 
   // Special case: if we have a subtitle, override the description.
   if (subTitle) {
