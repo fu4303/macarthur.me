@@ -47,7 +47,7 @@ type LogoProps = {
 
 const Logo = ({ asLink = false, short = false }: LogoProps ): ReactElement => {
   const router = useRouter();
-  const logoText: string = short ? "AM" : "Alex MacArthur";
+  const logoText: string = short ? "AC" : "Alec Campbell";
 
   useEffect(() => {
     let rafId: number = 0;
