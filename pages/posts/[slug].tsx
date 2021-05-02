@@ -4,7 +4,7 @@ import { getContentBySlug, getAllPosts } from "../../lib/api";
 import "prismjs/themes/prism-okaidia.css";
 
 
-export default function getStaticPaths() {
+export async function getStaticPaths() {
   const posts = getAllPosts();
 
   return {
